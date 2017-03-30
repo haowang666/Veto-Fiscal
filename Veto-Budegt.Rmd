@@ -24,6 +24,15 @@ biblio-style: apsr
 
 
 # Abstract
+Veto player theory (Tsebelis 2002) predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence (Tsebelis and Chang 2004), there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and perform an empirical test on veto player and budget stability in authoritarian countries. Preliminary analysis show that even in authoritarian countries, institutional constrians (veto players) lead to incremental budget changes. 
+
+
+
+
+Punctuated Equilibrium Theory (PET) argues that government’s over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
+
+
+
 
 
 
