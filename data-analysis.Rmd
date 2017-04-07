@@ -1,0 +1,44 @@
+---
+title: "Data Analysis"
+author: "Hao Wang"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Merging several sources
+
+## Working Environment 
+
+```{r packages, message=FALSE, warning=FALSE}
+library(foreign)
+library(dplyr)
+library(readstata13)
+library(countrycode)
+setwd("~/Dropbox/01Research Project/Budget-Vdem")
+#getwd()
+```
+
+
+## Merge Data
+
+```{r, warning=FALSE}
+GSRE <- read.dta13('GSRE_extended_1_0.dta')
+VDEM <- read.dta13('V-Dem-DS-CY+Others-v6.2.dta')
+colnames(VDEM)[10] <- "cowcode"
+#This keeps all points
+mydata <-  merge(GSRE, VDEM, by=c("cowcode","year"), all.x = TRUE, all.y = TRUE) 
+```
+
+
+## Trim Data 
+It seems weird, Jones et. al (2017) paper looks at federalism, and 
+
+
+
