@@ -37,11 +37,13 @@ mydata <-  merge(GSRE, VDEM, by=c("cowcode","year"), all.x = TRUE)
 ```
 
 
-## Trim Data 
+# Data summary
 
-### For V-dem project
+## For V-dem project
+V-dem file is download from [stata-and-other]()
 
 
+### Related to democracy
 ```{r}
 #Deliberative democracy index v2x-delibdem
 #To what extend is deliberatuve democracy achieved? aggregated index
@@ -59,12 +61,50 @@ summary(mydata$v2dlconslt)
 summary(mydata$v2dlengage)
 #-----------------------------------------------------------------
 
+#equal democracy index
+#equal protection of individual rights
+summary(mydata$v2xeg_eqprotec)
+#equal distribution of resource 
+summary(mydata$v2xeg_eqdr)
 
+#constraints on executive branches
+#judicial constraints
+summary(mydata$v2x_jucon)
+#legislative constraints
+summary(mydata$v2xlg_legcon)
+
+#civil society organization participation index
+#rountely consulted by policy maker
+summary(mydata$v2cscnsult)
+
+#---------------------------------------------------
+#party system institutionalization
+summary(mydata$v2xps_party)
+```
+
+
+### Related to corruption
+
+```{r}
+#political corruption index-aggregated
+summary(mydata$v2x_corr)
+#public sector corruption index
+summary(mydata$v2x_pubcorr)
+#executure corruption index
+summary(mydata$v2x_execorr)
+#-------------------------------------------
+
+#election vote buying 
+summary(mydata$v2elvotbuy)
+#voting irregularities
+summary(mydata$v2elirreg)
 
 ```
 
 
 
+
+### Related to Federalism and Decentralization 
 
 
 
@@ -78,7 +118,7 @@ It seems weird, Jones et. al (2017) paper looks at federalism, and parliamentali
 
 
 
-## Data
+## GSRE Part
 
 ### Percentage spent as of total expenditure
 expend_security_EXP expenddefence_EXP exp_public_order_EXP wagessalaries_EXP subpentrans_EXP pensions_EXP total_welfare_EXP education_EXP health_EXP social_protection_EXP housing_EXP owelfarespend_EXP
