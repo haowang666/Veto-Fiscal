@@ -21,7 +21,7 @@ library(foreign)
 library(dplyr)
 library(readstata13)
 library(countrycode)
-setwd("~/Dropbox/01Research Project/Budget-Vdem")
+setwd("D:/Dropbox/01Research Project/Budget-Vdem")
 #getwd()
 ```
 
@@ -32,13 +32,59 @@ setwd("~/Dropbox/01Research Project/Budget-Vdem")
 GSRE <- read.dta13('GSRE_extended_1_0.dta')
 VDEM <- read.dta13('V-Dem-DS-CY+Others-v6.2.dta')
 colnames(VDEM)[10] <- "cowcode"
-#This keeps all points
-mydata <-  merge(GSRE, VDEM, by=c("cowcode","year"), all.x = TRUE, all.y = TRUE) 
+#This keeps all points from GSRE
+mydata <-  merge(GSRE, VDEM, by=c("cowcode","year"), all.x = TRUE) 
 ```
 
 
 ## Trim Data 
-It seems weird, Jones et. al (2017) paper looks at federalism, and 
+
+### For V-dem project
 
 
+```{r}
+#Deliberative democracy index v2x-delibdem
+#To what extend is deliberatuve democracy achieved? aggregated index
+summary(mydata$v2x_delibdem)
+
+#give reasoned justification of their positions on public policy
+summary(mydata$v2dlreason)
+#give reasoned justification of their positions on common good
+summary(mydata$v2dlcommon)
+#give respect for counterarguments
+summary(mydata$v2dlcountr)
+#range of consultation
+summary(mydata$v2dlconslt)
+#engaged society
+summary(mydata$v2dlengage)
+#-----------------------------------------------------------------
+
+
+
+```
+
+
+
+
+
+
+
+
+
+It seems weird, Jones et. al (2017) paper looks at federalism, and parliamentalism 
+
+
+
+
+
+
+## Data
+
+### Percentage spent as of total expenditure
+expend_security_EXP expenddefence_EXP exp_public_order_EXP wagessalaries_EXP subpentrans_EXP pensions_EXP total_welfare_EXP education_EXP health_EXP social_protection_EXP housing_EXP owelfarespend_EXP
+
+
+
+### Percentage spent as of GDP
+expend_security_GDPGSRE expenddefence_GDPGSRE exp_public_order_GDPGSRE wagessalaries_GDPGSRE subpentrans_GDPGSRE pensions_GDPGSRE total_welfare_GDPGSRE education_GDPGSRE health_GDPGSRE social_protection_GDPGSRE housing_GDPGSRE owelfarespend_GDPGSRE
 
