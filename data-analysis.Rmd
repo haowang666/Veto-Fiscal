@@ -35,10 +35,9 @@ I measure the budget stability as the simple euclidean distance of the between-y
 $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
 
 ```{r generate DV, echo=FALSE, message=FALSE}
-library(DataCombine)
-attach(mydata)
-mydata <- mydata[order(cowcode, year), ]
-
+#Too many missings, gonna do multiple imputation
+set.seed(1)
+library(Amelia)
 #create lagged variables
 library(dplyr)
 mydata <- 
@@ -48,7 +47,6 @@ mydata <-
            lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
            lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
            lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
-           lag.subpentrans_EXP = lag(subpentrans_EXP, 1),
            lag.pensions_EXP = lag(pensions_EXP, 1), 
            lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
            lag.education_EXP = lag(education_EXP, 1), 
@@ -57,14 +55,26 @@ mydata <-
            lag.housing_EXP = lag(housing_EXP, 1), 
            lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
 
+a.out <- amelia(mydata, ts= "year", cs="country", 
+                idvars = c("X", "cowcode"), m=5)
+
+
+missmap(a.out)
+impute1 <- a.out$imputations[[1]]
+write.amelia(obj = a.out, file.stem = impute, separate = TRUE, format = "csv")
+
+
+
+
+
 mydata1 <- mydata[c("country", "year", "expend_security_EXP", "expenddefence_EXP",
-                   "exp_public_order_EXP", "wagessalaries_EXP", "subpentrans_EXP",
+                   "exp_public_order_EXP", "wagessalaries_EXP", 
                    "pensions_EXP", "total_welfare_EXP", "education_EXP", 
                    "health_EXP", "social_protection_EXP", "housing_EXP", "owelfarespend_EXP")]
 
 #Pick remaining data
 myvars <- names(mydata) %in% c("country", "year", "expend_security_EXP", "expenddefence_EXP",
-                   "exp_public_order_EXP", "wagessalaries_EXP", "subpentrans_EXP",
+                   "exp_public_order_EXP", "wagessalaries_EXP", 
                    "pensions_EXP", "total_welfare_EXP", "education_EXP", 
                    "health_EXP", "social_protection_EXP", "housing_EXP", "owelfarespend_EXP")
 mydata2 <- mydata[!myvars]
@@ -75,12 +85,10 @@ mydata$S <- sqrt((expend_security_EXP - lag.expend_security_EXP)^2 +
                    (lag.exp_public_order_EXP - exp_public_order_EXP)^2 +
                    (lag.wagessalaries_EXP - wagessalaries_EXP)^2)
 
-#check mydata1
-set.seed(1)
-library(Amelia)
-a.out <- amelia(mydata1, idvars = c("year", "country"), m=1)
-missmap(a.out)
-write.amelia(a.out, impute, separate = TRUE, format = "csv")
-impute <- a.out[[1]][[1]]
+
+
+
+
+
 ```
 
