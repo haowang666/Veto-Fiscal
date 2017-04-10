@@ -80,12 +80,37 @@ summary(mydata$v2cscnsult)
 #---------------------------------------------------
 #party system institutionalization
 summary(mydata$v2xps_party)
+
+#---------------------------------------------------
+#legislative constraints 
+#legislature questions officials in practice
+summary(mydata$v2lgqstexp)
+#legislature investigates in practice
+summary(mydata$v2lginvstp)
+#executive oversight: other body engages in the investigation of the executive branch
+summary(mydata$v2lgotovst)
+
+#--------------------------------------------------
+#veto legislation by law (Elkins et al. 2012) CCP project
+summary(mydata$e_ccp_leg)
+
+#--------------------------------------------------
+#minimal competitive elections Skaaning et al. 2015
+summary(mydata$e_competition)
+
+#-------------------------------------------------
+#Marshall and Jaggers 2013
+#institutionalizaed democracy
+summary(mydata$e_democ)
+#institutionalized autocracy
+summary(mydata$e_autoc)
+
 ```
 
 
-### Related to corruption
+### Related to corruption and clientelism
 
-```{r}
+```{r corription}
 #political corruption index-aggregated
 summary(mydata$v2x_corr)
 #public sector corruption index
@@ -99,14 +124,100 @@ summary(mydata$v2elvotbuy)
 #voting irregularities
 summary(mydata$v2elirreg)
 
+#-------------------------------------------
+#party linkage: from programmatic to clientelist 
+summary(mydata$v2psprlnks)
+#executure bribery and corruption exchange 
+summary(mydata$v2exbribe)
+#executive embezzlement and theft 
+summary(mydata$v2exembez)
+#public sector corrupt exchanges 
+summary(mydata$v2excrptps)
+
+#------------------------------------------
+#on delivery of puclic goods and private goods 
+#particularistic to puclic funded
+summary(mydata$v2dlencmps)
+
+
+#--------------------------------------------
+#Cite: Kaufman et al. 2010
+#world bank government efffectiveness
+summary(mydata$e_wbgi_gee)
+
+#world bank rule of law index
+summary(mydata$e_wbgi_rle)
+
 ```
 
+
+### Political Equality
+
+```{r}
+# equal power over socioeconomic conditions
+summary(mydata$v2pepwrses)
+# equal power over social groups 
+summary(mydata$v2pepwrsoc)
+```
 
 
 
 ### Related to Federalism and Decentralization 
 
+```{r decentralization}
+#regional government exist 
+summary(mydata$v2elreggov)
+#regional offices relative power 
+summary(mydata$v2elrgpwr)
 
+#local offices exists
+summary(mydata$v2ellocgov)
+#local offices relative power
+summary(mydata$v2ellocpwr)
+
+#division of power index (central-regional-local)
+summary(mydata$v2x_feduni)
+
+#Database of political institutions (Beck et al. 2001)
+#state government authority over taxation
+summary(mydata$e_dpi_author)
+
+```
+
+
+### Related to information and media
+
+```{r}
+#government censorship: media
+summary(mydata$v2mecenefm)
+#internet censorship
+summary(mydata$v2mecenefi)
+
+```
+
+
+### Demographics (controls)
+
+```{r}
+#education: average year of education among citizens older than 15
+summary(mydata$e_peaveduc)
+
+#gdp per capita (logged)
+summary(mydata$e_migdppcln)
+
+#gdp growth
+summary(mydata$e_migdpgro)
+
+#income inequality: UNU-Wider 2008
+summary(mydata$e_peginiwi)
+
+#Oil reserves: Haber and Menaldo 2011
+# in billions of barrels
+summary(mydata$e_reserves_billions)
+# Oil production per capita: Haber and Menaldo 2011
+summary(mydata$e_Total_Oil_Income_PC)
+
+```
 
 
 
