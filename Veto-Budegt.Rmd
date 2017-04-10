@@ -70,8 +70,11 @@ I measure the budget stability as the simple euclidean distance of the between-y
 
 $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
 
+
+
 ```{r generate DV, echo=FALSE, include=FALSE}
-#lm
+#generate DV
+
 
 ```
 
