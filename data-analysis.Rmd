@@ -13,8 +13,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Load Merged Data and Clean it
 
-```{r}
+```{r, echo=FALSE}
 library(MASS)
 library(dplyr)
+library(ggplot2)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+
+```
+
+
+```{r, echo=FALSE, include=FALSE}
+names(mydata)
+summary(mydata) #tons of missing data
+```
+
+
+# Get ready for the dependent variables:
+
+I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
+
+$$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
+
+```{r generate DV, echo=FALSE, include=FALSE}
+
+
 ```
 

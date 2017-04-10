@@ -5,33 +5,28 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: ~/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
+    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Veto Player and Fiscal Policy Stability"
-#thanks: "**Current version**: `r format(Sys.time(), '%B %d, %Y')`; **Corresponding author**: haowang@asu.edu."
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
 author:
 - name: Hao Wang
   affiliation: Arizona State University
-abstract: "Abstract is here"
+abstract: "Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and perform an empirical test on veto player and budget stability in authoritarian countries. Preliminary analysis show that even in authoritarian countries, institutional constrians (veto players) lead to incremental budget changes. "
 keywords: "veto player, public policy"
 geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
-#spacing: double
-bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
+spacing: double
+bibliography: D:/Dropbox/Bibliography-database/Haowang.bib
 biblio-style: apsr
 ---
 
 
-# Abstract
-Veto player theory (Tsebelis 2002) predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence (Tsebelis and Chang 2004), there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and perform an empirical test on veto player and budget stability in authoritarian countries. Preliminary analysis show that even in authoritarian countries, institutional constrians (veto players) lead to incremental budget changes. 
 
 
 
 
-Punctuated Equilibrium Theory (PET) argues that government’s over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
-
-
+Punctuated Equilibrium Theory (PET) argues that government budget shifts over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
 
 
 
@@ -40,21 +35,44 @@ Punctuated Equilibrium Theory (PET) argues that government’s over and under at
 Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium [@DerekBaumgartner2016].
 
 
-<!--  -->
-[@TsebelisChang2004]
 
 
 
 # Data
+Data in this project comes from various sources. 
 
-```{r load data, message=FALSE, tidy=TRUE, warning=FALSE}
+GSRE: 
+
+
+```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
 library(readstata13)
 library(MASS)
 library(ggplot2)
 library(plm)
 library(Zelig)
 library(MASS)
-mydata <- read.dta13('~/Dropbox/01Research Project/Budget-Vdem/Vdem_merge.dta', nonint.factors = TRUE)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+```
+
+
+
+
+
+```{r, echo=FALSE, include=FALSE}
+names(mydata)
+summary(mydata) #tons of missing data
+```
+
+
+# Get ready for the dependent variables:
+
+I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
+
+$$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
+
+```{r generate DV, echo=FALSE, include=FALSE}
+#lm
+
 ```
 
 
