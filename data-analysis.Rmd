@@ -13,18 +13,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Load Merged Data and Clean it
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 library(MASS)
 library(dplyr)
 library(ggplot2)
+library(Amelia)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
 
-```
-
-
-```{r, echo=FALSE, include=FALSE}
-names(mydata)
-summary(mydata) #tons of missing data
 ```
 
 
@@ -34,29 +29,26 @@ I measure the budget stability as the simple euclidean distance of the between-y
 
 $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
 
+
+
 ```{r generate DV, echo=FALSE, message=FALSE}
 library(Amelia)
 # subpentrans_EXP subpentrans_GDPGSRE get rid of, too many missings
-myvars <- names(mydata) %in% c("subpentrans_GDPGSRE", "subpentrans_EXP")
-mydata <- mydata[!myvars]
-summary(mydata)
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+names(mydata)
 missmap(mydata)
+#really bad data
+#----------------------------------------------------------------------------
+#To save computational power, just do multiple imputation of the GSRE part
+mydata1 <- select(mydata, cowcode, year, expend_security_EXP: owelfarespend_GDPGSRE)
+
+#Pick remaining data:
+mydata2 <- select(mydata, -(expend_security_EXP: owelfarespend_GDPGSRE))
+
 
 #Too many missings, gonna do multiple imputation
 set.seed(1)
-
-#To save computational power, just do multiple imputation of the GSRE part
-mydata1 <- mydata[c("country", "year", "expend_security_EXP", "expenddefence_EXP",
-                   "exp_public_order_EXP", "wagessalaries_EXP", 
-                   "pensions_EXP", "total_welfare_EXP", "education_EXP", 
-                   "health_EXP", "social_protection_EXP", "housing_EXP", "owelfarespend_EXP")]
-
-#Pick remaining data
-myvars <- names(mydata) %in% c("country", "year", "expend_security_EXP", "expenddefence_EXP",
-                   "exp_public_order_EXP", "wagessalaries_EXP", 
-                   "pensions_EXP", "total_welfare_EXP", "education_EXP", 
-                   "health_EXP", "social_protection_EXP", "housing_EXP", "owelfarespend_EXP")
-mydata2 <- mydata[!myvars]
+a.out <- amelia(mydata1, ts= "year", cs="cowcode", m=10)
 
 
 
@@ -77,8 +69,8 @@ mydata <-
            lag.housing_EXP = lag(housing_EXP, 1), 
            lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
 
-a.out <- amelia(mydata, ts= "year", cs="country", 
-                idvars = c("X", "cowcode"), m=10)
+
+
 
 
 missmap(a.out)

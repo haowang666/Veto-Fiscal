@@ -16,13 +16,19 @@ keywords: "veto player, public policy"
 geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
-spacing: double
+spacing: single
 bibliography: D:/Dropbox/Bibliography-database/Haowang.bib
 biblio-style: apsr
 ---
 
 
 
+
+
+# Intro
+Veto player theorys [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a collary is that institutional checks leads to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equibilibrium. 
+
+@TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. 
 
 
 
@@ -32,16 +38,26 @@ Punctuated Equilibrium Theory (PET) argues that government budget shifts over an
 
 
 # Argument 
+
+## Institutional Constraints
+
 Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium [@DerekBaumgartner2016].
+
+
+
+## Policy Punctuations
 
 
 
 
 
 # Data
-Data in this project comes from various sources. 
+Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures dataset). GSRE is a comprehensive budget dataset based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF [COFOG]() dataset, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritian regime in the [Geddes et al. 2014 -@Geddes] dataset. 
 
-GSRE: 
+Data on institutional constraints come from the Variaties of Democracy (Vdem) project [Coppedge et al. 2016 -@Vdem2016]. Unlike the widely used democracy index like Polity [Marshall et al. 2015 -@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
+
+Data on decentralization draws from the Political Institution Index [@Becketal2001]. 
+
 
 
 ```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
@@ -88,6 +104,24 @@ $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$
 
 
 
+# Appendix
+
+## Descriptive Statistics
+
+### Country List
+
+### Dependent Variables 
+
+
+# Missing Cases
+GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
+
+I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indice. 
+
+
+
+
+
 
 
 
@@ -109,46 +143,6 @@ M1 <- glm(vote ~ z.age + female + z.education + z.income,
 
 coefplot(M1)
 ```
-
-
-```{r, echo=FALSE, eval=TRUE, tidy = TRUE, cache=FALSE, fig.cap="A Coefficient Plot"}
-suppressMessages(library(Zelig))
-suppressMessages(library(arm))
-
-
-data(voteincome)
-
-voteincome$z.age <- arm::rescale(voteincome$age)
-voteincome$z.education <- arm::rescale(voteincome$education)
-voteincome$z.income <- arm::rescale(voteincome$income)
-
-M1 <- glm(vote ~ z.age + female + z.education + z.income,
-            data=voteincome, family=binomial)
-
-arm::coefplot(M1)
-```
-
-To get `knitr` to present the results of a table, add `results="asis"` to the brackets to start the R code chunk. The ensuing output will look like this (though the table may come on the next page). 
-
-```{r, echo=FALSE, eval=TRUE, tidy = TRUE, size="small", cache=FALSE, results="asis"}
-suppressMessages(library(Zelig))
-suppressMessages(library(stargazer))
-suppressMessages(library(arm))
-
-data(voteincome)
-
-voteincome$z.age <- arm::rescale(voteincome$age)
-voteincome$z.education <- arm::rescale(voteincome$education)
-voteincome$z.income <- arm::rescale(voteincome$income)
-
-
-M1 <- glm(vote ~ z.age + female + z.education + z.income,
-            data=voteincome, family=binomial)
-
-stargazer(M1, title="A Handsome Table", header=FALSE)
-```
-
--->
 
 
 <!-- This is for footnote: Adding `echo="FALSE"` inside the brackets to start the R chunk will omit the presentation of the R commands. It will just present the table. This provides substantial opportunity for authors in doing their analyses. Now, the analysis and presentation in the form of a polished manuscript can be effectively simultaneous.[^4]
