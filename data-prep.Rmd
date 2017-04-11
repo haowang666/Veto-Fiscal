@@ -287,3 +287,50 @@ write.csv(x = trim, file = "vdem-merge.csv")
 
 ```
 
+
+
+
+# Prepare for multiple imputation
+```{r}
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+#some cleaning
+#code polity -88 -66 -77 to na
+mydata <-
+  mydata %>%
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+
+
+#generating dependent variables 
+#The first step is to calculate the DV 
+#select GSRE
+GSRE <- select(mydata, c(78:89))
+
+GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
+GSRE$cowcode <- mydata$cowcode
+GSRE$year <- mydata$year
+
+#create percentage variables 
+dv1 <- 
+  GSRE %>%
+  mutate(expend_security_p = expend_security / sum,
+         expenddefence_p = expenddefence / sum,
+         exp_public_order_p = exp_public_order / sum,
+         wagessalaries_p = wagessalaries / sum,
+         subpentrans_p = subpentrans / sum,
+         pensions_p = pensions / sum,
+         total_welfare_p =  total_welfare / sum,
+         education_p =  education / sum,
+         health_p = health / sum,
+         social_protection_p = social_protection / sum,
+         housing_p = housing / sum,
+         owelfarespend_p = owelfarespend / sum
+        )
+
+#save data for multiple imputation
+raw <- select(dv1, cowcode, year, c(16:27))
+write.csv(x = raw, file = "raw.csv")
+```
+

@@ -100,7 +100,7 @@ names(mydata)
 ```
 
 
-# Get ready for the dependent variables:
+# Measuring Dependent Variables 
 
 I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
 
@@ -156,11 +156,11 @@ stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FAL
 
 
 **Dependent Variables**
-In the following table I report the components of dependent variables. 
+In the following table I report the components of dependent variables. It is measured as the raw expenditure as of 2005 constant USD. 
 
 ```{r dependent, tidy=TRUE, echo=FALSE, results='asis'}
-budget <- select(mydata, expend_security_EXP: owelfarespend_GDPGSRE)
-stargazer(budget, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
+expenditure <- select(mydata, c(78:89))
+stargazer(expenditure, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
 ```
 
 
@@ -182,7 +182,8 @@ The total missing map is showing in the correspoding figure.
 
 ```{r map, message=FALSE, warning=FALSE, echo=FALSE}
 library(Amelia)
-
+GSRE <- select(mydata, c(78:89))
+missmap(GSRE)
 ```
 
 
@@ -193,59 +194,91 @@ I also calculated resutls without multiple imputation: points that are missing i
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#generating dependent variables 
 #The first step is to calculate the DV 
 #select GSRE
-GSRE <- select(mydata, cowcode, year, c(56:66), c(67:77))
+GSRE <- select(mydata, c(78:89))
 
-#select GSRE
-GSRE <- 
+GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
+GSRE$cowcode <- mydata$cowcode
+GSRE$year <- mydata$year
+
+#create percentage variables 
+dv1 <- 
+  GSRE %>%
+  mutate(expend_security_p = expend_security / sum,
+         expenddefence_p = expenddefence / sum,
+         exp_public_order_p = exp_public_order / sum,
+         wagessalaries_p = wagessalaries / sum,
+         subpentrans_p = subpentrans / sum,
+         pensions_p = pensions / sum,
+         total_welfare_p =  total_welfare / sum,
+         education_p =  education / sum,
+         health_p = health / sum,
+         social_protection_p = social_protection / sum,
+         housing_p = housing / sum,
+         owelfarespend_p = owelfarespend / sum
+        )
+
+#save data for multiple imputation
+raw <- select(dv1, cowcode, year, c(16:27))
+```
 
 
-#replace NA to 0. 
-dv1 <- GSRE
-dv1[is.na(dv1)] <-0
 
-
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #create lagged variable
 dv1 <- 
     dv1 %>%
     group_by(cowcode) %>%
-    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
-           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
-           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
-           lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
-           lag.pensions_EXP = lag(pensions_EXP, 1), 
-           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
-           lag.education_EXP = lag(education_EXP, 1), 
-           lag.health_EXP = lag(health_EXP, 1),
-           lag.social_protection_EXP = lag(social_protection_EXP, 1),
-           lag.housing_EXP = lag(housing_EXP, 1), 
-           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+    mutate(lag.expend_security_p = lag(expend_security_p, 1), 
+           lag.expenddefence_p = lag(expenddefence_p, 1),
+           lag.exp_public_order_p = lag(exp_public_order_p, 1), 
+           lag.wagessalaries_p = lag(wagessalaries_p, 1), 
+           lag.subpentrans_p = lag(subpentrans_p, 1), 
+           lag.pensions_p = lag(pensions_p, 1), 
+           lag.total_welfare_p = lag(total_welfare_p, 1), 
+           lag.education_p = lag(education_p, 1), 
+           lag.health_p = lag(health_p, 1),
+           lag.social_protection_p = lag(social_protection_p, 1),
+           lag.housing_p = lag(housing_p, 1), 
+           lag.owelfarespend_p = lag(owelfarespend_p, 1))
+
+
+#code missings as 0
+dv1[is.na(dv1)] <-0
 
 #calculate stability index
 attach(dv1)
-yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
-     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
-     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
-     (wagessalaries_EXP - lag.wagessalaries_EXP)^2 +
-     (pensions_EXP - lag.pensions_EXP)^2 +
-     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
-     (education_EXP - lag.education_EXP)^2 +
-     (health_EXP - lag.health_EXP)^2 +
-     (social_protection_EXP - lag.social_protection_EXP)^2 +
-     (housing_EXP - lag.housing_EXP)^2 +
-     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+yb <- (expend_security_p - lag.expend_security_p)^2 +
+      (expenddefence_p - lag.expenddefence_p)^2 +
+      (exp_public_order_p - lag.exp_public_order_p)^2 +
+      (wagessalaries_p - lag.wagessalaries_p)^2 +
+      (subpentrans_p - lag.subpentrans_p)^2 +
+      (pensions_p - lag.pensions_p)^2 +
+      (total_welfare_p - lag.total_welfare_p)^2 +
+      (education_p - lag.education_p)^2 +
+      (health_p - lag.health_p)^2 +
+      (social_protection_p - lag.social_protection_p)^2 +
+      (housing_p - lag.housing_p)^2 +
+      (owelfarespend_p - lag.owelfarespend_p)^2
 
-#attach to data
+```
+
+
+The density plot of stability index without imputation is shown in the following figure
+
+```{r}
 mydata$EXP <- sqrt(yb)
-
 d <- ggplot(data = mydata) +
      geom_density(aes(x=EXP)) +
      ggtitle("Density Plot of Policy Stability Index") +
-     xlab("Policy Stability Index")
+     xlab("Policy Stability Index") 
 d
-    
 ```
+
+
+
 
 
 

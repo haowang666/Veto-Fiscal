@@ -110,3 +110,65 @@ mydata$S <- sqrt((expend_security_EXP - lag.expend_security_EXP)^2 +
 
 ```
 
+
+
+Some redundant codes
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#This code is using the existing percentage index
+
+#replace NA to 0. 
+dv2 <- GSRE
+dv2[is.na(dv1)] <-0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
+           lag.pensions_EXP = lag(pensions_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (wagessalaries_EXP - lag.wagessalaries_EXP)^2 +
+     (pensions_EXP - lag.pensions_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+#attach to data
+mydata$EXP <- sqrt(yb)
+
+d <- ggplot(data = mydata) +
+     geom_density(aes(x=EXP)) +
+     ggtitle("Density Plot of Policy Stability Index") +
+     xlab("Policy Stability Index") +
+     facet_wrap(~ country)
+d
+    
+```
+
+
+
+
+Multiple imputation part 
+```{r}
+#Multiple impuation part 
+```
+
+
