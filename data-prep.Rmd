@@ -244,6 +244,9 @@ expend_security_EXP expenddefence_EXP exp_public_order_EXP wagessalaries_EXP sub
 ### Percentage spent as of GDP
 expend_security_GDPGSRE expenddefence_GDPGSRE exp_public_order_GDPGSRE wagessalaries_GDPGSRE subpentrans_GDPGSRE pensions_GDPGSRE total_welfare_GDPGSRE education_GDPGSRE health_GDPGSRE social_protection_GDPGSRE housing_GDPGSRE owelfarespend_GDPGSRE
 
+### Raw expenditure
+expend_security expenddefence exp_public_order wagessalaries subpentrans pensions total_welfare education health social_protection housing owelfarespend
+
 
 ## Subset Data
 
@@ -271,7 +274,12 @@ trim <- mydata[,c("cowcode","year","country","v2x_delibdem",
                   "wagessalaries_GDPGSRE", "subpentrans_GDPGSRE", 
                   "pensions_GDPGSRE", "total_welfare_GDPGSRE",                                                                  "education_GDPGSRE", "health_GDPGSRE", 
                   "social_protection_GDPGSRE", "housing_GDPGSRE", 
-                  "owelfarespend_GDPGSRE"
+                  "owelfarespend_GDPGSRE" , "expend_security",
+                  "expenddefence", "exp_public_order", "wagessalaries",
+                  "subpentrans", "pensions", "total_welfare",
+                  "education", "health",
+                  "social_protection", "housing",
+                  "owelfarespend"
                   )]
 names(trim)
 

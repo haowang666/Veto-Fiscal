@@ -44,6 +44,12 @@ Punctuated Equilibrium Theory (PET) argues that government budget shifts over an
 Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium [@DerekBaumgartner2016].
 
 
+[@Henisz2000]
+
+[@KeeferStasavage2003]
+
+[@JohBevan2012]
+
 
 ## Policy Punctuations
 
@@ -52,12 +58,12 @@ Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long ter
 
 
 # Data
-Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures dataset). GSRE is a comprehensive budget dataset based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF [COFOG]() dataset, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritian regime in the [Geddes et al. -@Geddesetal2014] dataset. 
+Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures dataset). GSRE is a comprehensive budget dataset based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF [COFOG]() dataset, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritian regime in the [@Geddesetal2014] dataset. 
 
-Data on deliberative democracies and other regime-related variables come from the Variaties of Democracy (Vdem) project [Coppedge et al. -@Vdem2016]. Unlike the widely used democracy index like Polity [Marshall et al. -@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
+Data on deliberative democracies and other regime-related variables come from the Variaties of Democracy (Vdem) project [@Vdem2016]. Unlike the widely used democracy index like Polity [@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
 
 
-Data on institutional constraints come from the political constraints index []. 
+Data on institutional constraints come from the political constraints index [@Henisz2000]. Henisz develops a measure of institutional commitment that is objective, extensive, and based in positive political theory. He uses a quantitative model to capture the competitiveness portion of the definition of democracy (competitiveness and participation) with a proxy of number of independent veto points over policy outcomes and distribution of preferences of those actors. The measure is objective, with clear rules for measurement and aggregation, however it incorporates some of the Polity data coding for “independent judiciary” that gives it a slight subjective bias. POLCON is based on strong assumptions about each actor’s veto power. The measures are strongly correlated with the ICRG indexes and the Polity “Executive Constraint” index. “The new release of the political constraint dataset expands the scope of coverage to as many as 234 countries over the period 1800–2001. It also corrects a small number of computational, coding and factual errors in the previous release. The new database also includes country codes from the Cross-national time series data archive, Polity and the World Bank to facilitate matching this dataset to other international datasets that you may have. Finally, it contains the component variables used to construct the political constraint indexes.”
 
 
 
@@ -163,10 +169,46 @@ stargazer(budget, title = "Components of Budget Stability Measurements", header 
 
 The distribution of dependent variable without multiple imputation looks like this 
 
-```{r, echo=FALSE}
+
+
+
+
+
+
+# Missing Cases
+GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
+
+The total missing map is showing in the correspoding figure. 
+
+```{r map, message=FALSE, warning=FALSE, echo=FALSE}
+library(Amelia)
+
+```
+
+
+
+
+I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indicator. 
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #The first step is to calculate the DV 
-mydata <- 
-    mydata %>%
+#select GSRE
+GSRE <- select(mydata, cowcode, year, c(56:66), c(67:77))
+
+#select GSRE
+GSRE <- 
+
+
+#replace NA to 0. 
+dv1 <- GSRE
+dv1[is.na(dv1)] <-0
+
+
+#create lagged variable
+dv1 <- 
+    dv1 %>%
     group_by(cowcode) %>%
     mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
            lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
@@ -180,10 +222,7 @@ mydata <-
            lag.housing_EXP = lag(housing_EXP, 1), 
            lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
 
-#replace NA to 0. 
-dv1 <- select(mydata,c(56:66), c(78:88))
-dv1[is.na(dv1)] <-0
-names(dv1)
+#calculate stability index
 attach(dv1)
 yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
      (expenddefence_EXP - lag.expenddefence_EXP)^2 +
@@ -196,30 +235,17 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
      (social_protection_EXP - lag.social_protection_EXP)^2 +
      (housing_EXP - lag.housing_EXP)^2 +
      (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+#attach to data
 mydata$EXP <- sqrt(yb)
 
-dvsum <- select(mydata, year, country, EXP)
-
-bycountry <- group_by(dvsum, country)
-d <- summarise(bycountry, 
-               count =)
-
-
-d <- ggplot(data = mydata[]) +
-  geom_line(aes(x = year, y = EXP)) +
-  facet_wrap( ~ country)
+d <- ggplot(data = mydata) +
+     geom_density(aes(x=EXP)) +
+     ggtitle("Density Plot of Policy Stability Index") +
+     xlab("Policy Stability Index")
+d
+    
 ```
-
-
-
-
-
-# Missing Cases
-GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
-
-I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indice. 
-
-
 
 
 
