@@ -158,7 +158,7 @@ stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FAL
 **Dependent Variables**
 In the following table I report the components of dependent variables. It is measured as the raw expenditure as of 2005 constant USD. 
 
-```{r dependent, tidy=TRUE, echo=FALSE, results='asis'}
+```{r DV table, tidy=TRUE, echo=FALSE, results='asis'}
 expenditure <- select(mydata, c(78:89))
 stargazer(expenditure, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
 ```
@@ -193,7 +193,7 @@ I also calculated resutls without multiple imputation: points that are missing i
 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r DV generating, echo=FALSE, message=FALSE, warning=FALSE}
 #generating dependent variables 
 #The first step is to calculate the DV 
 #select GSRE
@@ -219,14 +219,11 @@ dv1 <-
          housing_p = housing / sum,
          owelfarespend_p = owelfarespend / sum
         )
-
-#save data for multiple imputation
-raw <- select(dv1, cowcode, year, c(16:27))
 ```
 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r DV generating 2, echo=FALSE, message=FALSE, warning=FALSE}
 #create lagged variable
 dv1 <- 
     dv1 %>%
@@ -262,6 +259,9 @@ yb <- (expend_security_p - lag.expend_security_p)^2 +
       (social_protection_p - lag.social_protection_p)^2 +
       (housing_p - lag.housing_p)^2 +
       (owelfarespend_p - lag.owelfarespend_p)^2
+
+#code irregular yb to 1.
+yb[yb >1] <- 1 
 
 ```
 

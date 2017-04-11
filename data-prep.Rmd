@@ -334,3 +334,10 @@ raw <- select(dv1, cowcode, year, c(16:27))
 write.csv(x = raw, file = "raw.csv")
 ```
 
+# Multiple Imputation 
+```{r}
+library(Amelia)
+raw <- read.csv("")
+```
+
+
