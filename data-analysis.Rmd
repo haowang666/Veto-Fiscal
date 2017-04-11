@@ -15,12 +15,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, echo=FALSE, message=FALSE}
 library(MASS)
-library(dplyr)
 library(ggplot2)
-library(Amelia)
+library(plm)
+library(Zelig)
+library(dplyr)
+library(tidyr)
+library(stargazer)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
-
+#code polity -88 -66 -77 to na
+mydata <-
+  mydata %>%
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
 ```
+
+# Summary statistics
+
+```{r, echo=FALSE, tidy=TRUE, results='asis'}
+stargazer(mydata)
+```
+
 
 
 # Get ready for the dependent variables:
@@ -32,7 +48,6 @@ $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$
 
 
 ```{r generate DV, echo=FALSE, message=FALSE}
-library(Amelia)
 # subpentrans_EXP subpentrans_GDPGSRE get rid of, too many missings
 mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
 names(mydata)

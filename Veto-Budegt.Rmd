@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
+    template: ~/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Veto Player and Fiscal Policy Stability"
 thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
 author:
@@ -17,7 +17,7 @@ geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: D:/Dropbox/Bibliography-database/Haowang.bib
+bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
 biblio-style: apsr
 ---
 
@@ -52,22 +52,36 @@ Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long ter
 
 
 # Data
-Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures dataset). GSRE is a comprehensive budget dataset based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF [COFOG]() dataset, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritian regime in the [Geddes et al. 2014 -@Geddes] dataset. 
+Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures dataset). GSRE is a comprehensive budget dataset based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF [COFOG]() dataset, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritian regime in the [Geddes et al. -@Geddesetal2014] dataset. 
 
-Data on institutional constraints come from the Variaties of Democracy (Vdem) project [Coppedge et al. 2016 -@Vdem2016]. Unlike the widely used democracy index like Polity [Marshall et al. 2015 -@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
+Data on deliberative democracies and other regime-related variables come from the Variaties of Democracy (Vdem) project [Coppedge et al. -@Vdem2016]. Unlike the widely used democracy index like Polity [Marshall et al. -@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
+
+
+Data on institutional constraints come from the political constraints index []. 
+
+
+
 
 Data on decentralization draws from the Political Institution Index [@Becketal2001]. 
 
 
 
 ```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
-library(readstata13)
 library(MASS)
 library(ggplot2)
 library(plm)
 library(Zelig)
-library(MASS)
+library(dplyr)
+library(tidyr)
+library(stargazer)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+#code polity -88 -66 -77 to na
+mydata <-
+  mydata %>%
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
 ```
 
 
@@ -76,7 +90,7 @@ mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/mas
 
 ```{r, echo=FALSE, include=FALSE}
 names(mydata)
-summary(mydata) #tons of missing data
+#summary(mydata) #tons of missing data
 ```
 
 
@@ -88,36 +102,122 @@ $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$
 
 
 
-```{r generate DV, echo=FALSE, include=FALSE}
-#generate DV
+
+\newpage
+
+# Appendix
 
 
+
+## Descriptive Statistics
+
+
+**summary statistics of deliberative democracy**
+
+
+
+
+```{r, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
+# results ="asis" add to table
+
+delib <- select(mydata, v2x_delibdem: v2dlengage)
+stargazer(delib, title= "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
+          covariate.labels=c("Deliberative Democracy", "Justification on Public Policy", 
+                             "Justification on Common Goods", "Respect for Counterarguments", 
+                             "Range of Consultation", "Range of Engagement"))
+```
+
+**summary statistics on institutional constriants**
+
+```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+const <- select(mydata, v2x_jucon, v2xlg_legcon, v2xps_party, e_democ, e_autoc, e_h_polcon5, e_h_polcon3) 
+stargazer(const, title = "Institutional Constraints", header = FALSE,
+          covariate.labels = c("Judical Constraints", "Legislative Constraints",
+                               "Institutionalization of Party", "Institutionalizaed Democracy",
+                               "Institutionalizaed Autocracy", "Political Constraints Index-3", 
+                               "Political Constraints Index-5"))
+```
+
+
+**summary statistics on federalism**
+
+```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+fed <- select(mydata, v2x_feduni, e_dpi_author)
+stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FALSE,
+          covariate.labels = c("Division of Power", "State government Authority"))
+
+```
+
+
+**Dependent Variables**
+In the following table I report the components of dependent variables. 
+
+```{r dependent, tidy=TRUE, echo=FALSE, results='asis'}
+budget <- select(mydata, expend_security_EXP: owelfarespend_GDPGSRE)
+stargazer(budget, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
 ```
 
 
 
 
 
+The distribution of dependent variable without multiple imputation looks like this 
+
+```{r, echo=FALSE}
+#The first step is to calculate the DV 
+mydata <- 
+    mydata %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
+           lag.pensions_EXP = lag(pensions_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#replace NA to 0. 
+dv1 <- select(mydata,c(56:66), c(78:88))
+dv1[is.na(dv1)] <-0
+names(dv1)
+attach(dv1)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (wagessalaries_EXP - lag.wagessalaries_EXP)^2 +
+     (pensions_EXP - lag.pensions_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+mydata$EXP <- sqrt(yb)
+
+dvsum <- select(mydata, year, country, EXP)
+
+bycountry <- group_by(dvsum, country)
+d <- summarise(bycountry, 
+               count =)
+
+
+d <- ggplot(data = mydata[]) +
+  geom_line(aes(x = year, y = EXP)) +
+  facet_wrap( ~ country)
+```
 
 
 
-
-
-
-# Appendix
-
-## Descriptive Statistics
-
-### Country List
-
-### Dependent Variables 
 
 
 # Missing Cases
 GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
 
 I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indice. 
-
 
 
 
@@ -143,22 +243,5 @@ M1 <- glm(vote ~ z.age + female + z.education + z.income,
 
 coefplot(M1)
 ```
-
-
-<!-- This is for footnote: Adding `echo="FALSE"` inside the brackets to start the R chunk will omit the presentation of the R commands. It will just present the table. This provides substantial opportunity for authors in doing their analyses. Now, the analysis and presentation in the form of a polished manuscript can be effectively simultaneous.[^4]
-
-[^4]: I'm not sure if I'm ready to commit to this myself since my workflow is still largely derived from [Rob J. Hyndman's example](http://robjhyndman.com/hyndsight/workflow-in-r/). However, *knitr* has endless potential, especially when analyses can stored in cache, saved as chunks, or loaded in the preamble of a document to reference later in the manuscript.
-
-# Add reference
-Inline refer: @Nichter2008, in bracket [@Nichter2008], suppress[Gonzales et al. -@Gonzalez-Ocantos2014] -->
-
-
-
-<!--
-# References
-\setlength{\parindent}{-0.2in}
-\setlength{\leftskip}{0.2in}
-\setlength{\parskip}{8pt}
-\vspace*{-0.2in}
-\noindent
 -->
+

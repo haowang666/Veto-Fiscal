@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(foreign)
 library(dplyr)
 library(readstata13)
+
 setwd("~/Dropbox/01Research Project/Budget-Vdem")
 getwd()
 GSRE <- read.dta13("GSRE_extended_1_0.dta")
@@ -273,7 +274,8 @@ trim <- mydata[,c("cowcode","year","country","v2x_delibdem",
                   "owelfarespend_GDPGSRE"
                   )]
 names(trim)
-write.csv(x = trim, file = "vdem-merge.csv")
-```
 
+write.csv(x = trim, file = "vdem-merge.csv")
+
+```
 
