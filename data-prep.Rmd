@@ -438,4 +438,9 @@ mydata$stability_0 <- sqrt(yb)
 
 
 ## From first imputation 
+```{r, include=FALSE}
+impp1 <- 
+```
+
+
 
