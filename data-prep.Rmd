@@ -307,7 +307,6 @@ mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
 #The first step is to calculate the DV 
 #select GSRE
 GSRE <- select(mydata, c(78:89))
-
 GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
 GSRE$cowcode <- mydata$cowcode
 GSRE$year <- mydata$year
@@ -329,15 +328,114 @@ dv1 <-
          owelfarespend_p = owelfarespend / sum
         )
 
-#save data for multiple imputation
+#save data for multiple imputation: percentage one
 raw <- select(dv1, cowcode, year, c(16:27))
 write.csv(x = raw, file = "raw.csv")
+
+#get original one
+raw2 <- GSRE 
+write.csv(x = raw2, file = "raw2.csv")
+
 ```
 
-# Multiple Imputation 
-```{r}
+# Multiple Imputation : based on percentage
+```{r, include=FALSE}
+library(dplyr)
 library(Amelia)
-raw <- read.csv("")
+raw <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/raw.csv")
+
+#keeps hitting warning, getting rid of some variables
+raw <- select(raw, -subpentrans_p, -X, -pensions_p, - owelfarespend_p)
+
+set.seed(3)
+a.out <- amelia(raw, ts = "year", cs = "cowcode", m=5)
+
+write.amelia(a.out, format  = "csv", file.stem = "impp")
 ```
 
+
+
+# Multiple imputation: based on actual expenditure
+
+
+# Adding DV into mydata frame
+
+## Original results 
+
+```{r, message=FALSE, include=FALSE}
+library(dplyr)
+library(Amelia)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+#code polity -88 -66 -77 to na
+mydata <-
+  mydata %>%
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+
+#generating dependent variables 
+#The first step is to calculate the DV 
+#select GSRE
+GSRE <- select(mydata, c(78:89))
+GSRE <- select(GSRE, -owelfarespend, -pensions, -subpentrans)
+
+
+GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
+GSRE$cowcode <- mydata$cowcode
+GSRE$year <- mydata$year
+
+#create percentage variables 
+dv1 <- 
+  GSRE %>%
+  mutate(expend_security_p = expend_security / sum,
+         expenddefence_p = expenddefence / sum,
+         exp_public_order_p = exp_public_order / sum,
+         wagessalaries_p = wagessalaries / sum,
+         total_welfare_p =  total_welfare / sum,
+         education_p =  education / sum,
+         health_p = health / sum,
+         social_protection_p = social_protection / sum,
+         housing_p = housing / sum
+        )
+#create lagged variable
+dv1 <- 
+    dv1 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_p = lag(expend_security_p, 1), 
+           lag.expenddefence_p = lag(expenddefence_p, 1),
+           lag.exp_public_order_p = lag(exp_public_order_p, 1), 
+           lag.wagessalaries_p = lag(wagessalaries_p, 1), 
+           lag.total_welfare_p = lag(total_welfare_p, 1), 
+           lag.education_p = lag(education_p, 1), 
+           lag.health_p = lag(health_p, 1),
+           lag.social_protection_p = lag(social_protection_p, 1),
+           lag.housing_p = lag(housing_p, 1))
+
+
+#code missings as 0
+dv1[is.na(dv1)] <-0
+
+#calculate stability index
+#subpentran, pension and ownwelfare are excluded
+attach(dv1)
+yb <- (expend_security_p - lag.expend_security_p)^2 +
+      (expenddefence_p - lag.expenddefence_p)^2 +
+      (exp_public_order_p - lag.exp_public_order_p)^2 +
+      (wagessalaries_p - lag.wagessalaries_p)^2 +
+      (total_welfare_p - lag.total_welfare_p)^2 +
+      (education_p - lag.education_p)^2 +
+      (health_p - lag.health_p)^2 +
+      (social_protection_p - lag.social_protection_p)^2 +
+      (housing_p - lag.housing_p)^2 
+
+#code irregular yb to 1.
+yb[yb >1] <- 1 
+mydata$stability_0 <- sqrt(yb)
+
+
+```
+
+
+## From first imputation 
 

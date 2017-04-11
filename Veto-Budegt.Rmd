@@ -156,7 +156,9 @@ stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FAL
 
 
 **Dependent Variables**
-In the following table I report the components of dependent variables. It is measured as the raw expenditure as of 2005 constant USD. 
+In the following table I report the components of dependent variables. It is measured as the raw expenditure as of 2005 constant USD. Three indicators are dropped out in the further analysis due to techniqual concerns. 
+
+
 
 ```{r DV table, tidy=TRUE, echo=FALSE, results='asis'}
 expenditure <- select(mydata, c(78:89))
@@ -210,7 +212,6 @@ dv1 <-
          expenddefence_p = expenddefence / sum,
          exp_public_order_p = exp_public_order / sum,
          wagessalaries_p = wagessalaries / sum,
-         subpentrans_p = subpentrans / sum,
          pensions_p = pensions / sum,
          total_welfare_p =  total_welfare / sum,
          education_p =  education / sum,
@@ -232,7 +233,6 @@ dv1 <-
            lag.expenddefence_p = lag(expenddefence_p, 1),
            lag.exp_public_order_p = lag(exp_public_order_p, 1), 
            lag.wagessalaries_p = lag(wagessalaries_p, 1), 
-           lag.subpentrans_p = lag(subpentrans_p, 1), 
            lag.pensions_p = lag(pensions_p, 1), 
            lag.total_welfare_p = lag(total_welfare_p, 1), 
            lag.education_p = lag(education_p, 1), 
@@ -251,7 +251,6 @@ yb <- (expend_security_p - lag.expend_security_p)^2 +
       (expenddefence_p - lag.expenddefence_p)^2 +
       (exp_public_order_p - lag.exp_public_order_p)^2 +
       (wagessalaries_p - lag.wagessalaries_p)^2 +
-      (subpentrans_p - lag.subpentrans_p)^2 +
       (pensions_p - lag.pensions_p)^2 +
       (total_welfare_p - lag.total_welfare_p)^2 +
       (education_p - lag.education_p)^2 +
@@ -269,7 +268,7 @@ yb[yb >1] <- 1
 The density plot of stability index without imputation is shown in the following figure
 
 ```{r}
-mydata$EXP <- sqrt(yb)
+mydata$stability_0 <- sqrt(yb)
 d <- ggplot(data = mydata) +
      geom_density(aes(x=EXP)) +
      ggtitle("Density Plot of Policy Stability Index") +
