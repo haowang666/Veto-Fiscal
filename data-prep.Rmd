@@ -346,6 +346,19 @@ rawp <- write.csv(x = dvp, file = "rawp.csv")
 
 # Multiple Imputation : based on raw percentage
 ```{r rawp, include=FALSE, warning=FALSE}
+library(dplyr)
+library(Amelia)
+rawp <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/rawp.csv")
+rawp <- select(rawp, -owelfarespend_EXP, -pensions_EXP)
+#diagnostics
+hist(rawp$expend_security_EXP)
+hist(rawp$total_welfare_EXP)
+hist(rawp$wagessalaries_EXP)
+
+#replace extreme large numbers 
+rawp[, expend_security_EXP]
+
+
 
 ```
 
