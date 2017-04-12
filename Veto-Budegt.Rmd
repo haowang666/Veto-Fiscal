@@ -119,38 +119,38 @@ pdim(mydata, index=c("cowcode", "year"))
 pmodel0 <- plm(stability_0 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 pmodel1 <- plm(stability_1 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 
 pmodel2 <- plm(stability_2 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 
 pmodel3 <- plm(stability_3 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 
 pmodel4 <- plm(stability_4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 pmodel5 <- plm(stability_5 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
 
 
-stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5)
+stargazer(pmodel0, pmodel1, pmodel2, pmodel3, header = FALSE)
 
 ```
 
@@ -159,9 +159,105 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5)
 ## OLS with L-Kurtosis
 
 ```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
-#reshape data
-
+library(Lmoments)
+library(reshape2)
+#-------------------------------------
+#mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#get rid of X (row name)
+#mydata <- select(mydata, -X, -X.1)
+#-------------------------------------
 #collapse original data to mean-substraction
+d <- mydata %>%
+  group_by(cowcode, country) %>%
+  summarise_each(funs(mean(., na.rm=TRUE)))
+#get rid of the missing
+d <- d[!(is.na(d$stability_0)),]
+
+
+#get lk score
+lk0 <- select(mydata, country, stability_0)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_0, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk0 <- t(b)[, 4]
+
+
+#get lk score
+lk0 <- select(mydata, country, stability_1)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_1, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk1 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_2)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_2, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk2 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_3)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_3, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk3 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_4)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_4, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk4 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_5)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_5, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk5 <- t(b)[, 4]
+
+#add to data frame
+d$y_lk0 = y_lk0
+d$y_lk1 = y_lk1
+d$y_lk2 = y_lk2
+d$y_lk3 = y_lk3
+d$y_lk4 = y_lk4
+d$y_lk5 = y_lk5
+
+#----------------------------------------------------------------
+lm0 <- lm(y_lk0 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+lm1 <- lm(y_lk1 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+lm2 <- lm(y_lk2 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+lm3 <- lm(y_lk3 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+lm4 <- lm(y_lk4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+lm5 <- lm(y_lk5 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=d)
+stargazer(lm0, lm1, lm2, lm3, header = FALSE)
+
 ```
 
 
