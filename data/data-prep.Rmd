@@ -293,7 +293,7 @@ write.csv(x = trim, file = "vdem-merge.csv")
 # Prepare for multiple imputation
 ```{r}
 library(dplyr)
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge.csv")
 #some cleaning
 #code polity -88 -66 -77 to na
 mydata <-
@@ -310,6 +310,9 @@ write.csv(x = mydata, file = "vdem-merge-clean.csv")
 
 
 ```
+
+
+
 
 
 
@@ -353,10 +356,6 @@ write.csv(x = dvp, file = "rawp.csv")
 
 ```
 
-
-
-
-
 # Multiple Imputation : based on raw percentage
 ```{r rawp, include=FALSE, warning=FALSE}
 rawp <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/rawp.csv")
@@ -368,6 +367,10 @@ newdata3 <- filter(rawp, total_welfare_EXP >1)
 
 
 ```
+
+
+
+
 
 
 
@@ -395,6 +398,15 @@ write.amelia(a.out, format  = "csv", file.stem = "impp")
 
 # Adding DV into mydata frame
 
+
+
+
+
+
+
+
+<!--
+#Need to abandon the following codes!!!!
 ## Original results 
 
 ```{r, message=FALSE, include=FALSE}
@@ -667,5 +679,6 @@ mydata[, 90:95][mydata[, 90:95] == 0] <- NA
 write.csv(x=mydata, file = "mydata2.csv")
 ```
 
+-->
 
 

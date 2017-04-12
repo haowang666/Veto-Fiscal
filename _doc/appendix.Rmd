@@ -1,0 +1,142 @@
+---
+output: 
+  pdf_document:
+geometry: margin=1in
+fontfamily: mathpazo
+fontsize: 12pt
+spacing: single
+bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
+biblio-style: apsr
+---
+
+
+
+
+
+
+```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
+library(MASS)
+library(ggplot2)
+library(plm)
+library(Zelig)
+library(dplyr)
+library(tidyr)
+library(stargazer)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
+#code polity -88 -66 -77 to na
+mydata <-
+  mydata %>%
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+```
+
+
+
+
+
+
+
+# Appendix
+
+
+
+## Descriptive Statistics
+
+
+**summary statistics of deliberative democracy**
+
+
+
+
+```{r, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
+# results ="asis" add to table
+
+delib <- select(mydata, v2x_delibdem: v2dlengage)
+stargazer(delib, title= "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
+          covariate.labels=c("Deliberative Democracy", "Justification on Public Policy", 
+                             "Justification on Common Goods", "Respect for Counterarguments", 
+                             "Range of Consultation", "Range of Engagement"))
+```
+
+**summary statistics on institutional constriants**
+
+```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+const <- select(mydata, v2x_jucon, v2xlg_legcon, v2xps_party, e_democ, e_autoc, e_h_polcon5, e_h_polcon3) 
+stargazer(const, title = "Institutional Constraints", header = FALSE,
+          covariate.labels = c("Judical Constraints", "Legislative Constraints",
+                               "Institutionalization of Party", "Institutionalizaed Democracy",
+                               "Institutionalizaed Autocracy", "Political Constraints Index-3", 
+                               "Political Constraints Index-5"))
+```
+
+
+**summary statistics on federalism**
+
+```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+fed <- select(mydata, v2x_feduni, e_dpi_author)
+stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FALSE,
+          covariate.labels = c("Division of Power", "State government Authority"))
+
+```
+
+
+** Dependent Variables **
+In the following table I report the components of dependent variables. 
+
+
+
+
+
+# Missing Cases
+GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
+
+I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indice. 
+
+
+
+
+
+
+
+
+
+
+<!--The folowing are some examples 
+
+```{r coefplot1, eval=FALSE, echo=FALSE, cache=FALSE, tidy=TRUE}
+suppressMessages(library(Zelig))
+suppressMessages(library(arm))
+suppressMessages(library(coefplot))
+
+data(voteincome)
+
+voteincome$z.age <- arm::rescale(voteincome$age)
+voteincome$z.education <- arm::rescale(voteincome$education)
+voteincome$z.income <- arm::rescale(voteincome$income)
+
+M1 <- glm(vote ~ z.age + female + z.education + z.income,
+            data=voteincome, family=binomial)
+
+coefplot(M1)
+```
+
+
+<!-- This is for footnote: Adding `echo="FALSE"` inside the brackets to start the R chunk will omit the presentation of the R commands. It will just present the table. This provides substantial opportunity for authors in doing their analyses. Now, the analysis and presentation in the form of a polished manuscript can be effectively simultaneous.[^4]
+
+[^4]: I'm not sure if I'm ready to commit to this myself since my workflow is still largely derived from [Rob J. Hyndman's example](http://robjhyndman.com/hyndsight/workflow-in-r/). However, *knitr* has endless potential, especially when analyses can stored in cache, saved as chunks, or loaded in the preamble of a document to reference later in the manuscript.
+
+# Add reference
+Inline refer: @Nichter2008, in bracket [@Nichter2008], suppress[Gonzales et al. -@Gonzalez-Ocantos2014] -->
+
+
+
+<!--
+# References
+\setlength{\parindent}{-0.2in}
+\setlength{\leftskip}{0.2in}
+\setlength{\parskip}{8pt}
+\vspace*{-0.2in}
+\noindent
+-->
