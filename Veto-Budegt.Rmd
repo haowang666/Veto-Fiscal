@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: ~/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
+    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Veto Player and Fiscal Policy Stability"
 thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
 author:
@@ -17,7 +17,7 @@ geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
+bibliography: D:/Dropbox/Bibliography-database/Haowang.bib
 biblio-style: apsr
 ---
 
@@ -28,11 +28,12 @@ biblio-style: apsr
 # Intro
 Veto player theorys [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a collary is that institutional checks leads to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equibilibrium. 
 
-@TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. 
+@TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. Their results show that countries with more veto players have more stable budget policies. 
+
+On the other hand, veto player theory also implies that more veto players make politicians harder to adjust current policies. This is particularly salient in coutries with multiple veto players (e.g. the United States). During some time periods with exogenous shocks, the policy stability can be harmful and politicians may react to the long-time stability with rapid changes of policies, which forms a policy punctuation. 
 
 
-
-Punctuated Equilibrium Theory (PET) argues that government budget shifts over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
+Punctuated Equilibrium Theory (PET) [@JohBevan2012; @JonesBaumgartner2012] argues that government budget shifts over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
 
 
 
@@ -48,7 +49,6 @@ Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long ter
 
 [@KeeferStasavage2003]
 
-[@JohBevan2012]
 
 
 ## Policy Punctuations
@@ -80,26 +80,91 @@ library(Zelig)
 library(dplyr)
 library(tidyr)
 library(stargazer)
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
+library(pcse)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
 #get rid of X (row name)
-mydata <- select(mydata, -X)
+mydata <- select(mydata, -X, -X.1)
 ```
 
 
 
 
 
-```{r, echo=FALSE, include=FALSE}
-names(mydata)
-#summary(mydata) #tons of missing data
-```
 
 
-# Measuring Dependent Variables 
+## Measuring Dependent Variables 
 
 I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
 
 $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
+
+
+
+
+
+## Independent Variables
+
+
+# Results
+
+## Fixed Effect Panel Data
+
+```{r panel reg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
+#set idVars
+pdim(mydata, index=c("cowcode", "year"))
+
+
+## Fixed Effect
+
+pmodel0 <- plm(stability_0 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+pmodel1 <- plm(stability_1 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+
+pmodel2 <- plm(stability_2 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+
+pmodel3 <- plm(stability_3 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+
+pmodel4 <- plm(stability_4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+pmodel5 <- plm(stability_5 ~ v2x_delibdem + e_h_polcon5 + e_autoc
+               + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
+               +  e_peginiwi+  e_Civil_War + v2x_corr, 
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoway")
+
+
+stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5)
+
+```
+
+
+
+## OLS with L-Kurtosis
+
+```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
+#reshape data
+
+#collapse original data to mean-substraction
+```
+
+
 
 
 
@@ -112,8 +177,9 @@ $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$
 
 ## Descriptive Statistics
 
+Here I provide summary statistics of the variables I used in this study
 
-**summary statistics of deliberative democracy**
+### summary statistics of deliberative democracy
 
 
 
@@ -128,7 +194,7 @@ stargazer(delib, title= "Deliberative Democracy Statistics", style = "apsr", hea
                              "Range of Consultation", "Range of Engagement"))
 ```
 
-**summary statistics on institutional constriants**
+### summary statistics on institutional constriants
 
 ```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
 const <- select(mydata, v2x_jucon, v2xlg_legcon, v2xps_party, e_democ, e_autoc, e_h_polcon5, e_h_polcon3) 
@@ -140,68 +206,88 @@ stargazer(const, title = "Institutional Constraints", header = FALSE,
 ```
 
 
-**summary statistics on federalism**
+### summary statistics on federalism
 
 ```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
-fed <- select(mydata, v2x_feduni, e_dpi_author)
+fed <- select(mydata, v2x_feduni, v2elrgpwr, v2ellocpwr)
 stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FALSE,
-          covariate.labels = c("Division of Power", "State government Authority"))
+          covariate.labels = c("Division of Power", "Regional Government Power", "Local Government Power"))
 
 ```
 
 
-**Dependent Variables**
-In the following table I report the components of dependent variables. It is measured as the raw expenditure as of 2005 constant USD. Three indicators are dropped out in the further analysis due to techniqual concerns. 
+### summary statistics on other control variables
+
+```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+fed <- select(mydata, v2mecenefm, e_peaveduc,e_migdppcln, e_migdpgro, e_peginiwi, 
+              e_Civil_War, e_Total_Oil_Income_PC, v2x_corr)
+stargazer(fed, title = "Other Control Variables", header = FALSE,
+          covariate.labels = c("Media Censorship", "Education", "GDP pp(logged)", 
+                               "GDP growth", "Income Inequality", 
+                               "Civial War", "Oil Production Per Capita",
+                               "Corruption Index"))
+
+```
+
+
+
+### dependent variable components
+
+In the following table I report the components of dependent variables. It is measured as the percentage expenditure of total expenditure. Two indicators are dropped out in the further analysis due to techniqual concerns. The variable `subpentrans` contains too few points, and the variable `pensions` must be dropped due to the convengence issue in multiple imputation. 
 
 
 
 ```{r DV table, tidy=TRUE, echo=FALSE, results='asis'}
-expenditure <- select(mydata, c(78:89))
+expenditure <- select(mydata,c(56:66))
 stargazer(expenditure, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
 ```
 
 
+### dependent variable statistics
 
 
+```{r DV stats, tidy=TRUE, echo=FALSE, results='asis'}
+stability <- select(mydata, stability_0, stability_1, stability_2,
+                    stability_3, stability_4, stability_5) 
+stargazer(stability, title = "Dependent Variable Statistics", header = FALSE, digits = 3,
+          covariate.labels = c("Original", "Imputation 1",  "Imputation 2",
+                                "Imputation 3",  "Imputation 4",  "Imputation 5"))
+```
 
-The distribution of dependent variable without multiple imputation looks like this 
+## Missing Cases
 
-
-
-
-
-
-
-# Missing Cases
 GSRE contains lots of missing cases. To avoid losing statistical powers and potential bias due to listwise deletion, this article employs multiple impuation of the GSRE part data. Results reported in the paper are from the first imputation. Appendix includes the rest 4 imputations. 
 
-The total missing map is showing in the correspoding figure. 
+The total missing map is showing in the correspoding figure. In this table, the components represent the pertentage expenditure of each sector in terms of total expenditure. 
 
 ```{r map, message=FALSE, warning=FALSE, echo=FALSE}
 library(Amelia)
-GSRE <- select(mydata, c(78:89))
+GSRE <- select(mydata, c(56:66))
 missmap(GSRE)
 ```
 
 
 
-
-I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indicator. 
+I also calculated resutls without multiple imputation: points that are missing in the GSRE dataset is set to be 0. Theoretically in this situation missing cases will contribute zero effects to the policy stability indicator. I calculate dependent variable while filling missing cases as 0. After the DV is imputed, I recoded observations with 0 values as missing (This is because a completely missing case will yield 0 as the outcome). 
 
 
 
 
 The density plot of stability index without imputation is shown in the following figure
 
-```{r}
-mydata$stability_0 <- sqrt(yb)
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 d <- ggplot(data = mydata) +
-     geom_density(aes(x=EXP)) +
+     geom_density(aes(x=mydata$stability_0)) +
      ggtitle("Density Plot of Policy Stability Index") +
      xlab("Policy Stability Index") 
 d
 ```
 
+The relationship between the raw DV and the imputed DV is shown in the following graph. Due to the page limits only the relationships between the original dependent variable and the first two imputed dependent variables are displayed here. 
+
+```{r, echo=FALSE, warning=FALSE}
+pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$stability_3)
+```
 
 
 
