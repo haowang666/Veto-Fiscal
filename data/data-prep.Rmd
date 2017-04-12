@@ -292,6 +292,7 @@ write.csv(x = trim, file = "vdem-merge.csv")
 
 # Prepare for multiple imputation
 ```{r}
+library(dplyr)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
 #some cleaning
 #code polity -88 -66 -77 to na
@@ -301,8 +302,18 @@ mydata <-
   mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
   mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
 mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+#get rid of two annoying observations 
+newdata <- filter(mydata, wagessalaries_EXP >1)
+mydata <- setdiff(mydata, newdata)
+
+write.csv(x = mydata, file = "vdem-merge-clean.csv")
 
 
+```
+
+
+
+```{r}
 #generating dependent variables 
 #The first step is to calculate the DV 
 #select GSRE
@@ -338,14 +349,23 @@ write.csv(x = raw2, file = "raw2.csv")
 
 #get exp of total expenditure percentage data
 dvp <-  select(mydata, cowcode, year, c(56:66))
-rawp <- write.csv(x = dvp, file = "rawp.csv")
+write.csv(x = dvp, file = "rawp.csv")
 
 ```
 
 
 
+
+
 # Multiple Imputation : based on raw percentage
 ```{r rawp, include=FALSE, warning=FALSE}
+rawp <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/rawp.csv")
+
+newdata1 <- filter(rawp, expend_security_EXP >1)
+newdata2 <- filter(rawp, wagessalaries_EXP >1)
+newdata3 <- filter(rawp, total_welfare_EXP >1)
+
+
 
 ```
 
@@ -453,6 +473,10 @@ mydata$stability_0 <- sqrt(yb)
 
 
 ## Original DV: based on raw percentage. 
+
+
+
+
 
 ## From first imputation 
 ```{r, include=FALSE, message=FALSE}
