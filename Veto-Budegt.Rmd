@@ -212,77 +212,8 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, header = FALSE,
 ## OLS with L-Kurtosis
 
 ```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
-library(Lmoments)
-library(reshape2)
-#-------------------------------------
-#mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#get rid of X (row name)
-#mydata <- select(mydata, -X, -X.1)
-#-------------------------------------
-#collapse original data to mean-substraction
-d <- mydata %>%
-  group_by(cowcode, country) %>%
-  summarise_each(funs(mean(., na.rm=TRUE)))
-#get rid of the missing
-d <- d[!(is.na(d$stability_0)),]
-
-
-#get lk score
-lk0 <- select(mydata, country, stability_0)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_0, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk0 <- t(b)[, 4]
-
-
-#get lk score
-lk0 <- select(mydata, country, stability_1)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_1, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk1 <- t(b)[, 4]
-
-#get lk score
-lk0 <- select(mydata, country, stability_2)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_2, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk2 <- t(b)[, 4]
-
-#get lk score
-lk0 <- select(mydata, country, stability_3)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_3, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk3 <- t(b)[, 4]
-
-#get lk score
-lk0 <- select(mydata, country, stability_4)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_4, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk4 <- t(b)[, 4]
-
-#get lk score
-lk0 <- select(mydata, country, stability_5)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_5, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
-#transpose, this is the LK score
-y_lk5 <- t(b)[, 4]
-
-#add to data frame
-d$y_lk0 = y_lk0
-d$y_lk1 = y_lk1
-d$y_lk2 = y_lk2
-d$y_lk3 = y_lk3
-d$y_lk4 = y_lk4
-d$y_lk5 = y_lk5
+#import data from github
+d <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/LKscore.csv")
 
 #----------------------------------------------------------------
 lm0 <- lm(y_lk0 ~ v2x_delibdem + e_h_polcon5 + e_autoc

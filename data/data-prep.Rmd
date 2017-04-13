@@ -315,79 +315,6 @@ write.csv(x = mydata, file = "vdem-merge-clean.csv")
 
 
 
-
-```{r}
-#generating dependent variables 
-#The first step is to calculate the DV 
-#select GSRE
-GSRE <- select(mydata, c(78:89))
-GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
-GSRE$cowcode <- mydata$cowcode
-GSRE$year <- mydata$year
-
-#create percentage variables 
-dv1 <- 
-  GSRE %>%
-  mutate(expend_security_p = expend_security / sum,
-         expenddefence_p = expenddefence / sum,
-         exp_public_order_p = exp_public_order / sum,
-         wagessalaries_p = wagessalaries / sum,
-         subpentrans_p = subpentrans / sum,
-         pensions_p = pensions / sum,
-         total_welfare_p =  total_welfare / sum,
-         education_p =  education / sum,
-         health_p = health / sum,
-         social_protection_p = social_protection / sum,
-         housing_p = housing / sum,
-         owelfarespend_p = owelfarespend / sum
-        )
-
-#save data for multiple imputation: percentage one
-raw <- select(dv1, cowcode, year, c(16:27))
-write.csv(x = raw, file = "raw.csv")
-
-#get original one
-raw2 <- GSRE 
-write.csv(x = raw2, file = "raw2.csv")
-
-#get exp of total expenditure percentage data
-dvp <-  select(mydata, cowcode, year, c(56:66))
-write.csv(x = dvp, file = "rawp.csv")
-
-```
-
-
-
-# Multiple Imputation : based on raw percentage
-```{r rawp, include=FALSE, warning=FALSE}
-library(dplyr)
-library(Amelia)
-<<<<<<< HEAD:data-prep.Rmd
-rawp <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/rawp.csv")
-rawp <- select(rawp, -owelfarespend_EXP, -pensions_EXP)
-#diagnostics
-hist(rawp$expend_security_EXP)
-hist(rawp$total_welfare_EXP)
-hist(rawp$wagessalaries_EXP)
-
-#replace extreme large numbers 
-rawp[, expend_security_EXP]
-
-
-=======
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
-rawp <- select(mydata, cowcode, year, c(57:67))
-names(rawp)
-summary(rawp)
-#get rid of pension
-rawp <-select(rawp, -pensions_EXP)
-
-set.seed(3)
-a.out <- amelia(rawp, ts = "year", cs = "cowcode", m=5)
-write.amelia(a.out, format  = "csv", file.stem = "imp")
-```
-
-
 # Adding DV into mydata frame
 
 without multiple imputation
@@ -440,12 +367,26 @@ mydata$stability_0[mydata$stability_0 ==0] <-NA
 ```
 
 
+# Multiple Imputation : based on raw percentage
+```{r rawp, include=FALSE, warning=FALSE}
+library(dplyr)
+library(Amelia)
 
 
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
+rawp <- select(mydata, cowcode, year, c(57:67))
+names(rawp)
+summary(rawp)
+#get rid of pension
+rawp <- select(rawp, -pensions_EXP)
+
+set.seed(3)
+a.out <- amelia(rawp, ts = "year", cs = "cowcode", m=5)
+write.amelia(a.out, format  = "csv", file.stem = "imp")
+```
 
 
-
-# Multiple imputation: based on actual expenditure percentage
+# Multiple imputation: based on raw expenditure percentage
 
 ```{r}
 library(dplyr)
@@ -653,8 +594,8 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_5 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_5[mydata$stability_5 ==0] <-NA
->>>>>>> origin/master:data/data-prep.Rmd
+mydata$stability_5[mydata$stability_5 == 0] <- NA
+
 
 #--------------------------------------------------------------------------
 #export to doable file
@@ -751,6 +692,51 @@ write.csv(x = d, file = "LKscore.csv")
 
 <!--
 #Need to abandon the following codes!!!!
+
+
+
+```{r}
+#generating dependent variables 
+#The first step is to calculate the DV 
+#select GSRE
+GSRE <- select(mydata, c(78:89))
+GSRE$sum <- apply(GSRE, 1, sum, na.rm= TRUE)
+GSRE$cowcode <- mydata$cowcode
+GSRE$year <- mydata$year
+
+#create percentage variables 
+dv1 <- 
+  GSRE %>%
+  mutate(expend_security_p = expend_security / sum,
+         expenddefence_p = expenddefence / sum,
+         exp_public_order_p = exp_public_order / sum,
+         wagessalaries_p = wagessalaries / sum,
+         subpentrans_p = subpentrans / sum,
+         pensions_p = pensions / sum,
+         total_welfare_p =  total_welfare / sum,
+         education_p =  education / sum,
+         health_p = health / sum,
+         social_protection_p = social_protection / sum,
+         housing_p = housing / sum,
+         owelfarespend_p = owelfarespend / sum
+        )
+
+#save data for multiple imputation: percentage one
+raw <- select(dv1, cowcode, year, c(16:27))
+write.csv(x = raw, file = "raw.csv")
+
+#get original one
+raw2 <- GSRE 
+write.csv(x = raw2, file = "raw2.csv")
+
+#get exp of total expenditure percentage data
+dvp <-  select(mydata, cowcode, year, c(56:66))
+write.csv(x = dvp, file = "rawp.csv")
+
+```
+
+
+
 
 # Multiple Imputation DV : based on percentage
 ```{r, include=FALSE}
