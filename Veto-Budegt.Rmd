@@ -69,7 +69,12 @@ Data in this project comes from various sources. The dependent variable comes fr
 Data on deliberative democracies and other regime-related variables come from the Variaties of Democracy (Vdem) project [@Vdem2016]. Unlike the widely used democracy index like Polity [@Polity2015], Vdem provides multidimensional meassurements of regimes, including both democracies and autocracies. 
 
 
-Data on institutional constraints come from the political constraints index [@Henisz2000]. Henisz develops a measure of institutional commitment that is objective, extensive, and based in positive political theory. He uses a quantitative model to capture the competitiveness portion of the definition of democracy (competitiveness and participation) with a proxy of number of independent veto points over policy outcomes and distribution of preferences of those actors. The measure is objective, with clear rules for measurement and aggregation, however it incorporates some of the Polity data coding for “independent judiciary” that gives it a slight subjective bias. POLCON is based on strong assumptions about each actor’s veto power. The measures are strongly correlated with the ICRG indexes and the Polity “Executive Constraint” index. “The new release of the political constraint dataset expands the scope of coverage to as many as 234 countries over the period 1800–2001. It also corrects a small number of computational, coding and factual errors in the previous release. The new database also includes country codes from the Cross-national time series data archive, Polity and the World Bank to facilitate matching this dataset to other international datasets that you may have. Finally, it contains the component variables used to construct the political constraint indexes.”
+Data on institutional constraints come from the political constraints index [@Henisz2000]. Political 
+
+
+
+
+Henisz develops a measure of institutional commitment that is objective, extensive, and based in positive political theory. He uses a quantitative model to capture the competitiveness portion of the definition of democracy (competitiveness and participation) with a proxy of number of independent veto points over policy outcomes and distribution of preferences of those actors. The measure is objective, with clear rules for measurement and aggregation, however it incorporates some of the Polity data coding for “independent judiciary” that gives it a slight subjective bias. POLCON is based on strong assumptions about each actor’s veto power. The measures are strongly correlated with the ICRG indexes and the Polity “Executive Constraint” index. “The new release of the political constraint dataset expands the scope of coverage to as many as 234 countries over the period 1800–2001. It also corrects a small number of computational, coding and factual errors in the previous release. The new database also includes country codes from the Cross-national time series data archive, Polity and the World Bank to facilitate matching this dataset to other international datasets that you may have. Finally, it contains the component variables used to construct the political constraint indexes.”
 
 
 
@@ -146,7 +151,7 @@ ggplot(data = test) +
 
 ## Independent Variables
 
-Our independent variables come from several different parts. The first part is from institutional constraints. 
+### Veto Player
  
 
 

@@ -608,7 +608,10 @@ write.csv(x = mydata, file = "mydata.csv")
 
 
 
-# Get LK score 
+
+
+#LK score is incorrect, needs to recalculate
+#issue fixed
 
 ```{r}
 library(Lmoments)
@@ -617,7 +620,7 @@ library(dplyr)
 #-------------------------------------
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
 #get rid of X (row name)
-mydata <- select(mydata, -X, -X.1)
+mydata <- select(mydata, -X.1)
 #-------------------------------------
 #collapse original data to mean-substraction
 d <- mydata %>%
@@ -626,72 +629,209 @@ d <- mydata %>%
 #get rid of the missing
 d <- d[!(is.na(d$stability_0)),]
 
+imp0 <- select(mydata, X, cowcode, year, c(57:67)) 
+imp0 <- select(imp0, -pensions_EXP)
 
-#get lk score
-lk0 <- select(mydata, country, stability_0)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_0, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+
+#--------------------------------------------------------------------------
+dv2 <- imp0
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk0 <- t(b)[, 4]
+d$y_lk0 <- y_lk0
 
+#------------------------------------------------------------------------------
 
-#get lk score
-lk0 <- select(mydata, country, stability_1)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_1, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+imp1 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp1.csv")
+
+dv2 <- imp1
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk1 <- t(b)[, 4]
+d$y_lk1 <- y_lk1
 
-#get lk score
-lk0 <- select(mydata, country, stability_2)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_2, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+#------------------------------------------------------------------------------------
+
+
+imp2 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp2.csv")
+
+dv2 <- imp2
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk2 <- t(b)[, 4]
+d$y_lk2 <- y_lk2
 
-#get lk score
-lk0 <- select(mydata, country, stability_3)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_3, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+#------------------------------------------------------------------------------------
+
+
+imp3 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp3.csv")
+
+dv2 <- imp3
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk3 <- t(b)[, 4]
+d$y_lk3 <- y_lk3
 
-#get lk score
-lk0 <- select(mydata, country, stability_4)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_4, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+#------------------------------------------------------------------------------------
+
+
+imp4 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp4.csv")
+
+dv2 <- imp4
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk4 <- t(b)[, 4]
+d$y_lk4 <- y_lk4
 
-#get lk score
-lk0 <- select(mydata, country, stability_5)
-lk0 <- na.omit(lk0)
-a <- tapply(lk0$stability_5, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
-b <- as.data.frame(matrix(unlist(a), nrow=4))
+#------------------------------------------------------------------------------------
+
+
+imp5 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp5.csv")
+
+dv2 <- imp5
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(14:23))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk5 <- t(b)[, 4]
+d$y_lk5 <- y_lk5
 
-#add to data frame
-d$y_lk0 = y_lk0
-d$y_lk1 = y_lk1
-d$y_lk2 = y_lk2
-d$y_lk3 = y_lk3
-d$y_lk4 = y_lk4
-d$y_lk5 = y_lk5
+#------------------------------------------------------------------------------------
 
-write.csv(x = d, file = "LKscore.csv")
+write.csv(x=d, file = "LKscore.csv")
 ```
+
+
+
+
+
 
 
 
 
 <!--
 #Need to abandon the following codes!!!!
+
+
+
 
 
 
