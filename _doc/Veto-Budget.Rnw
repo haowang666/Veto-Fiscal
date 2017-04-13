@@ -185,12 +185,12 @@ S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2}
 pmodel0 <- plm(stability_0 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+               data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 pmodel1 <- plm(stability_1 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model = "within")
 
 
 pmodel2 <- plm(stability_2 ~ v2x_delibdem + e_h_polcon5 + e_autoc
@@ -201,8 +201,8 @@ pmodel2 <- plm(stability_2 ~ v2x_delibdem + e_h_polcon5 + e_autoc
 
 pmodel3 <- plm(stability_3 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
-               +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+               +  e_peginiwi +  e_Civil_War + v2x_corr, 
+               data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
 pmodel4 <- plm(stability_4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
@@ -455,7 +455,7 @@ The density plot of stability index without imputation is shown in the following
 \begin{figure}
 <<density, echo=FALSE, warning=FALSE, message=FALSE>>=
 d <- ggplot(data = mydata) +
-     geom_density(aes(x=mydata$stability_0)) +
+     geom_density(aes(x = mydata$stability_0)) +
      xlab("Policy Stability Index") 
 d
 @

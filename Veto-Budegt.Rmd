@@ -17,7 +17,7 @@ geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
+bibliography: ~/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 ---
 
