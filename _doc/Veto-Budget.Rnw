@@ -474,8 +474,7 @@ The relationship between the raw DV and the imputed DV is shown in the following
 
 \newpage
 \singlespacing 
-\bibliography{Haowang}
 \bibliographystyle{apsr}
-\bibliography{~/Dropbox/Bibliography-database/Haowang}
+\bibliography{D:/Dropbox/Bib/Haowang}
 
 \end{document}
