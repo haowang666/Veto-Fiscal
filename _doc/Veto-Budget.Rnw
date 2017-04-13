@@ -6,22 +6,19 @@
 \usepackage{setspace}
 \usepackage{amsfonts}
 \usepackage{caption}
-\usepackage{threeparttable}
 \usepackage[abbr]{harvard}
 \usepackage{multirow}
 \usepackage{longtable}
 %\usepackage{times}
 \usepackage{lscape}
 \usepackage{float}
-\usepackage{subfigure}
 \usepackage{mathpazo}
-\usepackage{titlesec}
+
 \usepackage{color}
 %\usepackage{natbib}
-\usepackage[colorlinks=true,linkcolor=blue, citecolor=blue]{hyperref}
+%\usepackage[colorlinks=true,linkcolor=blue, citecolor=blue]{hyperref}
 
-
-
+\usepackage{titlesec}
 \titleformat*{\section}{\large\bfseries}
 \titleformat*{\subsection}{\large\itshape}
 \titleformat*{\subsubsection}{\large\itshape}
@@ -29,23 +26,8 @@
 \titleformat*{\subparagraph}{\large\itshape}
 
 
-\newcommand{\ts}{\textsuperscript}
-
 \clubpenalty=9999 \widowpenalty=9999
 \parskip=5.75pt
-
-\def\hang{\hangindent\parindent}
-\renewcommand{\bibitem}{\par\hang\hskip-\parindent}
-
-\newcommand{\bi}{\begin{itemize}}
-\newcommand{\ei}{\end{itemize}}
-\def\sep{0.25em}
-\def\fns{\footnotesize}
-\def\ss{\scriptsize}
-\def\ses{\tiny}
-\def\onepc{$^{\ast\ast}$} \def\fivepc{$^{\ast}$}
-\def\tenpc{$^{\dag}$}
-
 
 
 %-------------------------------------------------------
@@ -474,7 +456,8 @@ The relationship between the raw DV and the imputed DV is shown in the following
 
 \newpage
 \singlespacing 
+\bibliography{Haowang}
 \bibliographystyle{apsr}
-\bibliography{D:/Dropbox/Bib/Haowang}
+
 
 \end{document}

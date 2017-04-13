@@ -1,11 +1,12 @@
 ---
 output: 
-  pdf_document:
+  bookdown::pdf_document2:
+    toc: false
     citation_package: natbib
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: ~/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
+    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Veto Player and Fiscal Policy Stability"
 thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
 author:
@@ -17,7 +18,7 @@ geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: ~/Dropbox/bib/Haowang.bib
+bibliography: D:/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 ---
 
@@ -25,7 +26,8 @@ biblio-style: apsr
 
 
 
-# Intro
+# Introduction
+
 Veto player theorys [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a collary is that institutional checks leads to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equibilibrium. 
 
 @TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. Their results show that countries with more veto players have more stable budget policies. 
@@ -33,7 +35,7 @@ Veto player theorys [@Tsebelis2002] defines 'veto players' as individuals or ins
 On the other hand, veto player theory also implies that more veto players make politicians harder to adjust current policies. This is particularly salient in coutries with multiple veto players (e.g. the United States). During some time periods with exogenous shocks, the policy stability can be harmful and politicians may react to the long-time stability with rapid changes of policies, which forms a policy punctuation. 
 
 
-Punctuated Equilibrium Theory (PET) [@JohBevan2012; @JonesBaumgartner2012] argues that government budget shifts over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following Baumgartner et al. (2015) and Lam and Chan (2015), we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
+Punctuated Equilibrium Theory (PET) [@JohnBevan2012; @JonesBaumgartner2012] argues that government budget shifts over and under attention to certain policy areas lead to long periods of stability and short periods of radical changes. Most empirical evidence, however, is drawn from developed democracies. Following [@Baumgartneretal2017] and [@LamChan2015], we explore the determinants of policy stability in different authoritarian regimes. We extend the existing theory by examining the variations among authoritarian countries. Our results suggest that institutionalization in the policy making process is an important factor that explains cross national variation.
 
 
 
@@ -43,6 +45,10 @@ Punctuated Equilibrium Theory (PET) [@JohBevan2012; @JonesBaumgartner2012] argue
 ## Institutional Constraints
 
 Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium [@DerekBaumgartner2016].
+
+
+
+
 
 
 [@Henisz2000]
@@ -76,7 +82,6 @@ Data on decentralization draws from the Political Institution Index [@Becketal20
 library(MASS)
 library(ggplot2)
 library(plm)
-library(Zelig)
 library(dplyr)
 library(tidyr)
 library(stargazer)
@@ -94,32 +99,70 @@ mydata <- select(mydata, -X, -X.1)
 
 ## Measuring Dependent Variables 
 
-I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
+To evaluate the budget-stability hypothesis and punctual equilibrium hypothesis, we create two different dependent variables. The volatility index measures the budget shifts of a certain country at a single time point. We use L-Kurtosis score to measure the degree of punctuations (peakness). 
 
-$$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
 
+**Volatility Index **
+I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_{jt}$ is the volatility index of the $jth$ country at a certain year $t$. Since government budget has various categories: $p_{jit}$ denotes the percentage of $i$th category out of total expenditure of the country $j$ at year $t$. $S_{jt}$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
+
+\begin{equation}
+S_{jt} = \sqrt{\sum_{i = 1}^i (p_{jit} -p_{jit-1})^2} 
+(\#eq:St)
+\end{equation}
+
+For the percentage  of each expenditure term $p_{it}$, $p_{it} \in [0, 1]$, $S_{jt}$ has the same boundary as $[0, 1]$. Larger score means more volatile budget policies. 
+
+
+** L-Kurtosis Score **
+
+To evaluate the distribution of budget shifts, we calculated the L-Kurtosis score of each country across the available time spans. L-Kurtosis (LK) is the 4th L-moment of the momemnt statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximites a Gaussian distribution (also see [@Baumgartneretal2017; @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line. 
+
+
+```{r example, echo=FALSE, fig.cap="LK Score Example", message=FALSE, warning=FALSE}
+
+library(Lmoments)
+set.seed(1)
+x <- rnorm(1000) #Normal data
+x2 <- 4^x #One transformation
+test <- as.data.frame(cbind(x, x2))
+
+ggplot(data = test) +
+  geom_density(aes(x = x), color = "blue") +
+  geom_density(aes(x = x2), color = "red") +
+  xlim(-5, 5) +
+  xlab("") +
+  annotate("text", x = -4, y = 0.55, label = "Red Line: LK = 0.84") +
+  annotate("text", x = -4, y = 0.5, label = "Blue Line: LK = 0.07") 
+
+
+
+```
 
 
 
 
 ## Independent Variables
 
+Our independent variables come from several different parts. 
+
+
+
+
+
 
 # Results
 
 
-## Pooled OLS with Panel Corrected Standard Errors
+## Pooled OLS with Lagges DV and Panel Corrected Standard Errors
 
 
 
 
 ## Fixed Effect Panel Data
 
-```{r panel reg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
-#set idVars
-pdim(mydata, index=c("cowcode", "year"))
+Table \ref{fe} reports reports the fixed effect regression results. 
 
-
+```{r panelreg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
 ## Fixed Effect
 
 pmodel0 <- plm(stability_0 ~ v2x_delibdem + e_h_polcon5 + e_autoc
@@ -153,10 +196,11 @@ pmodel4 <- plm(stability_4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
 pmodel5 <- plm(stability_5 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+               data = mydata, index = c("cowcode", "year"), na.action=na.omit, model="within")
 
 
-stargazer(pmodel0, pmodel1, pmodel2, pmodel3, header = FALSE)
+stargazer(pmodel0, pmodel1, pmodel2, pmodel3, header = FALSE, 
+          title = "Fixed Effect Regression Results", label = "fe")
 
 ```
 
@@ -264,8 +308,8 @@ lm4 <- lm(y_lk4 ~ v2x_delibdem + e_h_polcon5 + e_autoc
 lm5 <- lm(y_lk5 ~ v2x_delibdem + e_h_polcon5 + e_autoc
                + v2mecenefm + e_peaveduc + e_migdppcln +  e_migdpgro 
                +  e_peginiwi+  e_Civil_War + v2x_corr, 
-               data=d)
-stargazer(lm0, lm1, lm2, lm3, header = FALSE)
+               data = d)
+stargazer(lm0, lm1, lm2, lm3, header = FALSE, title = "OLS Regression with L-Kurtosis as Dependent Variable", label = "LK")
 
 ```
 
@@ -294,6 +338,7 @@ Here I provide summary statistics of the variables I used in this study
 
 delib <- select(mydata, v2x_delibdem: v2dlengage)
 stargazer(delib, title= "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
+          label = "Delib", 
           covariate.labels=c("Deliberative Democracy", "Justification on Public Policy", 
                              "Justification on Common Goods", "Respect for Counterarguments", 
                              "Range of Consultation", "Range of Engagement"))
@@ -301,9 +346,10 @@ stargazer(delib, title= "Deliberative Democracy Statistics", style = "apsr", hea
 
 ### summary statistics on institutional constriants
 
-```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+```{r const, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
 const <- select(mydata, v2x_jucon, v2xlg_legcon, v2xps_party, e_democ, e_autoc, e_h_polcon5, e_h_polcon3) 
 stargazer(const, title = "Institutional Constraints", header = FALSE,
+          label = "const",
           covariate.labels = c("Judical Constraints", "Legislative Constraints",
                                "Institutionalization of Party", "Institutionalizaed Democracy",
                                "Institutionalizaed Autocracy", "Political Constraints Index-3", 
@@ -311,11 +357,13 @@ stargazer(const, title = "Institutional Constraints", header = FALSE,
 ```
 
 
+
 ### summary statistics on federalism
 
-```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+```{r fed, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
 fed <- select(mydata, v2x_feduni, v2elrgpwr, v2ellocpwr)
 stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FALSE,
+          label = "fed", 
           covariate.labels = c("Division of Power", "Regional Government Power", "Local Government Power"))
 
 ```
@@ -323,17 +371,18 @@ stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FAL
 
 ### summary statistics on other control variables
 
-```{r, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
+```{r control, tidy=TRUE, message=FALSE, echo=FALSE, results="asis"}
 fed <- select(mydata, v2mecenefm, e_peaveduc,e_migdppcln, e_migdpgro, e_peginiwi, 
               e_Civil_War, e_Total_Oil_Income_PC, v2x_corr)
 stargazer(fed, title = "Other Control Variables", header = FALSE,
+          label = "tab:control",
           covariate.labels = c("Media Censorship", "Education", "GDP pp(logged)", 
                                "GDP growth", "Income Inequality", 
                                "Civial War", "Oil Production Per Capita",
                                "Corruption Index"))
 
 ```
-
+Table \@ref(tab:control)
 
 
 ### dependent variable components
@@ -342,7 +391,7 @@ In the following table I report the components of dependent variables. It is mea
 
 
 
-```{r DV table, tidy=TRUE, echo=FALSE, results='asis'}
+```{r DVtable, tidy=TRUE, echo=FALSE, results='asis'}
 expenditure <- select(mydata,c(56:66))
 stargazer(expenditure, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
 ```
@@ -351,7 +400,7 @@ stargazer(expenditure, title = "Components of Budget Stability Measurements", he
 ### dependent variable statistics
 
 
-```{r DV stats, tidy=TRUE, echo=FALSE, results='asis'}
+```{r DVstats, tidy=TRUE, echo=FALSE, results='asis'}
 stability <- select(mydata, stability_0, stability_1, stability_2,
                     stability_3, stability_4, stability_5) 
 stargazer(stability, title = "Dependent Variable Statistics", header = FALSE, digits = 3,
@@ -365,11 +414,12 @@ GSRE contains lots of missing cases. To avoid losing statistical powers and pote
 
 The total missing map is showing in the correspoding figure. In this table, the components represent the pertentage expenditure of each sector in terms of total expenditure. 
 
-```{r map, message=FALSE, warning=FALSE, echo=FALSE}
+```{r map, message=FALSE, warning=FALSE, echo=FALSE, fig.cap = "Missing Map"}
 library(Amelia)
 GSRE <- select(mydata, c(56:66))
 missmap(GSRE)
 ```
+
 
 
 
@@ -380,21 +430,25 @@ I also calculated resutls without multiple imputation: points that are missing i
 
 The density plot of stability index without imputation is shown in the following figure
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r stability, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Policy Stability Index Density"}
 d <- ggplot(data = mydata) +
-     geom_density(aes(x=mydata$stability_0)) +
-     ggtitle("Density Plot of Policy Stability Index") +
+     geom_density(aes(x = mydata$stability_0)) +
      xlab("Policy Stability Index") 
 d
 ```
 
 The relationship between the raw DV and the imputed DV is shown in the following graph. Due to the page limits only the relationships between the original dependent variable and the first two imputed dependent variables are displayed here. 
 
-```{r, echo=FALSE, warning=FALSE}
+
+
+
+<!--Not for Now
+```{r pairs, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
 pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$stability_3)
 ```
 
-
+\@ref(fig:pairs)
+-->
 
 
 
@@ -418,5 +472,37 @@ M1 <- glm(vote ~ z.age + female + z.education + z.income,
 
 coefplot(M1)
 ```
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllrl}
+\hline
+& origin & carrier & count & name \\
+\hline
+1 & PDX & AS & 12844 & Alaska Airlines Inc. \\
+2 & PDX & WN & 11193 & Southwest Airlines Co. \\
+3 & PDX & OO & 9841 & SkyWest Airlines Inc. \\
+4 & PDX & UA & 6061 & United Air Lines Inc. \\
+5 & PDX & DL & 5168 & Delta Air Lines Inc. \\
+6 & PDX & US & 2361 & US Airways Inc. \\
+7 & PDX & AA & 2187 & American Airlines Inc. \\
+8 & PDX & F9 & 1362 & Frontier Airlines Inc. \\
+9 & PDX & B6 & 1287 & JetBlue Airways \\
+10 & PDX & VX & 666 & Virgin America \\
+11 & PDX & HA & 365 & Hawaiian Airlines Inc. \\
+12 & SEA & AS & 49616 & Alaska Airlines Inc. \\
+13 & SEA & WN & 12162 & Southwest Airlines Co. \\
+14 & SEA & DL & 11548 & Delta Air Lines Inc. \\
+15 & SEA & UA & 10610 & United Air Lines Inc. \\
+16 & SEA & OO & 8869 & SkyWest Airlines Inc. \\
+17 & SEA & AA & 5399 & American Airlines Inc. \\
+18 & SEA & US & 3585 & US Airways Inc. \\
+19 & SEA & VX & 2606 & Virgin America \\
+20 & SEA & B6 & 2253 & JetBlue Airways \\
+21 & SEA & F9 & 1336 & Frontier Airlines Inc. \\
+22 & SEA & HA & 730 & Hawaiian Airlines Inc. \\
+\hline
+\end{tabular}
+\end{table}
 -->
 

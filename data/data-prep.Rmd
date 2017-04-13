@@ -667,6 +667,86 @@ write.csv(x = mydata, file = "mydata.csv")
 
 
 
+# Get LK score 
+
+```{r}
+library(Lmoments)
+library(reshape2)
+library(dplyr)
+#-------------------------------------
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#get rid of X (row name)
+mydata <- select(mydata, -X, -X.1)
+#-------------------------------------
+#collapse original data to mean-substraction
+d <- mydata %>%
+  group_by(cowcode, country) %>%
+  summarise_each(funs(mean(., na.rm = TRUE)))
+#get rid of the missing
+d <- d[!(is.na(d$stability_0)),]
+
+
+#get lk score
+lk0 <- select(mydata, country, stability_0)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_0, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk0 <- t(b)[, 4]
+
+
+#get lk score
+lk0 <- select(mydata, country, stability_1)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_1, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk1 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_2)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_2, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk2 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_3)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_3, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk3 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_4)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_4, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk4 <- t(b)[, 4]
+
+#get lk score
+lk0 <- select(mydata, country, stability_5)
+lk0 <- na.omit(lk0)
+a <- tapply(lk0$stability_5, lk0$country, function(x) Lmoments(x, returnobject=FALSE))
+b <- as.data.frame(matrix(unlist(a), nrow=4))
+#transpose, this is the LK score
+y_lk5 <- t(b)[, 4]
+
+#add to data frame
+d$y_lk0 = y_lk0
+d$y_lk1 = y_lk1
+d$y_lk2 = y_lk2
+d$y_lk3 = y_lk3
+d$y_lk4 = y_lk4
+d$y_lk5 = y_lk5
+
+write.csv(x = d, file = "LKscore.csv")
+```
+
+
 
 
 <!--
