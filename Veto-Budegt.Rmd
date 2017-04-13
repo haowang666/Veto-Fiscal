@@ -12,6 +12,7 @@ thanks: "Replication files are available on the author's Github account (http://
 author:
 - name: Hao Wang
   affiliation: Arizona State University
+  
 abstract: "Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and perform an empirical test on veto player and budget stability in authoritarian countries. Preliminary analysis show that even in authoritarian countries, institutional constriants (veto players) lead to incremental budget changes. "
 keywords: "veto player, public policy"
 geometry: margin=1in
