@@ -102,7 +102,8 @@ mydata <- select(mydata, -X, -X.1)
 To evaluate the budget-stability hypothesis and punctual equilibrium hypothesis, we create two different dependent variables. The volatility index measures the budget shifts of a certain country at a single time point. We use L-Kurtosis score to measure the degree of punctuations (peakness). 
 
 
-**Volatility Index **
+### Volatility Index
+
 I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_{jt}$ is the volatility index of the $jth$ country at a certain year $t$. Since government budget has various categories: $p_{jit}$ denotes the percentage of $i$th category out of total expenditure of the country $j$ at year $t$. $S_{jt}$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
 
 \begin{equation}
@@ -113,9 +114,9 @@ S_{jt} = \sqrt{\sum_{i = 1}^i (p_{jit} -p_{jit-1})^2}
 For the percentage  of each expenditure term $p_{it}$, $p_{it} \in [0, 1]$, $S_{jt}$ has the same boundary as $[0, 1]$. Larger score means more volatile budget policies. 
 
 
-** L-Kurtosis Score **
+### L-Kurtosis Score
 
-To evaluate the distribution of budget shifts, we calculated the L-Kurtosis score of each country across the available time spans. L-Kurtosis (LK) is the 4th L-moment of the momemnt statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximites a Gaussian distribution (also see [@Baumgartneretal2017; @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line. 
+To evaluate the distribution of budget shifts, we calculated the L-Kurtosis score of each country across the available time spans. L-Kurtosis (LK) is the 4th L-moment of the momemnt statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximites a Gaussian distribution (also see [@Baumgartneretal2017; @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line: it features long-time incremental changes and short-term radical shifts (for detailed calculation, check [@Hosking1990]). 
 
 
 ```{r example, echo=FALSE, fig.cap="LK Score Example", message=FALSE, warning=FALSE}
@@ -135,23 +136,27 @@ ggplot(data = test) +
   annotate("text", x = -4, y = 0.5, label = "Blue Line: LK = 0.07") 
 
 
-
 ```
+
+
+
 
 
 
 
 ## Independent Variables
 
-Our independent variables come from several different parts. 
+Our independent variables come from several different parts. The first part is from institutional constraints. 
+ 
 
 
 
 
 
 
-# Results
+# Method and Results
 
+[@BeckKatz1995], [@BeckKatz2011]
 
 ## Pooled OLS with Lagges DV and Panel Corrected Standard Errors
 
@@ -334,10 +339,24 @@ stargazer(expenditure, title = "Components of Budget Stability Measurements", he
 ```{r DVstats, tidy=TRUE, echo=FALSE, results='asis'}
 stability <- select(mydata, stability_0, stability_1, stability_2,
                     stability_3, stability_4, stability_5) 
-stargazer(stability, title = "Dependent Variable Statistics", header = FALSE, digits = 3,
+stargazer(stability, title = "Volatility Index Table", header = FALSE, digits = 3,
           covariate.labels = c("Original", "Imputation 1",  "Imputation 2",
                                 "Imputation 3",  "Imputation 4",  "Imputation 5"))
 ```
+
+
+
+```{r DVLK, tidy=TRUE, echo=FALSE, results='asis'}
+d <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/LKscore.csv")
+
+lk <- select(d, y_lk0, y_lk1, y_lk2,
+                    y_lk3, y_lk4, y_lk5) 
+stargazer(lk, title = "LK Score Table", header = FALSE, digits = 3,
+          covariate.labels = c("Original", "Imputation 1",  "Imputation 2",
+                                "Imputation 3",  "Imputation 4",  "Imputation 5"))
+```
+
+
 
 ## Missing Cases
 
