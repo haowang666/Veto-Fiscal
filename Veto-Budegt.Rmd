@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
+    template: ~/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Veto Player and Fiscal Policy Stability"
 thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
 author:
@@ -17,7 +17,7 @@ geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: D:/Dropbox/Bibliography-database/Haowang.bib
+bibliography: ~/Dropbox/Bibliography-database/Haowang.bib
 biblio-style: apsr
 ---
 
@@ -107,6 +107,12 @@ $$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$
 
 # Results
 
+
+## Pooled OLS with Panel Corrected Standard Errors
+
+
+
+
 ## Fixed Effect Panel Data
 
 ```{r panel reg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
@@ -154,6 +160,9 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, header = FALSE)
 
 ```
 
+
+
+## Fiexed Effect with Two Way Effects
 
 
 ## OLS with L-Kurtosis
