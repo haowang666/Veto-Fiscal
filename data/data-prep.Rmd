@@ -839,7 +839,7 @@ mydata <- select(mydata, -X)
 
 
 ## without multiple imputation
-```{r}
+```{r, message=FALSE}
 dv2 <- select(mydata, c(57:67), cowcode, year)
 #get rid of wage 
 dv2 <- select(dv2, -pensions_EXP, -wagessalaries_EXP)
