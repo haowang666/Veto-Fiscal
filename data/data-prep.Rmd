@@ -827,6 +827,12 @@ write.csv(x=d, file = "LKscore.csv")
 
 
 
+
+
+
+
+
+
 <!--
 #Need to abandon the following codes!!!!
 
