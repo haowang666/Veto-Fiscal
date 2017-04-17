@@ -6,26 +6,28 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Institutional Constraints and Fiscal Policy Stability"
-thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
-author:
-- name: Hao Wang
-  affiliation: Arizona State University
-  
-abstract: "Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in nondemocratic countries. Results show that there is at most moderate support that institutional constriants (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
+author: 
+- Hao Wang
+- Arizona State University
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+abstract: " Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in nondemocratic countries. Results show that there is at most moderate support that institutional constriants (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
 keywords: "veto player, public policy, budget, punctuations"
 geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
 spacing: single
-bibliography: D:/Dropbox/bib/Haowang.bib
+papersize: letter
+bibliography: ~/Dropbox/bib/Haowang.bib
 biblio-style: apsr
+citecolor: blue
+header-includes: \usepackage{graphicx, longtable, float, subfigure}
 ---
 
+**Key words**: veto player, public policy, budget, punctuations \footnote{Replication files available on author's Github account: https://github.com/haowang666}
 
 
-
+\newpage
 
 # Introduction
 
@@ -45,10 +47,28 @@ Our study contributes to the existing literature in two parts: First, with the n
 
 
 
-# Argument
+# Nature of Policy Changes
+Governments change budget policy regularly. The amount of budget allocated to each specific program vary from year to year, we can differentiate the budget changes into two categories: deliberate change and automatic changes [@TsebelisChang2004]. The automatic changes are often a reflection of the environmental factors such as socio-economic development. The deliberate change however, requires cooperation of different political actors to break the current policy equilibrium. Our quantity of interest is the deliberate changes of budget, especially we care about the relative percentages of each budget category out of the total budget expenditure.  
+
+
+Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shifts as incrementally. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. This model is transformed by John Padgett in a theory of policy punctuations, in which he argues that the policy changes feature with long-period of stability and short-period of rapid changes [@Padget1980]. @Jonesetal1998 testes this hypotehsis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater change than is typically portrayed in the literature, even if there is great stability for most categories most of the time. 
+
+According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
+
+> Input (external information) $\Rightarrow$ Processing (internal institutions) $\Rightarrow$ Budget changes
+
+Both the first steps and the second steps can influence the final budget outcomes. The information collection can be inefficient and prone to erroreous messages. In a complex environment like politics, it is harder for politicians to decifer signals from the noise. Consequently, inefficient information gathering may lead to inefficient policy decisions. On the other hand, decisions are also bounded by institutional constraints. 'The detection and interpretation of signals may be limited by the system’s structure – incentives, for example, that encourage focusing on internal dynamics, such as bureaucratic infighting rather than problem solving' [@Faganetal2017, p.3]. 
 
 
 
+
+# Budget Policy in Authoritarian Countries
+Scholars 
+
+
+
+
+# Hypotheses
 
 ## Institutional Constraints
 Institutional Constraints lead to more stable budget policies. 
@@ -167,18 +187,19 @@ From Vdem Project [@Vdem2016]
 Education, GDP, GDP grow rate, inequality, Democracy Indices, etc . 
 
 
+
 # Method and Results
 
 GSRE data set contain lots of missing data, we did 5 multiple imputations and report results of the original dependent variable as well as the 5 imputed ones. 
 
 
-Table \ref{plm} reports pooled OLS result.
+<!-- Table \ref{plm} reports pooled OLS result. -->
 Table \ref{fe} reports fixed effect result.
 Table \ref{LK} reports L-Kurtosis score result.
-Table \ref{twoways} reports twoway fixed effect result, as a robustness check.
+Table \ref{twoways} reports twoway fixed effect result, as a robustness check [@BeckKatz2011].
 
-, [@BeckKatz2011]
 
+<!--
 ## Pooled OLS with Lagged DV and Panel Corrected Standard Errors
 
 First we conduct a pooled model with lagged dependent variable and panel corrected standard standard errors [@BeckKatz1995]. 
@@ -189,7 +210,7 @@ S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt
 (\#eq:pooled)
 \end{equation}
 
-
+<!--
 
 
 ```{r pcse, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
@@ -297,7 +318,7 @@ stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE,
 ```
 
 
-
+-->
 
 
 
@@ -714,7 +735,7 @@ d
 The relationship between the raw DV and the imputed DV is shown in the following graph. Due to the page limits only the relationships between the original dependent variable and the first two imputed dependent variables are displayed here. 
 
 
-
+\newpage
 
 <!--Not for Now
 ```{r pairs, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
