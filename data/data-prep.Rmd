@@ -829,10 +829,9 @@ write.csv(x=d, file = "LKscore.csv")
 
 ```{r}
 library(dplyr)
-library(Lmoments)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
 #get rid of X (row name)
-mydata <- select(mydata, -X)
+mydata <- dplyr::select(mydata, -X, -X.1)
 ```
 
 
