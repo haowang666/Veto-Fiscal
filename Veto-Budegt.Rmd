@@ -756,13 +756,12 @@ pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$st
 ```
 
 \@ref(fig:pairs)
--->
 
 
 
 
 
-<!--The folowing are some examples 
+The folowing are some examples 
 
 ```{r coefplot1, eval=FALSE, echo=FALSE, cache=FALSE, tidy=TRUE}
 suppressMessages(library(Zelig))
@@ -781,36 +780,5 @@ M1 <- glm(vote ~ z.age + female + z.education + z.income,
 coefplot(M1)
 ```
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rllrl}
-\hline
-& origin & carrier & count & name \\
-\hline
-1 & PDX & AS & 12844 & Alaska Airlines Inc. \\
-2 & PDX & WN & 11193 & Southwest Airlines Co. \\
-3 & PDX & OO & 9841 & SkyWest Airlines Inc. \\
-4 & PDX & UA & 6061 & United Air Lines Inc. \\
-5 & PDX & DL & 5168 & Delta Air Lines Inc. \\
-6 & PDX & US & 2361 & US Airways Inc. \\
-7 & PDX & AA & 2187 & American Airlines Inc. \\
-8 & PDX & F9 & 1362 & Frontier Airlines Inc. \\
-9 & PDX & B6 & 1287 & JetBlue Airways \\
-10 & PDX & VX & 666 & Virgin America \\
-11 & PDX & HA & 365 & Hawaiian Airlines Inc. \\
-12 & SEA & AS & 49616 & Alaska Airlines Inc. \\
-13 & SEA & WN & 12162 & Southwest Airlines Co. \\
-14 & SEA & DL & 11548 & Delta Air Lines Inc. \\
-15 & SEA & UA & 10610 & United Air Lines Inc. \\
-16 & SEA & OO & 8869 & SkyWest Airlines Inc. \\
-17 & SEA & AA & 5399 & American Airlines Inc. \\
-18 & SEA & US & 3585 & US Airways Inc. \\
-19 & SEA & VX & 2606 & Virgin America \\
-20 & SEA & B6 & 2253 & JetBlue Airways \\
-21 & SEA & F9 & 1336 & Frontier Airlines Inc. \\
-22 & SEA & HA & 730 & Hawaiian Airlines Inc. \\
-\hline
-\end{tabular}
-\end{table}
 -->
 
