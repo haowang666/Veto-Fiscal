@@ -116,6 +116,8 @@ library(tidyr)
 library(stargazer)
 library(pcse)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#add polity
+mydata$polity <- mydata$e_democ - mydata$e_autoc
 ```
 
 
