@@ -669,6 +669,9 @@ mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/mas
 =======
 #get rid of X (row name)
 #mydata <- select(mydata, -X, -X.1)
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 
 delib <- select(mydata, v2x_delibdem:v2dlengage)
