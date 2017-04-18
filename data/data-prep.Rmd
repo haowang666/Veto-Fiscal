@@ -827,11 +827,11 @@ write.csv(x=d, file = "LKscore.csv")
 
 ## add stability_x_aj to mydata.csv
 
-```{r}
+```{r, message=FALSE}
 library(dplyr)
+library(Lmoments)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#get rid of X (row name)
-mydata <- dplyr::select(mydata, -X, -X.1)
+
 ```
 
 
@@ -839,7 +839,7 @@ mydata <- dplyr::select(mydata, -X, -X.1)
 
 ## without multiple imputation
 ```{r, message=FALSE}
-dv2 <- select(mydata, c(57:67), cowcode, year)
+dv2 <- select(mydata, c(56:66), cowcode, year)
 #get rid of wage 
 dv2 <- select(dv2, -pensions_EXP, -wagessalaries_EXP)
 
@@ -1086,7 +1086,7 @@ mydata$stability_5_aj[mydata$stability_5_aj == 0] <- NA
 
 #--------------------------------------------------------------------------
 #export to doable file
-write.csv(x = mydata, file = "mydata.csv")
+write.csv(x = mydata, file = "mydata.csv", row.names = FALSE)
 ```
 
 

@@ -18,7 +18,7 @@ geometry: margin=1in
 fontsize: 12pt
 spacing: double
 papersize: letter
-bibliography: ~/Dropbox/bib/Haowang.bib
+bibliography: D:/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 citecolor: blue
 header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
@@ -109,7 +109,6 @@ Data on division of power draws from the Political Institution Index [@Becketal2
 
 
 ```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
-library(MASS)
 library(ggplot2)
 library(plm)
 library(dplyr)
@@ -117,8 +116,8 @@ library(tidyr)
 library(stargazer)
 library(pcse)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#get rid of X (row name)
-mydata <- select(mydata, - X, - X.1)
+#add polity
+mydata$polity <- mydata$e_democ - mydata$e_autoc
 ```
 
 
@@ -173,7 +172,7 @@ ggplot(data = test) +
 
 ## Independent Variables
 
-We two major independent variables: 
+We have two major independent variables: 
 In the horizontal level: veto players are different government divisions and political parties. In the vertical level, a strong local government with independent fiscal abilities can act as a strong veto players well.
 
 
@@ -187,7 +186,7 @@ We use two measurements of institutional constraints: POLCON index [@Henisz2000]
 
 ### Vertical Level
 
-Regional authority index, modeled by the state government authority over taxation [@Becketal2001]. 
+Regional authority index (RAI), modeled by the state government authority over taxation [@Becketal2001]. 
 
 
 
@@ -219,7 +218,7 @@ First we conduct a pooled model with lagged dependent variable and panel correct
 
 
 \begin{equation}
-S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
+S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4} RAI_{jt} + \beta_{5} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:pooled)
 \end{equation}
 
@@ -339,7 +338,7 @@ stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE,
 
 
 \begin{equation}
-S_{jt} = a_i + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} +
+S_{jt} = a_j + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4}RAI_{jt} + \beta_{5} Corrupt_{jt} +
 \mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:fe)
 \end{equation}
@@ -377,7 +376,7 @@ pmodel1 <- plm(stability_1_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_2_aj ~ 
+pmodel2 <- plm(stability_2_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -392,7 +391,7 @@ pmodel1 <- plm(stability_2_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_3_aj ~ 
+pmodel3 <- plm(stability_3_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -407,7 +406,7 @@ pmodel1 <- plm(stability_3_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_4_aj ~ 
+pmodel4 <- plm(stability_4_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -421,7 +420,7 @@ pmodel1 <- plm(stability_4_aj ~
             e_Civil_War ,  
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-pmodel1 <- plm(stability_5_aj ~ 
+pmodel5 <- plm(stability_5_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -453,7 +452,7 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5, header = FALSE,
 ## Fiexed Effect with Two Way Effects
 
 \begin{equation}
-S_{jt} = a_i  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} + \mathbf{Z} \beta +\epsilon_{jt}
+S_{jt} = a_j  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4}RAI_{jt} + \beta_{5} Corrupt_{jt} + \mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:twoways)
 \end{equation}
 
@@ -474,7 +473,7 @@ tmodel0 <- plm(stability_0_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_1_aj ~ 
+tmodel1 <- plm(stability_1_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -489,7 +488,7 @@ tmodel0 <- plm(stability_1_aj ~
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel0 <- plm(stability_2_aj ~ 
+tmodel2 <- plm(stability_2_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -504,7 +503,7 @@ tmodel0 <- plm(stability_2_aj ~
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel0 <- plm(stability_3_aj ~ 
+tmodel3 <- plm(stability_3_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -518,7 +517,7 @@ tmodel0 <- plm(stability_3_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_4_aj ~ 
+tmodel4 <- plm(stability_4_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -532,7 +531,7 @@ tmodel0 <- plm(stability_4_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_5_aj ~ 
+tmodel5 <- plm(stability_5_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -665,8 +664,12 @@ Here I provide summary statistics of the variables I used in this study
 ```{r, echo=FALSE, message=FALSE, results="asis"}
 # results ="asis" add to table
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+<<<<<<< HEAD
+
+=======
 #get rid of X (row name)
-mydata <- select(mydata, -X, -X.1)
+#mydata <- select(mydata, -X, -X.1)
+>>>>>>> origin/master
 
 delib <- select(mydata, v2x_delibdem:v2dlengage)
 stargazer(delib, title = "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
