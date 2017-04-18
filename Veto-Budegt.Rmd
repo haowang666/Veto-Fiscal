@@ -18,7 +18,7 @@ keywords: "veto player, public policy, budget, punctuations"
 geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 12pt
-spacing: single
+spacing: double
 bibliography: D:/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 ---
@@ -140,7 +140,7 @@ ggplot(data = test) +
 
 # Independent Variables
 
-We two major independent variables: 
+We have two major independent variables: 
 In the horizontal level: veto players are different government divisions and political parties. In the vertical level, a strong local government with independent fiscal abilities can act as a strong veto players well.
 
 
@@ -154,7 +154,7 @@ We use two measurements of institutional constraints: POLCON index [@Henisz2000]
 
 ## Vertical Level
 
-Regional authority index, modeled by the state government authority over taxation [@Becketal2001]. 
+Regional authority index (RAI), modeled by the state government authority over taxation [@Becketal2001]. 
 
 
 
@@ -185,7 +185,7 @@ First we conduct a pooled model with lagged dependent variable and panel correct
 
 
 \begin{equation}
-S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
+S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4} RAI_{jt} + \beta_{5} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:pooled)
 \end{equation}
 
@@ -305,7 +305,7 @@ stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE,
 
 
 \begin{equation}
-S_{jt} = a_i + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} +
+S_{jt} = a_j + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4}RAI_{jt} + \beta_{5} Corrupt_{jt} +
 \mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:fe)
 \end{equation}
@@ -395,7 +395,7 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5, header = FALSE,
 ## Fiexed Effect with Two Way Effects
 
 \begin{equation}
-S_{jt} = a_i  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4} Corrupt_{jt} + \mathbf{Z} \beta +\epsilon_{jt}
+S_{jt} = a_j  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4}RAI_{jt} + \beta_{5} Corrupt_{jt} + \mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:twoways)
 \end{equation}
 
