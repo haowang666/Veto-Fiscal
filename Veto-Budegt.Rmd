@@ -17,12 +17,8 @@ geometry: margin=1in
 <!-- fontfamily: mathpazo-->
 fontsize: 12pt
 spacing: double
-<<<<<<< HEAD
-bibliography: D:/Dropbox/bib/Haowang.bib
-=======
 papersize: letter
-bibliography: ~/Dropbox/bib/Haowang.bib
->>>>>>> origin/master
+bibliography: D:/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 citecolor: blue
 header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
@@ -113,7 +109,6 @@ Data on division of power draws from the Political Institution Index [@Becketal2
 
 
 ```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
-library(MASS)
 library(ggplot2)
 library(plm)
 library(dplyr)
@@ -121,8 +116,6 @@ library(tidyr)
 library(stargazer)
 library(pcse)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#get rid of X (row name)
-mydata <- select(mydata, - X, - X.1)
 ```
 
 
@@ -381,7 +374,7 @@ pmodel1 <- plm(stability_1_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_2_aj ~ 
+pmodel2 <- plm(stability_2_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -396,7 +389,7 @@ pmodel1 <- plm(stability_2_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_3_aj ~ 
+pmodel3 <- plm(stability_3_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -411,7 +404,7 @@ pmodel1 <- plm(stability_3_aj ~
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel1 <- plm(stability_4_aj ~ 
+pmodel4 <- plm(stability_4_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -425,7 +418,7 @@ pmodel1 <- plm(stability_4_aj ~
             e_Civil_War ,  
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-pmodel1 <- plm(stability_5_aj ~ 
+pmodel5 <- plm(stability_5_aj ~ 
             e_h_polcon5 +  
             v2xps_party +
             v2dlconslt +
@@ -478,7 +471,7 @@ tmodel0 <- plm(stability_0_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_1_aj ~ 
+tmodel1 <- plm(stability_1_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -493,7 +486,7 @@ tmodel0 <- plm(stability_1_aj ~
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel0 <- plm(stability_2_aj ~ 
+tmodel2 <- plm(stability_2_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -508,7 +501,7 @@ tmodel0 <- plm(stability_2_aj ~
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel0 <- plm(stability_3_aj ~ 
+tmodel3 <- plm(stability_3_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -522,7 +515,7 @@ tmodel0 <- plm(stability_3_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_4_aj ~ 
+tmodel4 <- plm(stability_4_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -536,7 +529,7 @@ tmodel0 <- plm(stability_4_aj ~
                  e_Civil_War, 
                  data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel0 <- plm(stability_5_aj ~ 
+tmodel5 <- plm(stability_5_aj ~ 
                  e_h_polcon3 +  
                  v2xps_party +
                  v2dlconslt +
@@ -670,7 +663,7 @@ Here I provide summary statistics of the variables I used in this study
 # results ="asis" add to table
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
 #get rid of X (row name)
-mydata <- select(mydata, -X, -X.1)
+#mydata <- select(mydata, -X, -X.1)
 
 delib <- select(mydata, v2x_delibdem:v2dlengage)
 stargazer(delib, title = "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
