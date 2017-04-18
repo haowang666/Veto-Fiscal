@@ -664,15 +664,10 @@ Here I provide summary statistics of the variables I used in this study
 ```{r, echo=FALSE, message=FALSE, results="asis"}
 # results ="asis" add to table
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-<<<<<<< HEAD
 
-=======
 #get rid of X (row name)
 #mydata <- select(mydata, -X, -X.1)
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
+
 
 delib <- select(mydata, v2x_delibdem:v2dlengage)
 stargazer(delib, title = "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
