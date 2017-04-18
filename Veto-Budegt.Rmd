@@ -6,26 +6,34 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: D:/Dropbox/Materials/svm-r-markdown-templates/svm-latex-ms.tex
 title: "Institutional Constraints and Fiscal Policy Stability"
-thanks: "Replication files are available on the author's Github account (http://github.com/haowang666). **Current version**: `r format(Sys.time(), '%B %d, %Y')`"
-author:
-- name: Hao Wang
-  affiliation: Arizona State University
-  
-abstract: "Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in nondemocratic countries. Results show that there is at most moderate support that institutional constriants (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
+author: 
+- Hao Wang
+- Arizona State University
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+abstract: " Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in nondemocratic countries. Results show that there is at most moderate support that institutional constriants (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
 keywords: "veto player, public policy, budget, punctuations"
 geometry: margin=1in
-fontfamily: mathpazo
+<!-- fontfamily: mathpazo-->
 fontsize: 12pt
 spacing: double
+<<<<<<< HEAD
 bibliography: D:/Dropbox/bib/Haowang.bib
+=======
+papersize: letter
+bibliography: ~/Dropbox/bib/Haowang.bib
+>>>>>>> origin/master
 biblio-style: apsr
+citecolor: blue
+header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
 ---
 
+**Key words**: veto player, public policy, budget, punctuations \footnote{Replication files available on author's Github account: https://github.com/haowang666}
 
 
+\newpage
 
+\doublespacing
 
 # Introduction
 
@@ -37,7 +45,7 @@ On the other hand, veto player theory also implies that more veto players make p
 
 This theoretical expectation leads to another potential hypothesis: the amount of veto power may leads to larger policy punctuation. Punctuated Equilibrium Theory (PET) [@JohnBevan2012  @JonesBaumgartner2012] argues that government budget shifts over due to the over-attention and under-attention to certain policy areas. Consequently it features with long periods of stability and short periods of radical changes. Considering the institutional constraints, we also want to test the effect of veto player on policy punctuation. 
 
-Our study contributes to the existing literature in two parts: First, with the newly released GSRE data, we extend the coverage to a much broader sample size. Till now most empirical studies on budget changes are drawn from OECD countries, although a few studies have started looking at nondemocratic cases, they are mostly cases studies [@Baumgartneretal2017  @LamChan2015]. Second, we systematically evaluate the two theories. Our results show that institutional constraints lead to more stable policy changes. However, there is little evidence that institutional constraints lead to policy punctuation. 
+Our study contributes to the existing literature in two parts: First, with the newly released GSRE data, we extend the coverage to a much broader sample size. Till now most empirical studies on budget changes are drawn from OECD countries, although a few studies have started looking at nondemocratic cases, they are mostly cases studies [@Baumgartneretal2017 @LamChan2015]. Second, we systematically evaluate the two theories. Our results show that institutional constraints lead to more stable policy changes. However, there is little evidence that institutional constraints lead to policy punctuation. 
 
 
 
@@ -45,26 +53,55 @@ Our study contributes to the existing literature in two parts: First, with the n
 
 
 
-# Argument
+# Nature of Policy Changes
+Governments change budget policy regularly. The amount of budget allocated to each specific program vary from year to year, we can differentiate the budget changes into two categories: deliberate change and automatic changes [@TsebelisChang2004]. The automatic changes are often a reflection of the environmental factors such as socio-economic development. The deliberate change however, requires cooperation of different political actors to break the current policy equilibrium. Our quantity of interest is the deliberate changes of budget, especially we care about the relative percentages of each budget category out of the total budget expenditure.  
+
+
+Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shifts as incrementally. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. This model is transformed by John Padgett in a theory of policy punctuations, in which he argues that the policy changes feature with long-period of stability and short-period of rapid changes [@Padget1980]. @Jonesetal1998 testes this hypothesis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater change than is typically portrayed in the literature, even if there is great stability for most categories most of the time. 
+
+According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
+
+> Input (external information) $\Rightarrow$ Processing (internal institutions) $\Rightarrow$ Budget changes
+
+Both the first steps and the second steps can influence the final budget outcomes. The information collection can be inefficient and prone to erroneous messages. In a complex environment like politics, it is harder for politicians to decipher signals from the noise. Consequently, inefficient information gathering may lead to inefficient policy decisions. On the other hand, decisions are also bounded by institutional constraints. 'The detection and interpretation of signals may be limited by the system’s structure – incentives, for example, that encourage focusing on internal dynamics, such as bureaucratic infighting rather than problem solving' [@Faganetal2017, p.3]. 
 
 
 
 
-## Institutional Constraints
-Institutional Constraints lead to more stable budget policies. 
+# Budget Policy in Authoritarian Countries
+Scholars study both the input and processing stages under democratic regimes, arguing that free and transparent information processing as well as less institutional constraints lead to incremental budget changes [@JonesBaumgartner2012]. Studying budget changes in authoritarian countries can be different from electoral democracies. First, there is no free and fair elections in authoritarian regimes. Election and regular political participation face the "dictator's dilemma" in nondemocracies [@Wintrobe1998]. Second, while serving as the information provider and monitor of the government actions in democratic regimes, media and press are not independent out in autocracies. Overall these create barriers for information input and leads to inefficient information collection in authoritarian countries.
+
+on the hand, institutional constraints are weaker in authoritarian countries. Unlike democracies, the autocract has better control over the government and the legislative institutions. For instance in a democratic government with checks-and-balances institutional design, the executive branch will be constrained by the legislature, which implies a longer period of negotiation and cooperation. Nevertheless autocrats are not completely free of the veto-player framework [@Tsebelis2002]. Frictions and intra-elite competitions still exist and often dictators need to choose co-optation strategy [@Svolik2012]. 
+
+so far only a few studies look at budgetary patterns in authoritarian countries. In the Hong Kong case, @LamChan2015 propose that non-democracies are characterized by less friction than democracies because the institutional design of these regimes centralizes power at the highest level of government, meanwhile there is little check and balances of the executive branch. Lacking the incentive of electoral competition, officials are less motivated to monitor and respond to the external environment. Consequently, there is high levels of inertia of environmental changes. Errors of information may accumulate over time and threaten the regime stability. @Baumgartneretal2017 conduct the first cross-national studies of budgetary changes in authoritarian countries (Brazil, Turkey, Malta and Russia). Their analysis suggests that authoritarian countries have different patterns of policy shifts with the democratic regimes. However, the argument is only moderately supported by their empirical evidence due to the lack of data. 
+
+
+Overall, we hope to expand the current research agenda of policy shifts to authoritarian countries. We argue that the budget system theory still applies to authoritarian regimes. However, due to the difficulty of conceptualizing the information gathering, we focus mainly on the internal frictions in authoritarian countries. 
 
 
 
 
-## Policy Punctuations
+# Hypotheses
+Previous studies on budget changes highlight the importance of input and processing. While both steps are important for decision making, we only focus on the institutional frictions in this manuscript. Viewing institutional frictions as a constraint on any deviations from the status quo, we argue that countries with higher levels of institutional frictions have smaller budget policy shifts. We use the similar framework appeared in @TsebelisChang2004: countries with more veto players have smaller winning sets that can beat the status quo, consequently lead to stable policy outcomes (small incremental changes). 
 
-Veto player $\Rightarrow$ unable to change policy rapidly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium [@DerekBaumgartner2016; @KeeferStasavage2003].
+> institutional frictions $\Rightarrow$ stable policy shifts
+
+On the other hand, the existing multiple veto players makes it harder for reforms and policy adaptions. In the extreme condition, the current winning set $P \in \emptyset$: politicians are unable to come up with any changes of the current policy plans. A stable budget policy is not necessary a good policy: it needs to speak to the external socio-economic environment. For instance, the incumbent government should be able to spend more in social-welfare domain if there are serious welfare issues. Eventually this inability of adaptation leads to an accumulation of problems and even threaten the stability of the regime. Politicians may respond to the long-term stability with short-term rapid changes as a remedy of the chronological grid-lock, which is a policy punctuation [@DerekBaumgartner2016 @KeeferStasavage2003]. 
 
 
 
+> Institutional frictions $\Rightarrow$ unable to change policy accordingly $\Rightarrow$ long term incremental changes and short-term rapid changes $\Rightarrow$ punctual equilibrium.
 
-# Data
-Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the [@Geddesetal2014] data set. 
+
+Therefore we have the following two hypothesis:
+
+1. Institutional frictions lead to budget stability (mimimal difference between fiscal years)
+2. Institutional frictions lead to higher budget punctuations. 
+
+
+
+# Data and Conceptualization 
+Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the @Geddesetal2014 data set. 
 
 Data on deliberative democracies and other regime-related variables come from the Varieties of Democracy (Vdem) project [@Vdem2016]. Unlike the widely used democracy index like Polity [@Polity2015], Vdem provides multidimensional measurements of regimes, including both democracies and autocracies. 
 
@@ -85,17 +122,17 @@ library(stargazer)
 library(pcse)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
 #get rid of X (row name)
-mydata <- select(mydata, -X, -X.1)
+mydata <- select(mydata, - X, - X.1)
 ```
 
 
 
-# Measuring Dependent Variables 
+## Measuring Dependent Variables 
 
 To evaluate the budget-stability hypothesis and punctual equilibrium hypothesis, we create two different dependent variables. The volatility index measures the budget shifts of a certain country at a single time point. We use L-Kurtosis score to measure the degree of punctuation (peakness). 
 
 
-## Volatility Index
+### Volatility Index
 
 I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_{jt}$ is the volatility index of the $jth$ country at a certain year $t$. Since government budget has various categories: $p_{jit}$ denotes the percentage of $i$th category out of total expenditure of the country $j$ at year $t$. $S_{jt}$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
 
@@ -107,10 +144,10 @@ S_{jt} = \sqrt{\sum_{i = 1}^i (p_{jit} -p_{jit-1})^2}
 For the percentage  of each expenditure term $p_{it}$, $p_{it} \in [0, 1]$, $S_{jt}$ has the same boundary as $[0, 1]$. Larger score means more volatile budget policies. 
 
 
-## L-Kurtosis Score
+### L-Kurtosis Score
 
 To evaluate the distribution of budget shifts, we calculated the L-Kurtosis score of policy changes of each country across the available time spans. Specifically, we calculate the between-year difference of budget percentages, and then using L-Kurtosis statistics to find the L-Kurtosis (LK) score.
-L-Kurtosis (LK) is the 4th L-moment of the moment statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximates a Gaussian distribution (also see [@Baumgartneretal2017; @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line: it features long-time incremental changes and short-term radical shifts (for detailed calculation, check [@Hosking1990]). 
+L-Kurtosis (LK) is the 4th L-moment of the moment statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximates a Gaussian distribution (also see [@Baumgartneretal2017 @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line: it features long-time incremental changes and short-term radical shifts (for detailed calculation, check [@Hosking1990]). 
 
 
 ```{r example, echo=FALSE, fig.cap="LK Score Example", message=FALSE, warning=FALSE}
@@ -138,7 +175,7 @@ ggplot(data = test) +
 
 
 
-# Independent Variables
+## Independent Variables
 
 We have two major independent variables: 
 In the horizontal level: veto players are different government divisions and political parties. In the vertical level, a strong local government with independent fiscal abilities can act as a strong veto players well.
@@ -146,25 +183,26 @@ In the horizontal level: veto players are different government divisions and pol
 
 
 
-## Horizontal Level
+### Horizontal Level
 
 We use two measurements of institutional constraints: POLCON index [@Henisz2000] and Party Institutionalization Index [@Vdem2016].
 
 
 
-## Vertical Level
+### Vertical Level
 
 Regional authority index (RAI), modeled by the state government authority over taxation [@Becketal2001]. 
 
 
 
-## Corruption 
+### Corruption 
 
 From Vdem Project [@Vdem2016]
 
 
-## Other Controls
+### Other Controls
 Education, GDP, GDP grow rate, inequality, Democracy Indices, etc . 
+
 
 
 # Method and Results
@@ -172,13 +210,13 @@ Education, GDP, GDP grow rate, inequality, Democracy Indices, etc .
 GSRE data set contain lots of missing data, we did 5 multiple imputations and report results of the original dependent variable as well as the 5 imputed ones. 
 
 
-Table \ref{plm} reports pooled OLS result.
+<!-- Table \ref{plm} reports pooled OLS result. -->
 Table \ref{fe} reports fixed effect result.
 Table \ref{LK} reports L-Kurtosis score result.
-Table \ref{twoways} reports twoway fixed effect result, as a robustness check.
+Table \ref{twoways} reports twoway fixed effect result, as a robustness check [@BeckKatz2011].
 
-, [@BeckKatz2011]
 
+<!--
 ## Pooled OLS with Lagged DV and Panel Corrected Standard Errors
 
 First we conduct a pooled model with lagged dependent variable and panel corrected standard standard errors [@BeckKatz1995]. 
@@ -189,7 +227,7 @@ S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt
 (\#eq:pooled)
 \end{equation}
 
-
+<!--
 
 
 ```{r pcse, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
@@ -297,7 +335,7 @@ stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE,
 ```
 
 
-
+-->
 
 
 
@@ -314,68 +352,92 @@ S_{jt} = a_j + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4}RAI_{jt} + \b
 ```{r panelreg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
 ## Fixed Effect
 
-pmodel0 <- plm(stability_0 ~ e_h_polcon5 +  v2xps_party +
+pmodel0 <- plm(stability_0_aj ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2dlconslt +
              v2x_feduni + 
              v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
+             polity + 
+             v2mecenefm + 
+             e_peaveduc + 
+             e_migdppcln +
+             e_migdpgro +
              e_Civil_War, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-pmodel1 <- plm(stability_1 ~ e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War ,  
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
-
-
-pmodel2 <- plm(stability_2 ~ e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-               data = mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+pmodel1 <- plm(stability_1_aj ~ 
+            e_h_polcon5 +  
+            v2xps_party +
+            v2dlconslt +
+            v2x_feduni + 
+            v2x_corr + 
+            polity + 
+            v2mecenefm + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel3 <- plm(stability_3 ~ e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+pmodel1 <- plm(stability_2_aj ~ 
+            e_h_polcon5 +  
+            v2xps_party +
+            v2dlconslt +
+            v2x_feduni + 
+            v2x_corr + 
+            polity + 
+            v2mecenefm + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel4 <- plm(stability_4 ~ e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War , 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within")
+pmodel1 <- plm(stability_3_aj ~ 
+            e_h_polcon5 +  
+            v2xps_party +
+            v2dlconslt +
+            v2x_feduni + 
+            v2x_corr + 
+            polity + 
+            v2mecenefm + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-pmodel5 <- plm(stability_5 ~ e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-             e_Civil_War , 
-               data = mydata, index = c("cowcode", "year"), na.action=na.omit, model="within")
+
+pmodel1 <- plm(stability_4_aj ~ 
+            e_h_polcon5 +  
+            v2xps_party +
+            v2dlconslt +
+            v2x_feduni + 
+            v2x_corr + 
+            polity + 
+            v2mecenefm + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+
+pmodel1 <- plm(stability_5_aj ~ 
+            e_h_polcon5 +  
+            v2xps_party +
+            v2dlconslt +
+            v2x_feduni + 
+            v2x_corr + 
+            polity + 
+            v2mecenefm + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
 stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5, header = FALSE, 
@@ -402,79 +464,104 @@ S_{jt} = a_j  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4
 ```{r twoway, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
 ## Twoway Effect
 
-tmodel0 <- plm(stability_0 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
+tmodel0 <- plm(stability_0_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel1 <- plm(stability_1 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War ,  
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
-
-
-tmodel2 <- plm(stability_2 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War , 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
+tmodel0 <- plm(stability_1_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel3 <- plm(stability_3 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
+tmodel0 <- plm(stability_2_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel4 <- plm(stability_4 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War , 
-               data=mydata, index=c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
+tmodel0 <- plm(stability_3_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel5 <- plm(stability_5 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-               data = mydata, index = c("cowcode", "year"), na.action=na.omit, model="within", effect = "twoways")
+tmodel0 <- plm(stability_4_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+
+tmodel0 <- plm(stability_5_aj ~ 
+                 e_h_polcon3 +  
+                 v2xps_party +
+                 v2dlconslt +
+                 v2x_feduni + 
+                 v2x_corr + 
+                 polity + 
+                 v2mecenefm + 
+                 e_peaveduc + 
+                 e_migdppcln +  
+                 e_migdpgro +
+                 e_Civil_War, 
+                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5, header = FALSE, 
-          title = "Two Way Fixed Effect Regression Results", label = "twoways",
+stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5, 
+          header = FALSE, 
+          title = "Two Way Fixed Effect Regression Results", 
+          label = "twoways",
           omit = c("e_Civil_War", "e_migdpgro"), 
           dep.var.labels.include = FALSE,
           covariate.labels = c("Constraints", "Party", "Consult", 
                                "Federalism", "Corruption", "Polity", "Censorship",
                                "Education", "GDP pc"),
           omit.stat = c("adj.rsq", "f", "res.dev", "ser"),
-           notes = "DV: Stability Index, higher value indicates more volatile policies")
+          notes = "DV: Stability Index, higher value indicates more volatile policies")
 ```
 
 
@@ -714,7 +801,7 @@ d
 The relationship between the raw DV and the imputed DV is shown in the following graph. Due to the page limits only the relationships between the original dependent variable and the first two imputed dependent variables are displayed here. 
 
 
-
+\newpage
 
 <!--Not for Now
 ```{r pairs, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
@@ -722,13 +809,12 @@ pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$st
 ```
 
 \@ref(fig:pairs)
--->
 
 
 
 
 
-<!--The folowing are some examples 
+The folowing are some examples 
 
 ```{r coefplot1, eval=FALSE, echo=FALSE, cache=FALSE, tidy=TRUE}
 suppressMessages(library(Zelig))
@@ -747,36 +833,5 @@ M1 <- glm(vote ~ z.age + female + z.education + z.income,
 coefplot(M1)
 ```
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rllrl}
-\hline
-& origin & carrier & count & name \\
-\hline
-1 & PDX & AS & 12844 & Alaska Airlines Inc. \\
-2 & PDX & WN & 11193 & Southwest Airlines Co. \\
-3 & PDX & OO & 9841 & SkyWest Airlines Inc. \\
-4 & PDX & UA & 6061 & United Air Lines Inc. \\
-5 & PDX & DL & 5168 & Delta Air Lines Inc. \\
-6 & PDX & US & 2361 & US Airways Inc. \\
-7 & PDX & AA & 2187 & American Airlines Inc. \\
-8 & PDX & F9 & 1362 & Frontier Airlines Inc. \\
-9 & PDX & B6 & 1287 & JetBlue Airways \\
-10 & PDX & VX & 666 & Virgin America \\
-11 & PDX & HA & 365 & Hawaiian Airlines Inc. \\
-12 & SEA & AS & 49616 & Alaska Airlines Inc. \\
-13 & SEA & WN & 12162 & Southwest Airlines Co. \\
-14 & SEA & DL & 11548 & Delta Air Lines Inc. \\
-15 & SEA & UA & 10610 & United Air Lines Inc. \\
-16 & SEA & OO & 8869 & SkyWest Airlines Inc. \\
-17 & SEA & AA & 5399 & American Airlines Inc. \\
-18 & SEA & US & 3585 & US Airways Inc. \\
-19 & SEA & VX & 2606 & Virgin America \\
-20 & SEA & B6 & 2253 & JetBlue Airways \\
-21 & SEA & F9 & 1336 & Frontier Airlines Inc. \\
-22 & SEA & HA & 730 & Hawaiian Airlines Inc. \\
-\hline
-\end{tabular}
-\end{table}
 -->
 

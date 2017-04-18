@@ -328,7 +328,7 @@ dv2 <- select(dv2, -pensions_EXP)
 
 
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -818,6 +818,284 @@ d$y_lk5 <- y_lk5
 
 write.csv(x=d, file = "LKscore.csv")
 ```
+
+
+
+
+
+# Recalculating Stability and LK score
+
+## add stability_x_aj to mydata.csv
+
+```{r}
+library(dplyr)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#get rid of X (row name)
+mydata <- dplyr::select(mydata, -X, -X.1)
+```
+
+
+
+
+## without multiple imputation
+```{r, message=FALSE}
+dv2 <- select(mydata, c(57:67), cowcode, year)
+#get rid of wage 
+dv2 <- select(dv2, -pensions_EXP, -wagessalaries_EXP)
+
+
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+#
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_0_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_0_aj[mydata$stability_0_aj == 0] <- NA
+```
+
+
+
+# Multiple imputation: without wage index
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+imp1 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp1.csv")
+imp2 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp2.csv")
+imp3 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp3.csv")
+imp4 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp4.csv")
+imp5 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp5.csv") 
+
+#-----------------------------------------------------------------------------------------------
+dv2 <- imp1
+#replace NA to 0. 
+dv2[is.na(dv2)] <-0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_1_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_1_aj[mydata$stability_1_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp2
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_2_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_2_aj[mydata$stability_2_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp3
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_3_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_3_aj[mydata$stability_3_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp4
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_4_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_4_aj[mydata$stability_4_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp5
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_5_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_5_aj[mydata$stability_5_aj == 0] <- NA
+
+
+#--------------------------------------------------------------------------
+#export to doable file
+write.csv(x = mydata, file = "mydata.csv")
+```
+
+
+
+
+
+
+
+
 
 
 
