@@ -124,6 +124,7 @@ mydata$polity <- mydata$e_democ - mydata$e_autoc
 
 
 
+
 ## Measuring Dependent Variables 
 
 To evaluate the budget-stability hypothesis and punctual equilibrium hypothesis, we create two different dependent variables. The volatility index measures the budget shifts of a certain country at a single time point. We use L-Kurtosis score to measure the degree of punctuation (peakness). 
