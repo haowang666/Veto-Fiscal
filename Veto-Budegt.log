@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.7.24)  18 APR 2017 00:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.7.24)  20 APR 2017 01:26
 entering extended mode
 **Veto-Budegt.tex
 (Veto-Budegt.tex
@@ -1045,11 +1045,11 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 828.
  ) 
 Here is how much of TeX's memory you used:
- 13384 strings out of 493698
- 192715 string characters out of 3144401
+ 13386 strings out of 493698
+ 192739 string characters out of 3144401
  309931 words of memory out of 3000000
  16299 multiletter control sequences out of 15000+200000
- 88001 words of font info for 122 fonts, out of 3000000 for 9000
+ 88092 words of font info for 123 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  32i,10n,35p,442b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
@@ -1070,7 +1070,7 @@ es/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/public/lm/lmri12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Veto-Budegt.pdf (23 pages, 578862 bytes).
+Output written on Veto-Budegt.pdf (23 pages, 578641 bytes).
 PDF statistics:
  445 PDF objects out of 1000 (max. 8388607)
  95 named destinations out of 1000 (max. 500000)
