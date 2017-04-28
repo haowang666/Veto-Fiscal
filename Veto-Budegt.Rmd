@@ -11,7 +11,7 @@ author:
 - Hao Wang
 - Arizona State University
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
-abstract: " Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in nondemocratic countries. Results show that there is at most moderate support that institutional constraints (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
+abstract: " Veto player theory [@Tsebelis2002] predicts that the number of veto players influencing policy stabilities. While studies in OECD countries have shown supportive evidence [@TsebelisChang2004], there is few work on policy stability in nondemocracies. This project uses a new dataset from GSRE (Global State Revenues and Expenditures dataset) and performs an empirical test on veto player / institutional constraint and budget stability in new democratic countries. Results show that there is at most moderate support that institutional constraints (veto players) lead to incremental budget changes, coefficients hardly achieve significant levels. Besides, our results show little evidence on Punctual Equilibrium Theory (PET): higher institutional constraints are not directly related to budget punctuations."
 keywords: "veto player, public policy, budget, punctuations"
 geometry: margin=1in
 <!-- fontfamily: mathpazo-->
@@ -33,7 +33,13 @@ header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
 
 # Introduction
 
-Veto player theory [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a corollary is that institutional checks lead to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equilibrium. 
+Government 
+
+
+Veto player theory [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. 
+
+
+This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a corollary is that institutional checks lead to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equilibrium. 
 
 @TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. Their results show that countries with more veto players have more stable budget policies. 
 
