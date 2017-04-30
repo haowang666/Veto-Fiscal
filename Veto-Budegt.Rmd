@@ -52,16 +52,24 @@ Our study contributes to the existing literature in two parts: First, with the n
 
 
 
-
-
-
 # Nature of Policy Changes
-Governments change budget policy regularly. The amount of budget allocated to each specific program vary from year to year, we can differentiate the budget changes into two categories: deliberate change and automatic changes [@TsebelisChang2004]. The automatic changes are often a reflection of the environmental factors such as socio-economic development. The deliberate change however, requires cooperation of different political actors to break the current policy equilibrium. Our quantity of interest is the deliberate changes of budget, especially we care about the relative percentages of each budget category out of the total budget expenditure.  
+
+## Punctual Equilibrium Theory
+
+Governments change budget policy regularly. The amount of budget allocated to each specific program vary from year to year, we can differentiate the budget changes into two categories: deliberate change and automatic changes [@TsebelisChang2004]. The automatic changes are often a reflection of the environmental factors such as socio-economic development. The deliberate change requires cooperation of different political actors to break the current policy equilibrium. In this project we study the dynamics of the budget changes. In particular, we want to explore the mechanisms of the budget percentage changes. 
 
 
-Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shifts as incrementally. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. This model is transformed by John Padgett in a theory of policy punctuations, in which he argues that the policy changes feature with long-period of stability and short-period of rapid changes [@Padget1980]. @Jonesetal1998 test this hypothesis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater change than is typically portrayed in the literature, even if there is great stability for most categories most of the time. 
+Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shift smoothly, in an incremental patter. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. His model ignores the internal institutional frictions, arguing that policy shifts features a pattern of randomness.
+Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. Later on this model is transformed by John Padgett in a theory of policy punctuations. Through the long-term observation of the U.S. federal budgetary expenditure, Padgett finds that budget policy remain minimal changes over a long term period and have huge fluctuations in some short-periods [@Padget1980]. The entire pattern resembles some tall towns on a flat land: at most of the time there is no changes, but when there is a change, the magnitude is huge. @Jonesetal1998 test this hypothesis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater changes than is typically portrayed in the literature, even if there is great stability for most categories most of the time. This pattern of budget circles is named as 'Punctuated Equilibrium Theory'. \footnote{Punctuated Equilibrium is a term borrowed from evolutional biology, it decribes a pattern which proposes that once species appear in the fossil record they will become stable, showing little evolutionary change for most of their geological history.}
 
-According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
+
+
+
+## Explain Policy Changes
+
+
+
+Punctuated equalibrium theory describes the general pattern of budget changes. However, it is still unclear what causes the budget shifts. According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
 
 > Input (external information) $\Rightarrow$ Processing (internal institutions) $\Rightarrow$ Budget changes
 
