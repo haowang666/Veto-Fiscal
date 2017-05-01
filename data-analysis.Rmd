@@ -11,164 +11,37 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Load Merged Data and Clean it
-
-```{r, echo=FALSE, message=FALSE}
-library(MASS)
+```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
 library(ggplot2)
 library(plm)
-library(Zelig)
 library(dplyr)
 library(tidyr)
 library(stargazer)
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/vdem-merge.csv?token=AX7YEY61G5zquz7jnDfL0Sl5k-3Bw8upks5Y9BGxwA%3D%3D")
-#code polity -88 -66 -77 to na
-mydata <-
-  mydata %>%
-  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
-  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
-  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
-mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
-```
-
-# Summary statistics
-
-```{r, echo=FALSE, tidy=TRUE, results='asis'}
-stargazer(mydata)
+library(pcse)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#add polity
+mydata$polity <- mydata$e_democ - mydata$e_autoc
 ```
 
 
 
-# Get ready for the dependent variables:
-
-I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_t$ is the stability index of a certain year $t$. Since government budget has various categories: $p_{it}$ denotes the percentage of $i$th category of total expenditure. $S_t$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
-
-$$S_t = \sqrt{\sum_{i = 1}^i (p_{it} -p_{it-1})^2} ~~~~~~~~~~~~~~~~~~~~ (1)$$ 
-
-
-
-```{r generate DV, echo=FALSE, message=FALSE}
-# subpentrans_EXP subpentrans_GDPGSRE get rid of, too many missings
-mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
-names(mydata)
-missmap(mydata)
-#really bad data
-#----------------------------------------------------------------------------
-#To save computational power, just do multiple imputation of the GSRE part
-mydata1 <- select(mydata, cowcode, year, expend_security_EXP: owelfarespend_GDPGSRE)
-
-#Pick remaining data:
-mydata2 <- select(mydata, -(expend_security_EXP: owelfarespend_GDPGSRE))
-
-
-#Too many missings, gonna do multiple imputation
-set.seed(1)
-a.out <- amelia(mydata1, ts= "year", cs="cowcode", m=10)
-
-
-
-#create lagged variables
-library(dplyr)
-mydata <- 
-    mydata %>%
-    group_by(cowcode) %>%
-    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
-           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
-           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
-           lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
-           lag.pensions_EXP = lag(pensions_EXP, 1), 
-           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
-           lag.education_EXP = lag(education_EXP, 1), 
-           lag.health_EXP = lag(health_EXP, 1),
-           lag.social_protection_EXP = lag(social_protection_EXP, 1),
-           lag.housing_EXP = lag(housing_EXP, 1), 
-           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
-
-
-
-
-
-missmap(a.out)
-impute1 <- a.out$imputations[[1]]
-write.amelia(obj = a.out, file.stem = impute, separate = TRUE, format = "csv")
-
-
-
-
-
-
-attach(mydata)
-mydata$S <- sqrt((expend_security_EXP - lag.expend_security_EXP)^2 +
-                   (lag.expenddefence_EXP - expenddefence_EXP)^2 +
-                   (lag.exp_public_order_EXP - exp_public_order_EXP)^2 +
-                   (lag.wagessalaries_EXP - wagessalaries_EXP)^2)
-
-
-
-
-
-
-```
-
-
-
-Some redundant codes
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#This code is using the existing percentage index
-
-#replace NA to 0. 
-dv2 <- GSRE
-dv2[is.na(dv1)] <-0
-
-
-#create lagged variable
-dv2 <- 
-    dv2 %>%
-    group_by(cowcode) %>%
-    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
-           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
-           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
-           lag.wagessalaries_EXP = lag(wagessalaries_EXP, 1), 
-           lag.pensions_EXP = lag(pensions_EXP, 1), 
-           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
-           lag.education_EXP = lag(education_EXP, 1), 
-           lag.health_EXP = lag(health_EXP, 1),
-           lag.social_protection_EXP = lag(social_protection_EXP, 1),
-           lag.housing_EXP = lag(housing_EXP, 1), 
-           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
-
-#calculate stability index
-attach(dv2)
-yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
-     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
-     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
-     (wagessalaries_EXP - lag.wagessalaries_EXP)^2 +
-     (pensions_EXP - lag.pensions_EXP)^2 +
-     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
-     (education_EXP - lag.education_EXP)^2 +
-     (health_EXP - lag.health_EXP)^2 +
-     (social_protection_EXP - lag.social_protection_EXP)^2 +
-     (housing_EXP - lag.housing_EXP)^2 +
-     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
-
-#attach to data
-mydata$EXP <- sqrt(yb)
-
-d <- ggplot(data = mydata) +
-     geom_density(aes(x=EXP)) +
-     ggtitle("Density Plot of Policy Stability Index") +
-     xlab("Policy Stability Index") +
-     facet_wrap(~ country)
-d
-    
-```
-
-
-
-
-Multiple imputation part 
 ```{r}
-#Multiple impuation part 
-```
+#generate same variance, different kurtosis
+set.seed(1)
+y <- rt(1000, 3)
+z <- rnorm(1000, 0, 3)
+x <- seq(from = 1, 
+         to = 1000,
+         by = 1)
+plotdata <- as.data.frame(cbind(x, y, z))
 
+ggplot(data = plotdata) +
+  geom_density(aes(x = y), color = "blue") +
+  geom_density(aes(x = z), color = "red") +
+  xlab("") +
+  annotate("text", x = -7, y = 0.3, label = "Blue Line: LK = 0.24, Variance = 3") +
+  annotate("text", x = -7, y = 0.28, label = "Red Line: LK = 0.12, Variance = 3") 
+
+
+```
 

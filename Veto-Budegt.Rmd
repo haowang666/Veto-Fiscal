@@ -24,7 +24,7 @@ citecolor: blue
 header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
 ---
 
-**Key words**: veto player, public policy, budget, punctuations \footnote{Replication files available on author's Github account: https://github.com/haowang666}
+**Key words**:  budget policy, institutional frictions, punctuations \footnote{Replication files available on author's Github account: https://github.com/haowang666}
 
 
 \newpage
@@ -33,19 +33,20 @@ header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
 
 # Introduction
 
-Government 
+Budget policy is a key aspect of government activity, one that attracts lots of academic attentions in the past few years. What can explain the changes of budgetary settings? Why budgetary changes are  stable in some countries but less so and more punctuated in other countries? What are the possible mechanisms that can explain the differences? These questions are not yet fulled explored. 
+This project test the budget stability hypothesis with a newly-compiled dataset: GSRE (Global State Revenues and Expenditures dataset). 
 
 
-Veto player theory [@Tsebelis2002] defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. 
-
-
-This theory predicts that: when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a corollary is that institutional checks lead to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from status quo equilibrium. 
+Government policy making involves negotiations of different branches and institutions. In democratic countries, to pass a policy modification requires the majority rule. This requirement makes the status quo at an advantageous position: any further move has to beat the status quo with a majority of votes. This instituional constraint is featured in the 'veto-player' theory [@Tsebelis2002]. 
+Veto player theory defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. Consequently, when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a corollary is that institutional checks lead to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from the status quo equilibrium. 
 
 @TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. Their results show that countries with more veto players have more stable budget policies. 
 
-On the other hand, veto player theory also implies that more veto players make politicians harder to adjust current policies. This is particularly salient in countries with multiple veto players (e.g. the United States). During some time periods with exogenous shocks, the policy stability can be harmful and politicians may react to the long-time stability with rapid changes of policies, which forms a policy punctuation. 
+On the other hand, veto player theory also implies that more veto players makes politicians harder to adjust current policies. This is particularly salient in countries with multiple veto players (e.g. the United States). During some time periods with exogenous shocks, the policy stability can be harmful and politicians may react to the long-time stability with rapid changes of policies, which forms a policy punctuation. 
 
-This theoretical expectation leads to another potential hypothesis: the amount of veto power may lead to larger policy punctuation. Punctuated Equilibrium Theory (PET) [@JohnBevan2012  @JonesBaumgartner2012] argues that government budget shifts over due to the over-attention and under-attention to certain policy areas. Consequently, it features with long periods of stability and short periods of radical changes. Considering the institutional constraints, we also want to test the effect of veto player on policy punctuation. 
+This theoretical expectation leads to another potential outcome: the amount of veto power may lead to larger policy punctuation. While stability refers to the overall changes, punctuation decribes the distribution of policy changes. They may seem incompatible at this moment, but actually they are not and we will address it in the later sections. 
+
+Punctuated Equilibrium Theory (PET) [@JohnBevan2012  @JonesBaumgartner2012] argues that government budget shifts over due to the over-attention and under-attention to certain policy areas. Consequently, it features with long periods of stability and short periods of radical changes. Considering the institutional constraints, we also want to test the effect of veto player on policy punctuation. 
 
 Our study contributes to the existing literature in two parts: First, with the newly released GSRE data, we extend the coverage to a much broader sample size. Till now most empirical studies on budget changes are drawn from OECD countries, although a few studies have started looking at nondemocratic cases, they are mostly cases studies [@Baumgartneretal2017 @LamChan2015]. Second, we systematically evaluate the two theories. Our results show that institutional constraints lead to more stable policy changes. However, there is little evidence that institutional constraints lead to policy punctuation. 
 
@@ -59,8 +60,10 @@ Our study contributes to the existing literature in two parts: First, with the n
 Governments change budget policy regularly. The amount of budget allocated to each specific program vary from year to year, we can differentiate the budget changes into two categories: deliberate change and automatic changes [@TsebelisChang2004]. The automatic changes are often a reflection of the environmental factors such as socio-economic development. The deliberate change requires cooperation of different political actors to break the current policy equilibrium. In this project we study the dynamics of the budget changes. In particular, we want to explore the mechanisms of the budget percentage changes. 
 
 
-Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shift smoothly, in an incremental patter. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. His model ignores the internal institutional frictions, arguing that policy shifts features a pattern of randomness.
-Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. Later on this model is transformed by John Padgett in a theory of policy punctuations. Through the long-term observation of the U.S. federal budgetary expenditure, Padgett finds that budget policy remain minimal changes over a long term period and have huge fluctuations in some short-periods [@Padget1980]. The entire pattern resembles some tall towns on a flat land: at most of the time there is no changes, but when there is a change, the magnitude is huge. @Jonesetal1998 test this hypothesis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater changes than is typically portrayed in the literature, even if there is great stability for most categories most of the time. This pattern of budget circles is named as 'Punctuated Equilibrium Theory'. \footnote{Punctuated Equilibrium is a term borrowed from evolutional biology, it decribes a pattern which proposes that once species appear in the fossil record they will become stable, showing little evolutionary change for most of their geological history.}
+Scholars developed multiple models addressing the nature of budget shifts. Early models assume no internal frictions and budget can shift smoothly in an incremental pattern. For instance @Wildavsky1964 proposes an incremental model of budgetary model based on the observations of the federal budget constructions of the U.S. government. His model ignores the internal institutional frictions, arguing that policy shifts features a pattern of randomness.
+
+
+Incremental model predicts that budget changes (the between-year differences) will approximate a Gaussian distribution due to the randomness of decision information. Later on this model is transformed by John Padgett in a theory of policy punctuations. Through the long-term observation of the U.S. federal budgetary expenditure, Padgett finds that budget policy remain minimal changes over a long term period and have huge fluctuations in some short-periods [@Padget1980]. The entire pattern resembles some tall towns on a flat land: at most of the time there is no changes, but when there is a change, the magnitude is huge. @Jonesetal1998 test this hypothesis with congressional budget authority of the U.S. government, of which they find that government spending is characterized by much greater changes than is typically portrayed in the literature, even if there is great stability for most categories most of the time. This pattern of budget circles is named as 'Punctuated Equilibrium Theory'. \footnote{Punctuated Equilibrium is a term borrowed from evolutionary biology, it describes a pattern which proposes that once species appear in the fossil record they will become stable, showing little evolutionary change for most of their geological history.}
 
 
 
@@ -68,12 +71,43 @@ Incremental model predicts that budget changes (the between-year differences) wi
 ## Explain Policy Changes
 
 
-
-Punctuated equalibrium theory describes the general pattern of budget changes. However, it is still unclear what causes the budget shifts. According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
+Punctuated equilibrium theory describes the general pattern of budget changes. However, it is still unclear what causes the budget shifts. According to @JonesBaumgartner2012, to explain the changes of budget we would need to incorporate both internal institutional constraints and external information flows. Efficient budget policy requires both accurate reflection of the external information and low levels of internal constraints. We can model this as the following system:
 
 > Input (external information) $\Rightarrow$ Processing (internal institutions) $\Rightarrow$ Budget changes
 
 Both the first step and the second step can influence the final budget outcomes. The information collection can be inefficient and prone to erroneous messages. In a complex environment like politics, it is harder for politicians to decipher signals from the noise. Consequently, inefficient information gathering may lead to inefficient policy decisions. On the other hand, decisions are also bounded by institutional constraints. 'The detection and interpretation of signals may be limited by the system's structure - incentives, for example, that encourage focusing on internal dynamics, such as bureaucratic infighting rather than problem solving' [@Faganetal2017, p.3]. 
+
+The effect of veto player structure comes into play in the second stage: the bargaining process of the internal political institutions. @JonesBaumgartner2012 use the word 'friction' in their analysis, which captures the obstacles to policy changes by institutional arrangements. Their studies in general show that the number of veto players affects the budget changes over time. 
+
+In @Tsebelis2002 's original settings. Veto player is defined by the ideological distances of effective political parties (named as partisan veto players) and institutional veto players (institutions/ government branches whose consent are required by constitution in enacting policy modifications). In democratic government with a checks-and-balances design, veto players can be any government branch that can effectively oppose a policy change. Consequently, more institutional veto players and more distant political parties lead to higher policy stability. 
+
+Both punctuated equilibrium theory and veto player theory emphasize the importance of veto player/frictions. They share 
+
+
+
+ \@ref(fig:LK-Var)
+
+```{r LK-Var, echo=FALSE, fig.cap="Same Variance Different Peakness", message=FALSE, warning=FALSE}
+#generate same variance, different kurtosis
+set.seed(1)
+y <- rt(1000, 3)
+z <- rnorm(1000, 0, 3)
+x <- seq(from = 1, 
+         to = 1000,
+         by = 1)
+plotdata <- as.data.frame(cbind(x, y, z))
+
+ggplot(data = plotdata) +
+  geom_density(aes(x = y), color = "blue") +
+  geom_density(aes(x = z), color = "red") +
+  xlab("") +
+  annotate("text", x = -7, y = 0.3, label = "Blue Line: LK = 0.24, Variance = 3") +
+  annotate("text", x = -7, y = 0.28, label = "Red Line: LK = 0.12, Variance = 3") 
+
+
+```
+
+
 
 
 
@@ -165,6 +199,7 @@ L-Kurtosis (LK) is the 4th L-moment of the moment statistics. It is used to summ
 ```{r example, echo=FALSE, fig.cap="LK Score Example", message=FALSE, warning=FALSE}
 
 library(Lmoments)
+#Lcoefs()
 set.seed(1)
 x <- rnorm(1000) #Normal data
 x2 <- 4^x #One transformation
@@ -175,8 +210,8 @@ ggplot(data = test) +
   geom_density(aes(x = x2), color = "red") +
   xlim(-5, 5) +
   xlab("") +
-  annotate("text", x = -4, y = 0.55, label = "Red Line: LK = 0.84") +
-  annotate("text", x = -4, y = 0.5, label = "Blue Line: LK = 0.07") 
+  annotate("text", x = -4, y = 0.55, label = "Red Line: LK = 0.44") +
+  annotate("text", x = -4, y = 0.5, label = "Blue Line: LK = 0.12") 
 
 
 ```
