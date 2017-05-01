@@ -654,7 +654,8 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
+#a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk0 <- t(b)[, 4]
@@ -684,7 +685,7 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk1 <- t(b)[, 4]
@@ -715,7 +716,7 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk2 <- t(b)[, 4]
@@ -746,7 +747,7 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk3 <- t(b)[, 4]
@@ -777,7 +778,7 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk4 <- t(b)[, 4]
@@ -808,7 +809,7 @@ dv2 <- select(dv2, cowcode, c(14:23))
 
 aql <- melt(dv2, id.vars = c("cowcode"))
 aql <- na.omit(aql)
-a <- tapply(aql$value, aql$cowcode, function(x) Lmoments(x, returnobject = FALSE))
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
 b <- as.data.frame(matrix(unlist(a), nrow = 4))
 #transpose, this is the LK score
 y_lk5 <- t(b)[, 4]

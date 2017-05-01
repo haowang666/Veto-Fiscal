@@ -81,7 +81,7 @@ The effect of veto player structure comes into play in the second stage: the bar
 
 In @Tsebelis2002 's original settings. Veto player is defined by the ideological distances of effective political parties (named as partisan veto players) and institutional veto players (institutions/ government branches whose consent are required by constitution in enacting policy modifications). In democratic government with a checks-and-balances design, veto players can be any government branch that can effectively oppose a policy change. Consequently, more institutional veto players and more distant political parties lead to higher policy stability. 
 
-Both punctuated equilibrium theory and veto player theory emphasize the importance of veto player/frictions. They share 
+Both punctuated equilibrium theory and veto player theory emphasize the importance of veto player/frictions. They share many similarities in predicting the overall budget changes. Veto player theory predicts that        
 
 
 
@@ -263,126 +263,7 @@ Table \ref{LK} reports L-Kurtosis score result.
 Table \ref{twoways} reports twoway fixed effect result, as a robustness check [@BeckKatz2011].
 
 
-<!--
-## Pooled OLS with Lagged DV and Panel Corrected Standard Errors
 
-First we conduct a pooled model with lagged dependent variable and panel corrected standard standard errors [@BeckKatz1995]. 
-
-
-\begin{equation}
-S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4} RAI_{jt} + \beta_{5} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
-(\#eq:pooled)
-\end{equation}
-
-<!--
-
-
-```{r pcse, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
-#pcse
-# stability_0 e_h_polcon5  v2xps_party v2dlconslt v2x_feduni v2x_corr polity e_peginiwi
-#create lagged DV
-mydata <- 
-    mydata %>%
-    group_by(cowcode) %>%
-    mutate(lag.stability_0 = lag(stability_0, 1), 
-           lag.stability_1 = lag(stability_1, 1),
-           lag.stability_2 = lag(stability_2, 1), 
-           lag.stability_3 = lag(stability_3, 1), 
-           lag.stability_4 = lag(stability_4, 1), 
-           lag.stability_5 = lag(stability_5, 1)
-           )
-
-mydata$polity <- mydata$e_democ - mydata$e_autoc
-
-plm0 <- plm(stability_0 ~  lag.stability_0 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt + 
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War,  
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-plm1 <- plm(stability_1 ~  lag.stability_1 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt + 
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War , 
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-plm2 <- plm(stability_2 ~  lag.stability_2 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-plm3 <- plm(stability_3 ~  lag.stability_3 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt + 
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War , 
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-plm4 <- plm(stability_4 ~  lag.stability_4 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt + 
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-plm5 <- plm(stability_5 ~  lag.stability_5 +
-             e_h_polcon5 +  v2xps_party +
-             v2dlconslt + 
-             v2x_feduni + 
-             v2x_corr + 
-             polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War , 
-            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
-               data = mydata)
-
-stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE, 
-          title = "Lagged DV with PCSE", label = "plm",
-          dep.var.labels.include = FALSE,
-          model.numbers  = TRUE,
-          omit = c("e_Civil_War", "lag.stability_5", "lag.stability_4",
-                   "lag.stability_3", "lag.stability_2", "lag.stability_1",
-                   "lag.stability_0", "e_migdpgro"), 
-          covariate.labels = c("Constraints", "Party", "Consult", 
-                               "Federalism", "Corruption", "Polity", "Censorship",
-                               "Education", "GDP pc"),
-          omit.stat = c("adj.rsq", "f", "res.dev", "ser") ,
-           notes = "DV: Stability Index, higher value indicates more volatile policies")
-
-```
-
-
--->
 
 
 
@@ -396,94 +277,118 @@ S_{jt} = a_j + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4}RAI_{jt} + \b
 \end{equation}
 
 
+
+```{r case-selection, echo=FALSE}
+# some preparation: pick cases with variation
+library(dplyr)
+mydata1 <- dplyr::select(mydata, 
+                         country,
+                         cowcode, 
+                         year,
+                         e_h_polcon5,
+                         v2x_jucon,  
+                         v2xlg_legcon,
+                         v2x_feduni, 
+                         v2xps_party, 
+                         v2x_corr, 
+                         polity, 
+                         e_migdppcln,
+                         e_migdpgro,
+                         e_Civil_War,
+                         stability_0,
+                         stability_1,
+                         stability_2,
+                         stability_3,
+                         stability_4,
+                         stability_5)
+mydata1 <- na.omit(mydata1)
+mydata3 <- mydata1 %>%
+           distinct(country)
+
+
+
+group1 <- c("Brazil", "Mexico", "Nicaragua", "Colombia")
+mydata2 <- filter(mydata1, country %in% group1 )
+
+
+
+ggplot(data = mydata2) +
+    geom_point(aes(x = e_h_polcon5, y = stability_1)) +
+    facet_wrap( ~ country, ncol = 2)
+
+
+
+```
+
+
+
+
+
 ```{r panelreg, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
 ## Fixed Effect
 
-pmodel0 <- plm(stability_0_aj ~ 
+pmodel0 <- plm(stability_0 ~ 
              e_h_polcon5 +  
              v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
              v2x_corr + 
              polity + 
-             v2mecenefm + 
-             e_peaveduc + 
+             e_migdppcln +
+             e_migdpgro +
+             e_peginiwi +
+             e_Civil_War, 
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+
+pmodel1 <- plm(stability_1 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
+             v2x_corr + 
+             polity + 
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-pmodel1 <- plm(stability_1_aj ~ 
-            e_h_polcon5 +  
-            v2xps_party +
-            v2dlconslt +
-            v2x_feduni + 
-            v2x_corr + 
-            polity + 
-            v2mecenefm + 
-            e_peaveduc + 
-            e_migdppcln + 
-            e_migdpgro +
-            e_Civil_War ,  
+
+pmodel2 <- plm(stability_2 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
+             v2x_corr + 
+             polity + 
+             e_migdppcln +
+             e_migdpgro +
+             e_Civil_War, 
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel2 <- plm(stability_2_aj ~ 
-            e_h_polcon5 +  
-            v2xps_party +
-            v2dlconslt +
-            v2x_feduni + 
-            v2x_corr + 
-            polity + 
-            v2mecenefm + 
-            e_peaveduc + 
-            e_migdppcln + 
-            e_migdpgro +
-            e_Civil_War ,  
+pmodel3 <- plm(stability_3 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
+             v2x_corr + 
+             polity + 
+             e_migdppcln +
+             e_migdpgro +
+             e_Civil_War, 
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
-pmodel3 <- plm(stability_3_aj ~ 
-            e_h_polcon5 +  
-            v2xps_party +
-            v2dlconslt +
-            v2x_feduni + 
-            v2x_corr + 
-            polity + 
-            v2mecenefm + 
-            e_peaveduc + 
-            e_migdppcln + 
-            e_migdpgro +
-            e_Civil_War ,  
+pmodel4 <- plm(stability_4 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
+             v2x_corr + 
+             polity + 
+             e_migdppcln +
+             e_migdpgro +
+             e_Civil_War, 
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
-
-pmodel4 <- plm(stability_4_aj ~ 
-            e_h_polcon5 +  
-            v2xps_party +
-            v2dlconslt +
-            v2x_feduni + 
-            v2x_corr + 
-            polity + 
-            v2mecenefm + 
-            e_peaveduc + 
-            e_migdppcln + 
-            e_migdpgro +
-            e_Civil_War ,  
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
-
-pmodel5 <- plm(stability_5_aj ~ 
-            e_h_polcon5 +  
-            v2xps_party +
-            v2dlconslt +
-            v2x_feduni + 
-            v2x_corr + 
-            polity + 
-            v2mecenefm + 
-            e_peaveduc + 
-            e_migdppcln + 
-            e_migdpgro +
-            e_Civil_War ,  
+pmodel5 <- plm(stability_5 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
+             v2x_corr + 
+             polity + 
+             e_migdppcln +
+             e_migdpgro +
+             e_Civil_War, 
             data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
 
 
@@ -496,6 +401,9 @@ stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5, header = FALSE,
                                "Education", "GDP pc"),
           omit.stat = c("adj.rsq", "f", "res.dev", "ser"),
            notes = "DV: Stability Index, higher value indicates more volatile policies")
+
+
+
 
 ```
 
@@ -511,91 +419,67 @@ S_{jt} = a_j  + \lambda_t + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta_{4
 ```{r twoway, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
 ## Twoway Effect
 
-tmodel0 <- plm(stability_0_aj ~ 
-                 e_h_polcon3 +  
+tmodel0 <- plm(stability_0 ~ 
+                 e_h_polcon5 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel1 <- plm(stability_1_aj ~ 
-                 e_h_polcon3 +  
+tmodel1 <- plm(stability_1 ~ 
+                 e_h_polcon5 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel2 <- plm(stability_2_aj ~ 
-                 e_h_polcon3 +  
+tmodel2 <- plm(stability_2 ~ 
+                 e_h_polcon5 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
-tmodel3 <- plm(stability_3_aj ~ 
-                 e_h_polcon3 +  
+tmodel3 <- plm(stability_3 ~ 
+                 e_h_polcon5 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel4 <- plm(stability_4_aj ~ 
+tmodel4 <- plm(stability_4 ~ 
                  e_h_polcon3 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
-tmodel5 <- plm(stability_5_aj ~ 
+tmodel5 <- plm(stability_5 ~ 
                  e_h_polcon3 +  
                  v2xps_party +
-                 v2dlconslt +
-                 v2x_feduni + 
                  v2x_corr + 
                  polity + 
-                 v2mecenefm + 
-                 e_peaveduc + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data=mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
 stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5, 
@@ -686,6 +570,27 @@ stargazer(lm0, lm1, lm2, lm3, lm4, lm5, header = FALSE,
 
 ```
 
+
+
+
+# Robustness check 
+
+
+
+```{r, echo=FALSE, message=FALSE}
+pmodel <- plm(stability_2 ~ 
+            v2x_jucon +  
+            v2xlg_legcon +
+            v2x_feduni + 
+            v2x_corr + 
+            v2xps_party +
+            polity + 
+            e_peaveduc + 
+            e_migdppcln + 
+            e_migdpgro +
+            e_Civil_War ,  
+            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+```
 
 
 
@@ -851,6 +756,133 @@ The relationship between the raw DV and the imputed DV is shown in the following
 
 
 \newpage
+
+
+
+
+<!--
+## Pooled OLS with Lagged DV and Panel Corrected Standard Errors
+
+First we conduct a pooled model with lagged dependent variable and panel corrected standard standard errors [@BeckKatz1995]. 
+
+
+\begin{equation}
+S_{jt} = \beta_0 + \beta_{1} S_{jt-1} + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4} RAI_{jt} + \beta_{5} Corrupt_{jt} +\mathbf{Z} \beta +\epsilon_{jt}
+(\#eq:pooled)
+\end{equation}
+
+<!--
+
+
+```{r pcse, echo=FALSE, message=FALSE, tidy=TRUE, results="asis"}
+#pcse
+# stability_0 e_h_polcon5  v2xps_party v2dlconslt v2x_feduni v2x_corr polity e_peginiwi
+#create lagged DV
+mydata <- 
+    mydata %>%
+    group_by(cowcode) %>%
+    mutate(lag.stability_0 = lag(stability_0, 1), 
+           lag.stability_1 = lag(stability_1, 1),
+           lag.stability_2 = lag(stability_2, 1), 
+           lag.stability_3 = lag(stability_3, 1), 
+           lag.stability_4 = lag(stability_4, 1), 
+           lag.stability_5 = lag(stability_5, 1)
+           )
+
+mydata$polity <- mydata$e_democ - mydata$e_autoc
+
+plm0 <- plm(stability_0 ~  lag.stability_0 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt + 
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+              e_Civil_War,  
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+plm1 <- plm(stability_1 ~  lag.stability_1 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt + 
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+              e_Civil_War , 
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+plm2 <- plm(stability_2 ~  lag.stability_2 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt +
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+               e_Civil_War , 
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+plm3 <- plm(stability_3 ~  lag.stability_3 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt + 
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+              e_Civil_War , 
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+plm4 <- plm(stability_4 ~  lag.stability_4 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt + 
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+               e_Civil_War , 
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+plm5 <- plm(stability_5 ~  lag.stability_5 +
+             e_h_polcon5 +  v2xps_party +
+             v2dlconslt + 
+             v2x_feduni + 
+             v2x_corr + 
+             polity+ 
+             v2mecenefm + e_peaveduc + 
+             e_migdppcln +  e_migdpgro +
+               e_Civil_War , 
+            index=c("cowcode", "year"), na.action=na.omit, model="pooling",
+               data = mydata)
+
+stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE, 
+          title = "Lagged DV with PCSE", label = "plm",
+          dep.var.labels.include = FALSE,
+          model.numbers  = TRUE,
+          omit = c("e_Civil_War", "lag.stability_5", "lag.stability_4",
+                   "lag.stability_3", "lag.stability_2", "lag.stability_1",
+                   "lag.stability_0", "e_migdpgro"), 
+          covariate.labels = c("Constraints", "Party", "Consult", 
+                               "Federalism", "Corruption", "Polity", "Censorship",
+                               "Education", "GDP pc"),
+          omit.stat = c("adj.rsq", "f", "res.dev", "ser") ,
+           notes = "DV: Stability Index, higher value indicates more volatile policies")
+
+```
+
+
+-->
+
+
+
 
 <!--Not for Now
 ```{r pairs, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
