@@ -533,7 +533,7 @@ stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5,
 
 
 
-The results in Table \ref{fe} and Table \ref{twoways} are quite expected. Unlike our expection, POLCON show little effect on budget volatility. 
+The results in Table \ref{fe} and Table \ref{twoways} are quite expected. Unlike our expection, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON shows in the 
 
 
 
