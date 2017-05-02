@@ -6,7 +6,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-title: "Institutional Constraints and Fiscal Policy Stability"
+title: "Institutional Constraints and Budget Stability"
 author: 
 - Hao Wang
 - Arizona State University
@@ -18,7 +18,7 @@ geometry: margin=1in
 fontsize: 12pt
 spacing: double
 papersize: letter
-bibliography: D:/Dropbox/bib/Haowang.bib
+bibliography: ~/Dropbox/bib/Haowang.bib
 biblio-style: apsr
 citecolor: blue
 header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace, rotating}
@@ -144,13 +144,13 @@ Therefore we have the following two hypothesis:
 
 Scholars study both the input and processing stages under democratic regimes (especially OECDs), arguing that free and transparent information processing as well as less institutional constraints lead to incremental budget changes [@JonesBaumgartner2012]. While OCED countries often have more avialeble data, their long-time stable political structure leads to fundamental problems of causal inference: the independent variable (frictions) seldom varies. For instance, the amount of institutional veto players of the United States remain the same since established. This invariability of independent variable causes trouble for demonstrating the effect of treatment (frictions): since the country-level friction index does not vary across time, the major difference only exists in the cross-sectional level. 
 
-To capture this effect, a solution is pooled time-series analysis with panel corrected standard errors [@BeckKatz1995]. @BeckKatz2001 considers the example of demcoracy, a time-invariant variable on conflict. 
+To capture this effect, a solution is pooled time-series analysis with panel corrected standard errors [@BeckKatz1995]. @BeckKatz2001 considers the example of democracy, a time-invariant variable on conflict. 
 They show that estimates obtained under fixed effect fail to show any relation between
-democracy and peace because it filters out all the effects of  time-invariant effect. On the other hand, pooled regression is biased in failing to estimate the individual level omitted variables. Cross-national studies including different countries will always encounter the country-level hetegeneity issue. Ignoring this not only leads to a biased estimate, but also causes problems of causal inference. 
+democracy and peace because it filters out all the effects of  time-invariant effect. On the other hand, pooled regression is biased in failing to estimate the individual level omitted variables. Cross-national studies including different countries will always encounter the country-level heterogeneity issue. Ignoring this not only leads to a biased estimate, but also causes problems of causal inference. 
 
-Our strategy to circumvent this problem is through data selection. We construct our dataset with GSRE, excluding stable democracies and stable autocracies of which the political insitutions remain the same between 1960 and 2006. This leaves us with total 93 countries. The detailed list of countries are provided in appendix Table \ref{countrylist}. This selection allows us to use fixed effect to estimate the individual level time-invariant effects while making sure the independent variable and dependent variables are not constant. 
+Our strategy to circumvent this problem is through data selection. We construct our dataset with GSRE, excluding stable democracies and stable autocracies of which the political institutions remain the same between 1960 and 2006. This leaves us with total 93 countries. The detailed list of countries are provided in appendix Table \ref{countrylist}. This selection allows us to use fixed effect to estimate the individual level time-invariant effects while making sure the independent variable and dependent variables are not constant. 
 
-Studying budget changes in nondemocratic countries can quite be different from electoral democracies. First, there is no free and fair elections in authoritarian regimes. Election and regular political participation face the "dictator's dilemma" in nondemocracies [@Wintrobe1998]. Second, while serving as the information provider and monitor of the government actions in democratic regimes, media and press are not independent in autocracies. Overall these create barriers for information input and leads to inefficient information collection in authoritarian countries. On the other hand, institutional constraints are weaker in nondemocracies. Unlike democracies, the dictator has better control over the government and the legislative institutions. For instance in a democratic government with checks-and-balances institutional design, the executive branch will be constrained by the legislature, which implies a longer period of negotiation and cooperation. However political elites in nondemocracies faces less, sometimes no political contraints [@Svolik2012]. The combination of inefficient information gathering and less political constraints may lead to larger variation of budget changes. 
+Studying budget changes in nondemocratic countries can quite be different from electoral democracies. First, there is no free and fair elections in authoritarian regimes. Election and regular political participation face the "dictator's dilemma" in nondemocracies [@Wintrobe1998]. Second, while serving as the information provider and monitor of the government actions in democratic regimes, media and press are not independent in autocracies. Overall these create barriers for information input and leads to inefficient information collection in authoritarian countries. On the other hand, institutional constraints are weaker in nondemocracies. Unlike democracies, the dictator has better control over the government and the legislative institutions. For instance in a democratic government with checks-and-balances institutional design, the executive branch will be constrained by the legislature, which implies a longer period of negotiation and cooperation. However political elites in nondemocracies faces less, sometimes no political constraints [@Svolik2012]. The combination of inefficient information gathering and less political constraints may lead to larger variation of budget changes. 
 
 So far only a few studies look at budgetary patterns in authoritarian countries. In the Hong Kong case, @LamChan2015 propose that non-democracies are characterized by less friction than democracies because the institutional design of these regimes centralizes power at the highest level of government, meanwhile there is little check and balances of the executive branch. Lacking the incentive of electoral competition, officials are less motivated to monitor and respond to the external environment. Consequently, there is high levels of inertia of environmental changes. Errors of information may accumulate over time and threaten the regime stability. @Baumgartneretal2017 conduct the first cross-national studies of budgetary changes in authoritarian countries (Brazil, Turkey, Malta and Russia). Their analysis suggests that authoritarian countries have different patterns of policy shifts with the democratic regimes. However, the argument is only moderately supported by their empirical evidence due to the lack of data. 
 
@@ -161,10 +161,10 @@ Overall, we hope to expand the current research agenda of policy shifts to nonde
 
 ## Data sources
 
-Data in this project comes from various sources. The measurement components of dependent variable come from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set (The Classification of the Functions of Government), GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the @Geddesetal2014 data set. Table \ref{DVparts} in Appendix reports the components of dependent variable. Total we use 10 measuerement components of budget policy, which cover a variety of policies including security, defence, wages, education, health, housing etc. We combine the changes of each individual category to make it an overall indicator of the volitality index. Detailed calculation is in the next section. 
+Data in this project comes from various sources. The measurement components of dependent variable come from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set (The Classification of the Functions of Government), GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the @Geddesetal2014 data set. Table \ref{DVparts} in Appendix reports the components of dependent variable. Total we use 10 measurement components of budget policy, which cover a variety of policies including security, defence, wages, education, health, housing etc. We combine the changes of each individual category to make it an overall indicator of the volatility index. Detailed calculation is in the next section. 
 
 
-Data on institutional constraints come from the political constraints index (POLCON) [@Henisz2000] and the Varieties of Democracy (Vdem) project [@Vdem2016]. Henisz's measurement is a combined indicator of veto powers of different independent branches of government [@HeniszMansfield2006]. Specifically, veto powers are from the executive, upper and lower legislative chambers, judiciary, and sub-federal institutions. Countries lacking any formal veto points receive a point of 0. The initital score is then modified to taken into account of the party composition of the executive and legislative branches. Alignments will decrease POLCON index and with-branch heterogeneity will increase POLCON index [see @HeniszMansfield2006 p. 195]. In the newest version, measure is also modified to take into account the extent of alignment across branches of government using data on the party composition of the executive and legislative branches.
+Data on institutional constraints come from the political constraints index (POLCON) [@Henisz2000] and the Varieties of Democracy (Vdem) project [@Vdem2016]. Henisz's measurement is a combined indicator of veto powers of different independent branches of government [@HeniszMansfield2006]. Specifically, veto powers are from the executive, upper and lower legislative chambers, judiciary, and sub-federal institutions. Countries lacking any formal veto points receive a point of 0. The initial score is then modified to taken into account of the party composition of the executive and legislative branches. Alignments will decrease POLCON index and with-branch heterogeneity will increase POLCON index [see @HeniszMansfield2006 p. 195]. In the newest version, measure is also modified to take into account the extent of alignment across branches of government using data on the party composition of the executive and legislative branches.
 
 
 Data on division of power draws from the Political Institution Index [@Becketal2001]. 
@@ -181,10 +181,10 @@ We measure the budget stability as the simple euclidean distance of the between-
 
 \begin{equation}
 V_{it} = \sqrt{\sum_{j = 1}^j (p_{ijt} -p_{ijt-1})^2} 
-(\#eq:St)
+(\#eq:volatility)
 \end{equation}
 
-For the percentage of each expenditure term $p_{ijt}$, $p_{ijt} \in [0, 1]$, $V_{jt}$ has the same boundary as $[0, 1]$. Larger score means more volatile budget policies. We contruct a single dependent variable rather than use the raw percentage changes of each categories for several reasons. First, since our research interest is budget stability as a whole, a unified index of all the budget categories better serves our purpose. Some budget categories will experience dramatic shifts in certain years while other budget remain relatively stable. Our measurement will penalize the particular changes, thus lead to a conservative overall estimate. Second, many categories are missing for the single observation, for instance, in 1970, El Salvado has statistics on health, education spending, but categories security spending and defence spending are missing. Using individual components will reduce the sample size to less than 800, which loses statistical power a lot. 
+For the percentage of each expenditure term $p_{ijt}$, $p_{ijt} \in [0, 1]$, $V_{it}$ has the same boundary as $[0, 1]$. Larger score means more volatile budget policies. We construct a single dependent variable rather than use the raw percentage changes of each categories for several reasons. First, since our research interest is budget stability as a whole, a unified index of all the budget categories better serves our purpose. Some budget categories will experience dramatic shifts in certain years while other budget remain relatively stable. Our measurement will penalize the particular changes, thus lead to a conservative overall estimate. Second, many categories are missing for the single observation, for instance, in 1970, El Salvado has statistics on health, education spending, but categories security spending and defence spending are missing. Using individual components will reduce the sample size to less than 800, which loses statistical power a lot. 
 
 
 ### L-Kurtosis Score
@@ -200,15 +200,15 @@ The main independent variable in this study is the political constraint index (P
 
 ### Other Controls
 
-While our main interest is to evalute the relation between POLCON and policy volatility, we include other control variables to account for the potential associations that may influence our results. Follow @TsebelisChang2004, @Faganetal2017 and @Baumgartneretal2017, we include *Polity* score measuring the regime type. Also we inlude the party institutionalization index, suggested by @HeniszMansfield2006. A measurement of corruption is included as budget policies are often related with corruption activities in nonstable democracies [@Keefer2007]. We also include logged GDP pc and GDP growth rates relecting economic development. Finally, we include a dummy variable of Civil War status as countries currently involving in civil war tend to have much volatile budget policies than in the peace time. 
+While our main interest is to evaluate the relation between POLCON and policy volatility, we include other control variables to account for the potential associations that may influence our results. Follow @TsebelisChang2004, @Faganetal2017 and @Baumgartneretal2017, we include *Polity* score measuring the regime type. Also we include the party institutionalization index, suggested by @HeniszMansfield2006. A measurement of corruption is included as budget policies are often related with corruption activities in non-stable democracies [@Keefer2007]. We also include logged GDP pc and GDP growth rates reflecting economic development. Finally, we include a dummy variable of Civil War status as countries currently involving in civil war tend to have much volatile budget policies than in the peace time. 
 
 
 
 # Method and Results
 
-GSRE data set contain lots of missing data, we did 5 multiple imputations and report results of the original dependent variable as well as the 5 imputed ones. Detailed procedure is described in Appedix missing data section. In the results tables, colomun 1 reports the result without multiple imputation, column 2 to 6 report results with multiple imputation of the GSRE data.
+GSRE data set contain lots of missing data, we did 5 multiple imputations and report results of the original dependent variable as well as the 5 imputed ones. Detailed procedure is described in Appendix missing data section. In the results tables, column 1 reports the result without multiple imputation, column 2 to 6 report results with multiple imputation of the GSRE data.
 
-Since our major independent variable is POLCON, which is relatively stable over time, the most efficient method is a pooled time-series analysis. However, the pooled model is rejected in the statistical test between pooled OLS and LSDV model. The second best method is random effect model, which allows estimating time-invariant effects [@BellJones2015]. Again the RD model is rejected in the Hausman test. While fixed effect is picked by the data structure, it is known that fixed effect model is bad at throwing time-invariant effects away [@BeckKatz2001]. We circumvent this issue by selecting cases with both IV and DV varying across time \footnote{again we did the tests from pooled ols to random effect based on the trimmed data, still FE model is preferred}. Countries of which the POLCON index remain 0 are dropped from the analysis. The remaining cases exibit at least some changes of POLCON index over the time span 1960 - 2006.
+Since our major independent variable is POLCON, which is relatively stable over time, the most efficient method is a pooled time-series analysis. However, the pooled model is rejected in the statistical test between pooled OLS and LSDV model. The second best method is random effect model, which allows estimating time-invariant effects [@BellJones2015]. Again the RD model is rejected in the Hausman test. While fixed effect is picked by the data structure, it is known that fixed effect model is bad at throwing time-invariant effects away [@BeckKatz2001]. We circumvent this issue by selecting cases with both IV and DV varying across time \footnote{again we did the tests from pooled ols to random effect based on the trimmed data, still FE model is preferred}. Countries of which the POLCON index remain 0 are dropped from the analysis. The remaining cases exhibit at least some changes of POLCON index over the time span 1960 - 2006.
 
 While the country-level fixed effect controls for the unobserved time-invariant components of each country, it is possible that there exists a time-specific fixed effect [@BeckKatz2011]. We test the potential time-specific fixed effect and the result confirms the existence of the time effect. Therefore we conduct both fixed effect and two-way fixed effects, results are reported in Table \ref{fe} and Table \ref{twoways}.
 
@@ -221,12 +221,12 @@ In equation \@ref(eq:fe), $a_i$ is the country-level time-invariant factor, *POL
 
 
 \begin{equation}
-V_{it} = a_i + \beta_{2} POLCON_{it} + \beta_{3}Party_{it} + \beta_{5} Corrupt_{it} + \mathbf{Z} \beta +\epsilon_{it}
+V_{it} = a_i + \beta_{1} POLCON_{it} + \beta_{2}Party_{it} + \beta_{3} Corrupt_{it} + \mathbf{Z} \beta +\epsilon_{it}
 (\#eq:fe)
 \end{equation}
 
 \begin{equation}
-V_{it} = a_i  + \lambda_t + \beta_{2} POLCON_{it} + \beta_{3}Party_{it} + \beta_{5} Corrupt_{it} + \mathbf{Z} \beta +\epsilon_{it}
+V_{it} = a_i  + \lambda_t + \beta_{1} POLCON_{it} + \beta_{2}Party_{it} + \beta_{3} Corrupt_{it} + \mathbf{Z} \beta +\epsilon_{it}
 (\#eq:twoways)
 \end{equation}
 
@@ -533,19 +533,39 @@ stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5,
 
 
 
-The results in Table \ref{fe} and Table \ref{twoways} are quite unexpected. Unlike our expection, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON shows in the 
+The results in Table \ref{fe} and Table \ref{twoways} are quite unexpected. Unlike our expectation, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON is only significant in the 5th multiple imputation. Standard errors are quite large in the other 4 imputations as well as in the original data and the estimated coefficients are small. In the twoway model, non of the POLCON coefficients reach the statistical significance level. 
+The direction of the coefficients though, are in the expected direction. Since our dependent variable is the Volatility index, a negative sign means the increase of POLCON will decrease the degree of budget volatility. In the not-so rigorous way, POLCON leads to more stable budget outcomes. 
 
+Polity score appears to be marginally significant. In Table \ref{fe}, Polity scores are significant in the original data as well as three imputed data sets. Controling for the year fixed effect, Polity still remain significant in 3 of the 5 imputations. According to both Table \ref{fe} and Table \ref{twoways}, higher Polity score leads to more budget volatility. This is something unexpected. Scholars like @Baumgartneretal2017, @LamChan2015 argue that democratization leads to more stable budget policies. This may due to the case selection in our study: we do not include stable democracies nor stable autocracies in the dataset. Therefore countries during the transitional periods may experience more budget policy changes due to the transition. As @Huntington2008 has pointed out, transition often means a 'misfit' between political institutions and socio-economic development, which implies more volatility.
 
-
+The most significant variable is the corruption index. We did not theorize the importance of corruption in this study, rather corruption was added as a normal control variable. However, the coefficients of corruption remain significant in all models, and the coefficients also have the largest magnitude. Apparently there is some evidence that corruption captures some variability of budget policies in the selected countries. Corruption index has a range of [0, 1]. The regression results basically infer that moving the corruption index from 0 to 1, the budget volatility index will decrease by 0.08 to 0.1, dependening on the specific dependent variable. Recall from equation \@ref(eq:volatility), our Volatility Index captures the the variability of budget changes between different years and has the range [0 , 1]. Table \ref{DVstats} in Appendix shows that the standard deviation of the Volatility Index is about 0.15. Thus the shifts of the corruption index can actually decrease the dependent variable by almost 1 standard deviation, which is a huge impact! A full exploration based on corruption will be beyond the scope of the current project, our initial intuition is that corruption may indicate clientelistic behaviors, which tend to favor the current budget policy. Therefore curruption index is related with more stable budgetary changes. 
 
 
 
 
 ## OLS with L-Kurtosis
 
-To evaluate the PET hypothesis, we conduct an 
+To evaluate the PET hypothesis, we need to change our dependent variable from the annual Volatility index to the overall punctuation measure: L-Kurtosis score. We construct the L-Kurtosis score based on the first difference changes of each budget component $p_{ijt}$. Specifically, for a certain country $i$, we first calculate the between year percentage changes of each budget component:
 
-Table \ref{LK} reports L-Kurtosis score result.
+\begin{equation}
+\Delta_{ijt} = p_{ijt} - p_{ijt-1}
+(\#eq:lkfd)
+\end{equation}
+
+Then we pooled all the $\Delta_{ijt}$ and obtain the signle LK score of country $i$ though the LK function. In equation \@ref(eq:lk), $\mathbf{\Delta_i}$ is the matrix notation of $\Delta_{ijt}$. For a specific country $i$, $\mathbf{\Delta_i}$ is a $j \times t$ matrix.  
+
+\begin{equation}
+LK_{i} = f_{LK} (\mathbf{\Delta_i})
+(\#eq:lk)
+\end{equation}
+
+Since the LK socre is an aggregated measurement of each country across the whole time period, we perform sinple OLS regression to test if POLCON is related to higher LK score \footnote{all the independent variables in the OLS are at their means}. 
+
+
+Table \ref{LK} reports L-Kurtosis score result. Quite unexpected, we did not find any variable that appears to be statistically significant. 
+
+
+
 
 ```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
 #import data from github
@@ -1063,7 +1083,7 @@ stargazer(lm0, lm1, lm2, lm3, lm4, lm5, header = FALSE,
 
 ## Country Seletion Criteria
 
-GSRE does not include OECD countries by default, we select the remaining countries based on two indicators: the political contraint index and the polity score. We drop countries of which either score does not change in the time period between 1960 and 2006. Countries like China, Vietnam, Sudan, Yemen,  Saudi Arabia etc. are classfied as stable authoritarian regimes and they are dropped from the total observations. 
+GSRE does not include OECD countries by default, we select the remaining countries based on two indicators: the political constraint index and the polity score. We drop countries of which either score does not change in the time period between 1960 and 2006. Countries like China, Vietnam, Sudan, Yemen,  Saudi Arabia etc. are classified as stable authoritarian regimes and they are dropped from the total observations. 
 
 The remaining countries are listed in Table \ref{countrylist}
 
@@ -1175,6 +1195,7 @@ stargazer(stability,
           title = "Volatility Index Table", 
           header = FALSE,
           digits = 3,
+          label = "DVstats", 
           covariate.labels = c("Original",
                                "Imputation 1",
                                "Imputation 2",
@@ -1209,8 +1230,8 @@ stargazer(lk,
 
 ## Missing Cases
 
-GSRE contains lots of missing cases. @Lall2016 systematically reanalyzed all the recent PE articles in *International Organization* and *World Politics*, and found out half of the key 'findings' disappeared. To avoid losing statistical powers and potential bias due to list-wise deletion, this article employs multiple imputation of the GSRE part data. Since GSRE part data are all measuring govermental expenditures, different categories are correlated. We use `Amelia` to perform multiple imputation with the multivariate normal distribution assumption [@Honakeretal2011]. Multiple imputation is unbiased when data are Missing at Random (MAR) as well as Missing Completely at Random (MCAR). Under Missing not at Random (MNAR),  multiple imputation is biased since missingness depends (to some extent) on missing values. In reality data are almost always MNAR, with missingness depending in part on observed data and in part on missing data. Critically, however, multiple imputationis not seriously biased under MNAR if missingness is strongly related to observed data and thus approximates MAR [see the discussion in @Lall2016].
-Results reported in the paper are from the orginal data (without multiple imputation) and first 5 multiple imputation. 
+GSRE contains lots of missing cases. @Lall2016 systematically reanalyzed all the recent PE articles in *International Organization* and *World Politics*, and found out half of the key 'findings' disappeared. To avoid losing statistical powers and potential bias due to list-wise deletion, this article employs multiple imputation of the GSRE part data. Since GSRE part data are all measuring governmental expenditures, different categories are correlated. We use `Amelia` to perform multiple imputation with the multivariate normal distribution assumption [@Honakeretal2011]. Multiple imputation is unbiased when data are Missing at Random (MAR) as well as Missing Completely at Random (MCAR). Under Missing not at Random (MNAR),  multiple imputation is biased since missingness depends (to some extent) on missing values. In reality data are almost always MNAR, with missingness depending in part on observed data and in part on missing data. Critically, however, multiple imputations not seriously biased under MNAR if missingness is strongly related to observed data and thus approximates MAR [see the discussion in @Lall2016].
+Results reported in the paper are from the original data (without multiple imputation) and first 5 multiple imputation. 
 
 
 The total missing map is showing in the Figure \@ref(fig:map). 
@@ -1364,22 +1385,6 @@ stargazer(plm0, plm1, plm2, plm3, plm4, plm5, header = FALSE,
            notes = "DV: Stability Index, higher value indicates more volatile policies")
 
 ```
-
-
--->
-
-
-
-
-<!--Not for Now
-```{r pairs, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
-pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$stability_3)
-```
-
-\@ref(fig:pairs)
-
-
-
 
 
 The folowing are some examples 
