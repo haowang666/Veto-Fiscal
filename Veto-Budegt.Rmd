@@ -34,17 +34,17 @@ header-includes: \usepackage{graphicx, longtable, float, subfigure, setspace}
 # Introduction
 
 Budget policy is a key aspect of government activity, one that attracts lots of academic attentions in the past few years. What can explain the changes of budgetary settings? Why budgetary changes are  stable in some countries but less so and more punctuated in other countries? What are the possible mechanisms that can explain the differences? These questions are not yet fulled explored. 
-This project test the budget stability hypothesis with a newly-compiled dataset: GSRE (Global State Revenues and Expenditures dataset). 
+This institutional test the budget stability hypothesis with a newly-compiled dataset: GSRE (Global State Revenues and Expenditures dataset). 
 
 
-Government policy making involves negotiations of different branches and institutions. In democratic countries, to pass a policy modification requires the majority rule. This requirement makes the status quo at an advantageous position: any further move has to beat the status quo with a majority of votes. This instituional constraint is featured in the 'veto-player' theory [@Tsebelis2002]. 
+Government policy making involves negotiations of different branches and institutions. In democratic countries, to pass a policy modification requires the majority rule. This requirement makes the status quo at an advantageous position: any further move has to beat the status quo with a majority of votes. This institutional constraint is featured in the 'veto-player' theory [@Tsebelis2002]. 
 Veto player theory defines 'veto players' as individuals or institutions whose agreement is required for a change of the status quo. Consequently, when the number of veto players increase, the winning set that can defeat status quo will shrink, which in turn leads to higher policy stability. Since veto player is ultimately related to the level of institutional constraints, a corollary is that institutional checks lead to more stable, incremental policy outcomes. With many checks and balances in the government, it will be harder to move policies from the status quo equilibrium. 
 
 @TsebelisChang2004 apply veto player theory in the budget changes of the 19 OECD countries. In their analysis, parties with more polarized positions are modeled as potential veto players who could have blocked the policy proposals. Their results show that countries with more veto players have more stable budget policies. 
 
 On the other hand, veto player theory also implies that more veto players makes politicians harder to adjust current policies. This is particularly salient in countries with multiple veto players (e.g. the United States). During some time periods with exogenous shocks, the policy stability can be harmful and politicians may react to the long-time stability with rapid changes of policies, which forms a policy punctuation. 
 
-This theoretical expectation leads to another potential outcome: the amount of veto power may lead to larger policy punctuation. While stability refers to the overall changes, punctuation decribes the distribution of policy changes. They may seem incompatible at this moment, but actually they are not and we will address it in the later sections. 
+This theoretical expectation leads to another potential outcome: the amount of veto powers may lead to larger policy punctuation. While stability refers to the overall changes, punctuation describes the distribution of policy changes. They may seem incompatible at this moment, but actually they are not and we will address it in the later sections. 
 
 Punctuated Equilibrium Theory (PET) [@JohnBevan2012  @JonesBaumgartner2012] argues that government budget shifts over due to the over-attention and under-attention to certain policy areas. Consequently, it features with long periods of stability and short periods of radical changes. Considering the institutional constraints, we also want to test the effect of veto player on policy punctuation. 
 
@@ -81,14 +81,17 @@ The effect of veto player structure comes into play in the second stage: the bar
 
 In @Tsebelis2002 's original settings. Veto player is defined by the ideological distances of effective political parties (named as partisan veto players) and institutional veto players (institutions/ government branches whose consent are required by constitution in enacting policy modifications). In democratic government with a checks-and-balances design, veto players can be any government branch that can effectively oppose a policy change. Consequently, more institutional veto players and more distant political parties lead to higher policy stability. 
 
-Both punctuated equilibrium theory and veto player theory emphasize the importance of veto player/frictions. They share many similarities in predicting the overall budget changes. Veto player theory predicts that        
+Both punctuated equilibrium theory and veto player theory emphasize the importance of veto player/frictions. They share many similarities in predicting the overall budget changes. Veto player theory predicts that political structure with many veto powers leads to stability; PET on the other hand frames veto players as 'friction', arguing that institutional frictions lead to budget stability. So far few studies analyze budget volatility with both veto player theory and PET. This study attempts to evaluate both theories with GSRE dataset. 
+
+On the other hand, veto player and PET have slightly different dependent variables. Veto player emphasizes the changes of policy per se: for instance, even @TsebelisChang2004 study budget changes (which is often the subject of interest in the PET studies), their dependent variable is policy changes per se, but not the overall distribution. Veto player theories make little assumptions about the policy punctuations. In terms of statistics, both veto player theory and PET agree that frictions lead to stable policy outcomes (small variance). However, PET has the second measurement of policy change distributions: frictions lead to higher punctuations. 
+
+Figure \@ref(fig:LK-Var) addresses the difference between the two models. In this figure both the red line and blue are hypothetical budget changes of two different countries. These two lines have the same mean and variance, thus will be considered with equal amount of stability in the veto player theory. However their shapes are different due to the level of peakness: blue line are more 'punctuated' than the red line. In other words, veto player theory can be regarded as 'nested' in the PET structure: veto player predicts stability only, PET predicts both stability and punctuations. 
 
 
-
- \@ref(fig:LK-Var)
 
 ```{r LK-Var, echo=FALSE, fig.cap="Same Variance Different Peakness", message=FALSE, warning=FALSE}
 #generate same variance, different kurtosis
+library(ggplot2)
 set.seed(1)
 y <- rt(1000, 3)
 z <- rnorm(1000, 0, 3)
@@ -109,30 +112,16 @@ ggplot(data = plotdata) +
 
 
 
-
-
-
-# Budget Policy in Authoritarian Countries
-
-Scholars study both the input and processing stages under democratic regimes, arguing that free and transparent information processing as well as less institutional constraints lead to incremental budget changes [@JonesBaumgartner2012]. Studying budget changes in authoritarian countries can be different from electoral democracies. First, there is no free and fair elections in authoritarian regimes. Election and regular political participation face the "dictator's dilemma" in nondemocracies [@Wintrobe1998]. Second, while serving as the information provider and monitor of the government actions in democratic regimes, media and press are not independent in autocracies. Overall these create barriers for information input and leads to inefficient information collection in authoritarian countries.
-
-On the other hand, institutional constraints are weaker in authoritarian countries. Unlike democracies, the autocrat has better control over the government and the legislative institutions. For instance in a democratic government with checks-and-balances institutional design, the executive branch will be constrained by the legislature, which implies a longer period of negotiation and cooperation. Nevertheless autocrats are not completely free of the veto-player framework [@Tsebelis2002]. Frictions and intra-elite competitions still exist and often dictators need to choose co-optation strategy [@Svolik2012]. 
-
-So far only a few studies look at budgetary patterns in authoritarian countries. In the Hong Kong case, @LamChan2015 propose that non-democracies are characterized by less friction than democracies because the institutional design of these regimes centralizes power at the highest level of government, meanwhile there is little check and balances of the executive branch. Lacking the incentive of electoral competition, officials are less motivated to monitor and respond to the external environment. Consequently, there is high levels of inertia of environmental changes. Errors of information may accumulate over time and threaten the regime stability. @Baumgartneretal2017 conduct the first cross-national studies of budgetary changes in authoritarian countries (Brazil, Turkey, Malta and Russia). Their analysis suggests that authoritarian countries have different patterns of policy shifts with the democratic regimes. However, the argument is only moderately supported by their empirical evidence due to the lack of data. 
-
-
-Overall, we hope to expand the current research agenda of policy shifts to authoritarian countries. We argue that the budget system theory still applies to authoritarian regimes. However, due to the difficulty of conceptualizing the information gathering, we focus mainly on the internal frictions in authoritarian countries. 
-
-
-
-
 # Hypotheses
 
-Previous studies on budget changes highlight the importance of input and processing. While both steps are important for decision making, we only focus on the institutional frictions in this manuscript. Viewing institutional friction as a constraint on any deviations from the status quo, we argue that countries with higher levels of institutional friction have smaller budget policy shifts. We use the similar framework appeared in @TsebelisChang2004: countries with more veto players have smaller winning sets that can beat the status quo, consequently lead to stable policy outcomes (small incremental changes). 
+Previous studies on budget changes highlight the importance of input and processing. While both steps are important for decision making, we only focus on the institutional frictions/veto powers in this manuscript. 
+
+Viewing institutional friction as a constraint on any deviations from the status quo, we argue that countries with higher levels of institutional frictions have smaller budget policy shifts. We adopt the similar framework appeared in @TsebelisChang2004: countries with more veto players have smaller winning sets that can beat the status quo, consequently lead to stable policy outcomes (small incremental changes). 
 
 > institutional frictions $\Rightarrow$ stable policy shifts
 
-On the other hand, the existing multiple veto players make it harder for reforms and policy adaptations. In the extreme condition, the current winning set $P \in \emptyset$: politicians are unable to come up with any changes of the current policy plans. A stable budget policy is not necessary a good policy: it needs to speak to the external socio-economic environment. For instance, the incumbent government should be able to spend more in social-welfare domain if there are serious welfare issues. Eventually this inability of adaptation leads to an accumulation of problems and even threaten the stability of the regime. Politicians may respond to the long-term stability with short-term rapid changes as a remedy of the chronological grid-lock, which is a policy punctuation [@DerekBaumgartner2016 @KeeferStasavage2003]. 
+On the other hand, the existing multiple veto players make it harder for reforms and policy adaptations. 
+In the extreme condition, the current winning set $P \in \emptyset$: politicians are unable to come up with any changes of the current policy plans. A stable budget policy is not necessary a good policy: it needs to speak to the external socio-economic environment. For instance, the incumbent government should be able to spend more in social-welfare domain if there are serious welfare issues. Eventually this inability of adaptation leads to an accumulation of problems and even threaten the stability of the regime. Politicians may respond to the long-term stability with short-term rapid changes as a remedy of the chronological grid-lock, which is a policy punctuation [@DerekBaumgartner2016 @KeeferStasavage2003]. 
 
 
 
@@ -141,34 +130,49 @@ On the other hand, the existing multiple veto players make it harder for reforms
 
 Therefore we have the following two hypothesis:
 
-1. Institutional frictions lead to budget stability (minimal difference between fiscal years)
-2. Institutional frictions lead to higher budget punctuations. 
+1. Veto Player Hypothesis: Institutional frictions lead to budget stability (minimal difference between fiscal years)
+2. PET hypothesis: Institutional frictions lead to higher budget punctuations. 
 
 
 
-# Data and Conceptualization 
-Data in this project comes from various sources. The dependent variable comes from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set, GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the @Geddesetal2014 data set. 
 
-Data on deliberative democracies and other regime-related variables come from the Varieties of Democracy (Vdem) project [@Vdem2016]. Unlike the widely used democracy index like Polity [@Polity2015], Vdem provides multidimensional measurements of regimes, including both democracies and autocracies. 
 
-Data on institutional constraints come from the political constraints index (POLCON) [@Henisz2000]. Political constraint index measures the risk of policy changes. Henisz uses a quantitative model to capture the competitiveness portion of the definition of democracy (competitiveness and participation) with a proxy of number of independent veto points over policy outcomes and distribution of preferences of those actors. POLCON is based on strong assumptions about each actors veto power. In the newest version, measure is also modified to take into account the extent of alignment across branches of government using data on the party composition of the executive and legislative branches.
+
+# Data and Method
+
+## Case Selections
+
+Scholars study both the input and processing stages under democratic regimes (especially OECDs), arguing that free and transparent information processing as well as less institutional constraints lead to incremental budget changes [@JonesBaumgartner2012]. While OCED countries often have more avialeble data, their long-time stable political structure leads to fundamental problems of causal inference: the independent variable (frictions) seldom varies. For instance, the amount of institutional veto players of the United States remain the same since established. This invariability of independent variable causes trouble for demonstrating the effect of treatment (frictions): since the country-level friction index does not vary across time, the major difference only exists in the cross-sectional level. 
+
+To capture this effect, a solution is pooled time-series analysis with panel corrected standard errors [@BeckKatz1995]. @BeckKatz2001 considers the example of demcoracy, a time-invariant variable on conflict. 
+They show that estimates obtained under fixed effect fail to show any relation between
+democracy and peace because it filters out all the effects of  time-invariant effect. On the other hand, pooled regression is biased in failing to estimate the individual level omitted variables. Cross-national studies including different countries will always encounter the country-level hetegeneity issue. Ignoring this not only leads to a biased estimate, but also causes problems of causal inference. 
+
+Our strategy to circumvent this problem is through data selection. We construct our dataset with GSRE, excluding stable democracies and stable autocracies of which the political insitutions remain the same between 1960 and 2006. This leaves us with total 93 countries. The detailed list of countries are provided in appendix Table \ref{countrylist}. This selection allows us to use fixed effect to estimate the individual level time-invariant effects while making sure the independent variable and dependent variables are not constant. 
+
+Studying budget changes in nondemocratic countries can quite be different from electoral democracies. First, there is no free and fair elections in authoritarian regimes. Election and regular political participation face the "dictator's dilemma" in nondemocracies [@Wintrobe1998]. Second, while serving as the information provider and monitor of the government actions in democratic regimes, media and press are not independent in autocracies. Overall these create barriers for information input and leads to inefficient information collection in authoritarian countries. On the other hand, institutional constraints are weaker in nondemocracies. Unlike democracies, the dictator has better control over the government and the legislative institutions. For instance in a democratic government with checks-and-balances institutional design, the executive branch will be constrained by the legislature, which implies a longer period of negotiation and cooperation. However political elites in nondemocracies faces less, sometimes no political contraints [@Svolik2012]. The combination of inefficient information gathering and less political constraints may lead to larger variation of budget changes. 
+
+So far only a few studies look at budgetary patterns in authoritarian countries. In the Hong Kong case, @LamChan2015 propose that non-democracies are characterized by less friction than democracies because the institutional design of these regimes centralizes power at the highest level of government, meanwhile there is little check and balances of the executive branch. Lacking the incentive of electoral competition, officials are less motivated to monitor and respond to the external environment. Consequently, there is high levels of inertia of environmental changes. Errors of information may accumulate over time and threaten the regime stability. @Baumgartneretal2017 conduct the first cross-national studies of budgetary changes in authoritarian countries (Brazil, Turkey, Malta and Russia). Their analysis suggests that authoritarian countries have different patterns of policy shifts with the democratic regimes. However, the argument is only moderately supported by their empirical evidence due to the lack of data. 
+
+
+Overall, we hope to expand the current research agenda of policy shifts to nondemocracies, especially to countries with regime-transition experiences. We expect that less constraints in nondemocratic countries lead to more budget changes, and perhaps less punctuations. 
+
+
+
+## Data sources
+
+Data in this project comes from various sources. The measurement components of dependent variable come from the GSRE project (Global State Revenues and Expenditures data set). GSRE is a comprehensive budget data set based on the previous released historical documents from the International Monetary Fund (IMF). Comparing with the IMF COFOG data set (The Classification of the Functions of Government), GSRE increases coverage and accuracy of budgeting data for most authoritarian regimes and some democratic regimes. Since GSRE is built on IMF historical documents, it covers all independent states that have been or are the members of the IMF and are being coded as an authoritarian regime in the @Geddesetal2014 data set. Table \ref{DVparts} in Appendix reports the components of dependent variable. Total we use 10 measuerement components of budget policy, which cover a variety of policies including security, defence, wages, education, health, housing etc. 
+
+
+Data on institutional constraints come from the political constraints index (POLCON) [@Henisz2000] and the Varieties of Democracy (Vdem) project [@Vdem2016]. 
+
+
+Political constraint index measures the risk of policy changes. Henisz uses a quantitative model to capture the competitiveness portion of the definition of democracy (competitiveness and participation) with a proxy of number of independent veto points over policy outcomes and distribution of preferences of those actors. POLCON is based on strong assumptions about each actors veto power. In the newest version, measure is also modified to take into account the extent of alignment across branches of government using data on the party composition of the executive and legislative branches.
 
 
 Data on division of power draws from the Political Institution Index [@Becketal2001]. 
 
 
-
-```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
-library(ggplot2)
-library(plm)
-library(dplyr)
-library(tidyr)
-library(stargazer)
-library(pcse)
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#add polity
-mydata$polity <- mydata$e_democ - mydata$e_autoc
-```
 
 
 
@@ -180,10 +184,10 @@ To evaluate the budget-stability hypothesis and punctual equilibrium hypothesis,
 
 ### Volatility Index
 
-I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $S_{jt}$ is the volatility index of the $jth$ country at a certain year $t$. Since government budget has various categories: $p_{jit}$ denotes the percentage of $i$th category out of total expenditure of the country $j$ at year $t$. $S_{jt}$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
+I measure the budget stability as the simple euclidean distance of the between-year percentage differences. It can be written in the following equation: $V_{jt}$ is the volatility index of the $jth$ country at a certain year $t$. Since government budget has various categories: $p_{jit}$ denotes the percentage of $i$th category out of total expenditure of the country $j$ at year $t$. $V_{jt}$ will increase as the difference between $p_{it}$ and $p_{it-1}$ increases. 
 
 \begin{equation}
-S_{jt} = \sqrt{\sum_{i = 1}^i (p_{jit} -p_{jit-1})^2} 
+V_{jt} = \sqrt{\sum_{i = 1}^i (p_{jit} -p_{jit-1})^2} 
 (\#eq:St)
 \end{equation}
 
@@ -193,30 +197,7 @@ For the percentage  of each expenditure term $p_{it}$, $p_{it} \in [0, 1]$, $S_{
 ### L-Kurtosis Score
 
 To evaluate the distribution of budget shifts, we calculated the L-Kurtosis score of policy changes of each country across the available time spans. Specifically, we calculate the between-year difference of budget percentages, and then using L-Kurtosis statistics to find the L-Kurtosis (LK) score.
-L-Kurtosis (LK) is the 4th L-moment of the moment statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximates a Gaussian distribution (also see [@Baumgartneretal2017 @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:example) shows an example of LK score and distributions. In this figure, the red line has a LK score of 0.84, makes it more 'punctuated' than the blue line: it features long-time incremental changes and short-term radical shifts (for detailed calculation, check [@Hosking1990]). 
-
-
-```{r example, echo=FALSE, fig.cap="LK Score Example", message=FALSE, warning=FALSE}
-
-library(Lmoments)
-#Lcoefs()
-set.seed(1)
-x <- rnorm(1000) #Normal data
-x2 <- 4^x #One transformation
-test <- as.data.frame(cbind(x, x2))
-
-ggplot(data = test) +
-  geom_density(aes(x = x), color = "blue") +
-  geom_density(aes(x = x2), color = "red") +
-  xlim(-5, 5) +
-  xlab("") +
-  annotate("text", x = -4, y = 0.55, label = "Red Line: LK = 0.44") +
-  annotate("text", x = -4, y = 0.5, label = "Blue Line: LK = 0.12") 
-
-
-```
-
-
+L-Kurtosis (LK) is the 4th L-moment of the moment statistics. It is used to summarize the peakness of the variable distributions. An L-Kurtosis score of 0.123 approximates a Gaussian distribution (also see [@Baumgartneretal2017 @BreunigJones2010]). Higher LK score means heavy tails and high peaks. Figure \@ref(fig:LK-Var) shows an example of LK score and distributions. In this figure, the blue line has a LK score of 0.24, makes it more 'punctuated' than the red line: it features long-time incremental changes and short-term radical shifts (for detailed calculation, check [@Hosking1990]). 
 
 
 
@@ -238,7 +219,7 @@ We use two measurements of institutional constraints: POLCON index [@Henisz2000]
 
 ### Vertical Level
 
-Regional authority index (RAI), modeled by the state government authority over taxation [@Becketal2001]. 
+Regional authority index, modeled by the state government authority over taxation [@Becketal2001]. 
 
 
 
@@ -247,8 +228,7 @@ Regional authority index (RAI), modeled by the state government authority over t
 From Vdem Project [@Vdem2016]
 
 
-### Other Controls
-Education, GDP, GDP grow rate, inequality, Democracy Indices, etc . 
+
 
 
 
@@ -257,7 +237,7 @@ Education, GDP, GDP grow rate, inequality, Democracy Indices, etc .
 GSRE data set contain lots of missing data, we did 5 multiple imputations and report results of the original dependent variable as well as the 5 imputed ones. 
 
 
-<!-- Table \ref{plm} reports pooled OLS result. -->
+
 Table \ref{fe} reports fixed effect result.
 Table \ref{LK} reports L-Kurtosis score result.
 Table \ref{twoways} reports twoway fixed effect result, as a robustness check [@BeckKatz2011].
@@ -275,6 +255,23 @@ S_{jt} = a_j + \beta_{2} Cont_{jt} + \beta_{3}Party_{jt} + \beta{4}RAI_{jt} + \b
 \mathbf{Z} \beta +\epsilon_{jt}
 (\#eq:fe)
 \end{equation}
+
+
+
+
+
+```{r load data, message=FALSE, tidy=TRUE, warning=FALSE, echo=FALSE}
+library(ggplot2)
+library(plm)
+library(dplyr)
+library(tidyr)
+library(stargazer)
+library(pcse)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+#add polity
+mydata$polity <- mydata$e_democ - mydata$e_autoc
+```
+
 
 
 
@@ -301,22 +298,38 @@ mydata1 <- dplyr::select(mydata,
                          stability_3,
                          stability_4,
                          stability_5)
-mydata1 <- na.omit(mydata1)
-mydata3 <- mydata1 %>%
+
+group1 <- c(
+"Djibouti",
+"Congo, the Democratic Republic of the",
+"China",
+"Chad",
+"Cameroon",
+"Burma",
+"Ethiopia",
+"Gabon",
+"Gambia, The",
+"Kazakhstan",
+"Libya",
+"Mauritania",
+"Nigeria",
+"Saudi Arabia",
+"Somalia",
+"Sudan",
+"Swaziland",
+"Togo",
+"Turkmenistan",
+"Vietnam",
+"Yemen",
+"Zambia")
+
+mydata3 <- filter(mydata1, !country %in% group1 )
+#mydata3 <- setdiff(mydata1, mydata2)
+mydata4 <- na.omit(mydata3)
+mydata4 <- mydata4 %>%
            distinct(country)
 
-
-
-group1 <- c("Brazil", "Mexico", "Nicaragua", "Colombia")
-mydata2 <- filter(mydata1, country %in% group1 )
-
-
-
-ggplot(data = mydata2) +
-    geom_point(aes(x = e_h_polcon5, y = stability_1)) +
-    facet_wrap( ~ country, ncol = 2)
-
-
+#write.csv(x = mydata4, file = "mydata4.csv", row.names = FALSE)
 
 ```
 
@@ -334,9 +347,11 @@ pmodel0 <- plm(stability_0 ~
              polity + 
              e_migdppcln +
              e_migdpgro +
-             e_peginiwi +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 pmodel1 <- plm(stability_1 ~ 
              e_h_polcon5 +  
@@ -346,8 +361,10 @@ pmodel1 <- plm(stability_1 ~
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
-
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 pmodel2 <- plm(stability_2 ~ 
              e_h_polcon5 +  
@@ -357,8 +374,10 @@ pmodel2 <- plm(stability_2 ~
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
-
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 pmodel3 <- plm(stability_3 ~ 
              e_h_polcon5 +  
@@ -368,7 +387,10 @@ pmodel3 <- plm(stability_3 ~
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 
 pmodel4 <- plm(stability_4 ~ 
@@ -379,7 +401,10 @@ pmodel4 <- plm(stability_4 ~
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 pmodel5 <- plm(stability_5 ~ 
              e_h_polcon5 +  
@@ -389,21 +414,25 @@ pmodel5 <- plm(stability_5 ~
              e_migdppcln +
              e_migdpgro +
              e_Civil_War, 
-            data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within")
+            data = mydata3, 
+            index = c("cowcode", "year"), 
+            na.action = na.omit, 
+            model = "within")
 
 
 stargazer(pmodel0, pmodel1, pmodel2, pmodel3, pmodel4, pmodel5, header = FALSE, 
-          title = "Fixed Effect Regression Results", label = "fe",
-          omit = c("e_Civil_War", "e_migdpgro"), 
+          title = "Fixed Effect Regression Results", 
+          label = "fe",
           dep.var.labels.include = FALSE,
-          covariate.labels = c("Constraints", "Party", "Consult", 
-                               "Federalism", "Corruption", "Polity", "Censorship",
-                               "Education", "GDP pc"),
+          covariate.labels = c("Constraints", 
+                               "Party", 
+                               "Corruption", 
+                               "Polity",
+                               "GDP pc",
+                               "GDP growth",
+                               "Civil War status"),
           omit.stat = c("adj.rsq", "f", "res.dev", "ser"),
-           notes = "DV: Stability Index, higher value indicates more volatile policies")
-
-
-
+          notes = "DV: Stability Index, higher value indicates more volatile policies")
 
 ```
 
@@ -427,7 +456,7 @@ tmodel0 <- plm(stability_0 ~
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 tmodel1 <- plm(stability_1 ~ 
                  e_h_polcon5 +  
@@ -437,7 +466,7 @@ tmodel1 <- plm(stability_1 ~
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
 tmodel2 <- plm(stability_2 ~ 
@@ -448,7 +477,7 @@ tmodel2 <- plm(stability_2 ~
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
 tmodel3 <- plm(stability_3 ~ 
@@ -459,38 +488,41 @@ tmodel3 <- plm(stability_3 ~
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 tmodel4 <- plm(stability_4 ~ 
-                 e_h_polcon3 +  
+                 e_h_polcon5 +  
                  v2xps_party +
                  v2x_corr + 
                  polity + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 tmodel5 <- plm(stability_5 ~ 
-                 e_h_polcon3 +  
+                 e_h_polcon5 +  
                  v2xps_party +
                  v2x_corr + 
                  polity + 
                  e_migdppcln +  
                  e_migdpgro +
                  e_Civil_War, 
-                 data = mydata, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
+                 data = mydata3, index = c("cowcode", "year"), na.action = na.omit, model = "within", effect = "twoways")
 
 
 stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5, 
           header = FALSE, 
           title = "Two Way Fixed Effect Regression Results", 
           label = "twoways",
-          omit = c("e_Civil_War", "e_migdpgro"), 
           dep.var.labels.include = FALSE,
-          covariate.labels = c("Constraints", "Party", "Consult", 
-                               "Federalism", "Corruption", "Polity", "Censorship",
-                               "Education", "GDP pc"),
+          covariate.labels = c("Constraints", 
+                               "Party", 
+                               "Corruption", 
+                               "Polity", 
+                               "GDP pc (log)",
+                               "GDP growth rate",
+                               "Civil War status"),
           omit.stat = c("adj.rsq", "f", "res.dev", "ser"),
           notes = "DV: Stability Index, higher value indicates more volatile policies")
 ```
@@ -503,69 +535,109 @@ stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5,
 #import data from github
 d <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/LKscore.csv")
 d$polity <- d$e_democ - d$e_autoc
+d1 <- dplyr::select(d, 
+                    country,
+                    cowcode, 
+                    year,
+                    e_h_polcon5,
+                    v2x_jucon,  
+                    v2xlg_legcon,
+                    v2x_feduni, 
+                    v2xps_party, 
+                    v2x_corr, 
+                    polity, 
+                    e_migdppcln,
+                    e_migdpgro,
+                    e_Civil_War,
+                    y_lk0,
+                    y_lk1,
+                    y_lk2,
+                    y_lk3,
+                    y_lk4,
+                    y_lk5)
+
+d1 <- na.omit(d1)
+d3 <- filter(d1, !country %in% group1 )
+d3 <- filter(d3, !country %in% c("Cuba", "Eritrea"))
+
+
+#d2 <- filter(d, country %in% group1 )
+#d3 <- setdiff(d, d2)
+
 
 #----------------------------------------------------------------
-lm0 <- lm(y_lk0 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+lm0 <- lm(y_lk0 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data=d)
-lm1 <- lm(y_lk1 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
+
+lm1 <- lm(y_lk1 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-              e_Civil_War, 
-               data=d)
-lm2 <- lm(y_lk2 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
+lm2 <- lm(y_lk2 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data=d)
-lm3 <- lm(y_lk3 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
+lm3 <- lm(y_lk3 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data=d)
-lm4 <- lm(y_lk4 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
+lm4 <- lm(y_lk4 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data = d)
-lm5 <- lm(y_lk5 ~ e_h_polcon3 +  v2xps_party +
-             v2dlconslt +
-             v2x_feduni + 
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
+lm5 <- lm(y_lk5 ~ 
+             e_h_polcon5 +  
+             v2xps_party +
              v2x_corr + 
              polity+ 
-             v2mecenefm + e_peaveduc + 
-             e_migdppcln +  e_migdpgro +
-               e_Civil_War, 
-               data = d)
+             e_migdppcln +  
+             e_migdpgro +
+             e_Civil_War, 
+             data = d3)
+
 stargazer(lm0, lm1, lm2, lm3, lm4, lm5, header = FALSE, 
           title = "OLS Regression with L-Kurtosis as Dependent Variable", 
-          label = "LK", omit = c("e_Civil_War", "e_migdpgro"), 
+          label = "LK",
           dep.var.labels.include = FALSE,
-          covariate.labels = c("Constraints", "Party", "Consult", 
-                               "Federalism", "Corruption", "Polity", "Censorship",
-                               "Education", "GDP pc"),
+          covariate.labels = c("Constraints", 
+                               "Party Instit.", 
+                               "Corruption", 
+                               "Polity", 
+                               "GDP pc", 
+                               "GDP growth rate",
+                               "Civil War Status"),
           omit.stat = c("f", "res.dev", "ser"))
 
 ```
@@ -612,89 +684,103 @@ pmodel <- plm(stability_2 ~
 
 
 
+
+## Country Seletion Criteria
+
+GSRE does not include OECD countries by default, we select the remaining countries based on two indicators: the political contraint index and the polity score. We drop countries of which either score does not change in the time period between 1960 and 2006. Countries like China, Vietnam, Sudan, Yemen,  Saudi Arabia etc. are classfied as stable authoritarian regimes and they are dropped from the total observations. 
+
+The remaining countries are listed in Table \ref{countrylist}
+
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Country List}
+    \begin{tabular}{lllll}
+    \hline
+    Afghanistan & Colombia & Iran  & Mozambique & \multicolumn{1}{l}{South Korea} \\
+    Albania & Comoros & Iraq  & Namibia & \multicolumn{1}{l}{Spain} \\
+    Algeria & Congo & Israel & Nepal & \multicolumn{1}{l}{Sri Lanka} \\
+    Angola & Costa Rica & Jamaica & Nicaragua & \multicolumn{1}{l}{Syria} \\
+    Argentina & Cote d'Ivoire & Jordan & Niger & \multicolumn{1}{l}{Taiwan} \\
+    Armenia & Croatia & Kenya & Pakistan & \multicolumn{1}{l}{Tajikistan} \\
+    Azerbaijan & Ecuador & Kyrgyzstan & Paraguay & \multicolumn{1}{l}{Tanzania} \\
+    Bangladesh & El Salvador & Laos  & Peru  & \multicolumn{1}{l}{Thailand} \\
+    Belarus & Estonia & Lebanon & Philippines & \multicolumn{1}{l}{Trinidad and Tobago} \\
+    Benin & Georgia & Lesotho & Poland & \multicolumn{1}{l}{Tunisia} \\
+    Bolivia & Ghana & Macedonia & Portugal & \multicolumn{1}{l}{Turkey} \\
+    Botswana & Greece & Madagascar & Romania & \multicolumn{1}{l}{Uganda} \\
+    Brazil & Guatemala & Malawi & Russia & \multicolumn{1}{l}{Ukraine} \\
+    Bulgaria & Guinea & Malaysia & Rwanda & \multicolumn{1}{l}{Uruguay} \\
+    Burkina Faso & Guinea-Bissau & Mali  & Senegal & \multicolumn{1}{l}{Uzbekistan} \\
+    Burundi & Haiti & Mexico & Sierra Leone & \multicolumn{1}{l}{Venezuela} \\
+    Cambodia & Honduras & Moldova & Slovakia & \multicolumn{1}{l}{Zimbabwe} \\
+    Central African Republic & Hungary & Mongolia & Slovenia &  \\
+    Chile & Indonesia & Morocco & South Africa &  \\
+    \hline
+    \end{tabular}
+  \label{countrylist}
+\end{table}
+
+
+
+
+
+
+\newpage
+
 ## Descriptive Statistics
 
 Here I provide summary statistics of the variables I used in this study
 
-### summary statistics of deliberative democracy
 
-```{r, echo=FALSE, message=FALSE, results="asis"}
-# results ="asis" add to table
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-
-#get rid of X (row name)
-#mydata <- select(mydata, -X, -X.1)
+### summary statistics on independent variables 
 
 
-delib <- select(mydata, v2x_delibdem:v2dlengage)
-stargazer(delib, title = "Deliberative Democracy Statistics", style = "apsr", header = FALSE,
-          label = "Delib", 
-          covariate.labels = c("Deliberative Democracy", "Justification on Public Policy", 
-                             "Justification on Common Goods", "Respect for Counterarguments", 
-                             "Range of Consultation", "Range of Engagement"))
-```
-
-### summary statistics on institutional constriants
-
-```{r const, message=FALSE, echo=FALSE, results="asis"}
-const <- select(mydata, v2x_jucon, v2xlg_legcon, v2xps_party, 
-                e_democ, e_autoc, e_h_polcon5, e_h_polcon3) 
-
-stargazer(const, title = "Institutional Constraints", header = FALSE,
-          label = "const",
-          covariate.labels = c("Judical Constraints", "Legislative Constraints",
-                               "Institutionalization of Party", "Institutionalizaed Democracy",
-                               "Institutionalizaed Autocracy", "Political Constraints Index-5", 
-                               "Political Constraints Index-3"))
-```
-
-
-
-### summary statistics on federalism
-
-```{r fed, message=FALSE, echo=FALSE, results="asis"}
-fed <- select(mydata, v2x_feduni, v2elrgpwr, v2ellocpwr)
-stargazer(fed, title = "Division of Power (centrl-regional) Index", header = FALSE,
-          label = "fed", 
-          covariate.labels = c("Division of Power", "Regional Government Power", "Local Government Power"))
-
+```{r indep, message=FALSE, echo=FALSE, results="asis"}
+indep <- select(mydata3,
+                e_h_polcon5,
+                v2x_jucon, 
+                v2xlg_legcon, 
+                v2x_feduni,
+                v2xps_party,
+                polity, 
+                v2x_corr,  
+                e_migdppcln,  
+                e_migdpgro,
+                e_Civil_War)
+indep <- na.omit(mydata3)
+stargazer(indep, 
+          title = "Independent Variables", 
+          header = FALSE,
+          label = "indep",
+          covariate.labels = c("Political Contraint Index",
+                               "Judical Constraints", 
+                               "Legislative Constraints",
+                               "Central-Local Power Divisions",
+                               "Institutionalization of Party", 
+                               "Polity Score",
+                               "Corruption Index", 
+                               "GDP pc", 
+                               "GDP Growth Rate",
+                               "Civil War"))
 ```
 
 
-### summary statistics on curruption and election irregularities
-
-```{r corrupt, message=FALSE, echo=FALSE, results="asis"}
-fed <- select(mydata, v2x_corr, v2x_execorr, v2elvotbuy, v2elirreg)
-
-stargazer(fed, title = "Corruption and Election Irregularities", header = FALSE,
-          label = "corrupt", 
-          covariate.labels = c("Corruption Index", "Executive Corruption Index", "Vote Buying", "Election Irregularities"))
-
-```
-
-
-### summary statistics on other control variables
-
-```{r control, message=FALSE, echo=FALSE, results="asis"}
-fed <- select(mydata, v2mecenefm, e_peaveduc,e_migdppcln, e_migdpgro, e_peginiwi, 
-              e_Civil_War, e_Total_Oil_Income_PC)
-stargazer(fed, title = "Other Control Variables", header = FALSE,
-          label = "tab:control",
-          covariate.labels = c("Media Censorship", "Education", "GDP pp(logged)", "GDP growth", "Income Inequality", "Civial War", "Oil Production Per Capita"))
-#Table \@ref(tab:control)
-```
-
-
+\newpage
 
 ### dependent variable components
 
-In the following table I report the components of dependent variables. It is measured as the percentage expenditure of total expenditure. Two indicators are dropped out in the further analysis due to technical concerns. The variable `subpentrans` contains too few points, and the variable `pensions` must be dropped due to the convergence issue in multiple imputation. 
+In the following table I report the components of dependent variables. The summary statistics is from the raw GSRE dataset. The number of observations will be inconsistent with the observations used in the regression analysis due to the missing values. It is measured as the percentage expenditure of total expenditure. Two indicators are dropped out in the further analysis due to technical concerns. The variable `subpentrans` contains too few points, and the variable `pensions` must be dropped due to the convergence issue in multiple imputation. 
 
 
 
 ```{r DVtable, echo=FALSE, results='asis'}
 expenditure <- select(mydata,c(56:66))
-stargazer(expenditure, title = "Components of Budget Stability Measurements", header = FALSE, digits = 3)
+stargazer(expenditure, 
+          label = "DVparts",
+          title = "Components of Budget Volatility Measurements", 
+          header = FALSE, 
+          digits = 3)
 ```
 
 
@@ -702,23 +788,45 @@ stargazer(expenditure, title = "Components of Budget Stability Measurements", he
 
 
 ```{r DVstats, echo=FALSE, results='asis'}
-stability <- select(mydata, stability_0, stability_1, stability_2,
-                    stability_3, stability_4, stability_5) 
-stargazer(stability, title = "Volatility Index Table", header = FALSE, digits = 3,
-          covariate.labels = c("Original", "Imputation 1",  "Imputation 2",
-                                "Imputation 3",  "Imputation 4",  "Imputation 5"))
+stability <- select(mydata3, 
+                    stability_0, 
+                    stability_1, 
+                    stability_2,
+                    stability_3, 
+                    stability_4, 
+                    stability_5) 
+stargazer(stability, 
+          title = "Volatility Index Table", 
+          header = FALSE,
+          digits = 3,
+          covariate.labels = c("Original",
+                               "Imputation 1",
+                               "Imputation 2",
+                               "Imputation 3",
+                               "Imputation 4",
+                               "Imputation 5"))
 ```
 
 
 
 ```{r DVLK, echo=FALSE, results='asis'}
-d <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/LKscore.csv")
-
-lk <- select(d, y_lk0, y_lk1, y_lk2,
-                    y_lk3, y_lk4, y_lk5) 
-stargazer(lk, title = "LK Score Table", header = FALSE, digits = 3,
-          covariate.labels = c("Original", "Imputation 1",  "Imputation 2",
-                                "Imputation 3",  "Imputation 4",  "Imputation 5"))
+lk <- select(d3, 
+             y_lk0, 
+             y_lk1, 
+             y_lk2,
+             y_lk3, 
+             y_lk4, 
+             y_lk5) 
+stargazer(lk, 
+          title = "LK Score Table", 
+          header = FALSE, 
+          digits = 3,
+          covariate.labels = c("Original", 
+                               "Imputation 1",  
+                               "Imputation 2",
+                               "Imputation 3",
+                               "Imputation 4",
+                               "Imputation 5"))
 ```
 
 
@@ -753,6 +861,11 @@ d
 ```
 
 The relationship between the raw DV and the imputed DV is shown in the following graph. Due to the page limits only the relationships between the original dependent variable and the first two imputed dependent variables are displayed here. 
+
+```{r, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables Comparison"}
+pairs(~ mydata$stability_0 + mydata$stability_1 + mydata$stability_2 + mydata$stability_3)
+```
+
 
 
 \newpage
