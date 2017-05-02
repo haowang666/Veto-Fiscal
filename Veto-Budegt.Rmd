@@ -533,15 +533,19 @@ stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5,
 
 
 
-The results in Table \ref{fe} and Table \ref{twoways} are quite expected. Unlike our expection, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON shows in the 
+The results in Table \ref{fe} and Table \ref{twoways} are quite unexpected. Unlike our expection, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON shows in the 
 
 
 
 
 
-Table \ref{LK} reports L-Kurtosis score result.
+
 
 ## OLS with L-Kurtosis
+
+To evaluate the PET hypothesis, we conduct an 
+
+Table \ref{LK} reports L-Kurtosis score result.
 
 ```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
 #import data from github
@@ -1102,7 +1106,7 @@ The remaining countries are listed in Table \ref{countrylist}
 
 ## Descriptive Statistics
 
-Here I provide summary statistics of the variables I used in this study
+Here I provide summary statistics of the variables I used in this study. Number of observations differs from the results in regression table due to the default list-wise deletion setting in regression analyses. 
 
 
 ### summary statistics on independent variables 
