@@ -563,6 +563,43 @@ stargazer(tmodel0, tmodel1, tmodel2, tmodel3, tmodel4, tmodel5,
 
 
 
+<<<<<<< HEAD
+=======
+The results in Table \ref{fe} and Table \ref{twoways} are quite unexpected. Unlike our expectation, POLCON show little effect on budget volatility. In all the columns of Table \ref{fe}, POLCON is only significant in the 5th multiple imputation. Standard errors are quite large in the other 4 imputations as well as in the original data and the estimated coefficients are small. In the twoway model, non of the POLCON coefficients reach the statistical significance level. 
+The direction of the coefficients though, are in the expected direction. Since our dependent variable is the Volatility index, a negative sign means the increase of POLCON will decrease the degree of budget volatility. In the not-so rigorous way, POLCON leads to more stable budget outcomes. 
+
+Polity score appears to be marginally significant. In Table \ref{fe}, Polity scores are significant in the original data as well as three imputed data sets. Controling for the year fixed effect, Polity still remain significant in 3 of the 5 imputations. According to both Table \ref{fe} and Table \ref{twoways}, higher Polity score leads to more budget volatility. This is something unexpected. Scholars like @Baumgartneretal2017, @LamChan2015 argue that democratization leads to more stable budget policies. This may due to the case selection in our study: we do not include stable democracies nor stable autocracies in the dataset. Therefore countries during the transitional periods may experience more budget policy changes due to the transition. As @Huntington2008 has pointed out, transition often means a 'misfit' between political institutions and socio-economic development, which implies more volatility.
+
+The most significant variable is the corruption index. We did not theorize the importance of corruption in this study, rather corruption was added as a normal control variable. However, the coefficients of corruption remain significant in all models, and the coefficients also have the largest magnitude. Apparently there is some evidence that corruption captures some variability of budget policies in the selected countries. Corruption index has a range of [0, 1]. The regression results basically infer that moving the corruption index from 0 to 1, the budget volatility index will decrease by 0.08 to 0.1, dependening on the specific dependent variable. Recall from equation \@ref(eq:volatility), our Volatility Index captures the the variability of budget changes between different years and has the range [0 , 1]. Table \ref{DVstats} in Appendix shows that the standard deviation of the Volatility Index is about 0.15. Thus the shifts of the corruption index can actually decrease the dependent variable by almost 1 standard deviation, which is a huge impact! A full exploration based on corruption will be beyond the scope of the current project, our initial intuition is that corruption may indicate clientelistic behaviors, which tend to favor the current budget policy. Therefore curruption index is related with more stable budgetary changes. 
+
+
+
+
+## OLS with L-Kurtosis
+
+To evaluate the PET hypothesis, we need to change our dependent variable from the annual Volatility index to the overall punctuation measure: L-Kurtosis score. We construct the L-Kurtosis score based on the first difference changes of each budget component $p_{ijt}$. Specifically, for a certain country $i$, we first calculate the between year percentage changes of each budget component:
+
+\begin{equation}
+\Delta_{ijt} = p_{ijt} - p_{ijt-1}
+(\#eq:lkfd)
+\end{equation}
+
+Then we pooled all the $\Delta_{ijt}$ and obtain the signle LK score of country $i$ though the LK function. In equation \@ref(eq:lk), $\mathbf{\Delta_i}$ is the matrix notation of $\Delta_{ijt}$. For a specific country $i$, $\mathbf{\Delta_i}$ is a $j \times t$ matrix.  
+
+\begin{equation}
+LK_{i} = f_{LK} (\mathbf{\Delta_i})
+(\#eq:lk)
+\end{equation}
+
+Since the LK socre is an aggregated measurement of each country across the whole time period, we perform sinple OLS regression to test if POLCON is related to higher LK score \footnote{all the independent variables in the OLS are at their means}. 
+
+
+Table \ref{LK} reports L-Kurtosis score result. Quite unexpected, we did not find any variable that appears to be statistically significant. The PET hypothesis is in general not well-supported 
+
+
+
+
+>>>>>>> origin/master
 ```{r LK, message=FALSE, results='asis', echo=FALSE, warning=FALSE}
 #import data from github
 d <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/LKscore.csv")
@@ -686,13 +723,22 @@ stargazer(lm0, lm1, lm2, lm3, lm4, lm5, header = FALSE,
 
 \newpage
 
+
 # Robustness check 
 
 After estimating the model with POLCON, we run robustness checks through different measurements of political constraints. POLCON is a comprehensive measurement of veto powers, including the different branches of government, party compositions, and the central-local power divisions. It is possible that only some parts of the veto powers are important while the other parts are not. Since the coefficients of regressors only show the average effect, the non-important components of POLCON may drive the effect down to a negligible level. To decompose the POLCON measurement, we divide the veto powers into two levels: horizontal level and vertical level. 
 
 The horizontal level veto powers resemble the definition of @Tsebelis2004. We use the executive constraint index of @Vdem2016. It has two parts: legislative constraint on executive branch and judicial constraint on executive branch. We expect that these two constraint should lead to more stable budget policy and higher punctuations.
 
+<<<<<<< HEAD
 In the vertical level, we adopt the idea of @Faganetal2017, use the federalism index from @Becketal2001. In @Faganetal2017, they found that federalism is positively related to the degree of budget punctuations. We are expecting to find similar relations here. Specially, our central-regional power index include 6 components: local government exists, regional government exists, local government elected, regional government elected, local government relative power over taxation, regional government relative power over taxation. We re-do all the regression analysis based on these two components of political constraint indicator. Results are reported in Table \ref{rbfe}, Table \ref{rbtwoways} and Table \ref{rbLK}.
+=======
+
+
+We have two major independent variables: 
+In the horizontal level: veto players are different government divisions and political parties. In the vertical level, a strong local government with independent fiscal abilities can act as a strong veto players well.
+
+>>>>>>> origin/master
 
 Again we did not find strong support for either veto player hypothesis nor PET hypothesis. Judicial constraint is negatively related to budget volatility (positively related to stability), but the coefficients are not significant. Quite unexpected, legislative constraint and central-regional divisions lead to more volatile budgetary policies. The evidence if quite minimal though for the legislative constraint index. The central-regional division index however, show moderate evidence that a federal system lead to more volatile budgetary changes: coefficients are positive in all models in Table \ref{rbfe} and Table \ref{rbtwoways}. In imputation 3 and imputation 4 the coefficients are significant. Even in imputation 1, 2 and 5 the coefficients do not reach the significant level, the standard error is quite small comparing to the magnitude of the coefficients. 
 
