@@ -562,7 +562,7 @@ LK_{i} = f_{LK} (\mathbf{\Delta_i})
 Since the LK socre is an aggregated measurement of each country across the whole time period, we perform sinple OLS regression to test if POLCON is related to higher LK score \footnote{all the independent variables in the OLS are at their means}. 
 
 
-Table \ref{LK} reports L-Kurtosis score result. Quite unexpected, we did not find any variable that appears to be statistically significant. 
+Table \ref{LK} reports L-Kurtosis score result. Quite unexpected, we did not find any variable that appears to be statistically significant. The PET hypothesis is in general not well-supported 
 
 
 
@@ -689,7 +689,10 @@ stargazer(lm0, lm1, lm2, lm3, lm4, lm5, header = FALSE,
 
 
 
+
 # Robustness check 
+
+
 
 
 
