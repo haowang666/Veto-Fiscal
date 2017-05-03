@@ -19,7 +19,6 @@
 *.ps
 *.dvi
 *.fdb_latexmk
-*.R
 *.nav
 *.snm
 
