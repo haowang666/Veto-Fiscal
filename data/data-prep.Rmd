@@ -126,11 +126,20 @@ trim <- mydata[,c("cowcode",
                   "housing",
                   "owelfarespend",
                   
-                  
+                  "e_v2x_polyarchy_3C",
+                  "e_v2x_polyarchy_4C",
+                  "e_v2x_polyarchy_5C",
+                  "e_v2x_api_3C",
+                  "e_v2x_api_4C",
+                  "e_v2x_api_5C",
+                  "e_v2x_EDcomp_thick_3C",
+                  "e_v2x_EDcomp_thick_4C",
+                  "e_v2x_EDcomp_thick_5C",
+                  "e_v2x_libdem_3C",
+                  "e_v2x_libdem_4C",
+                  "e_v2x_libdem_5C"
                   )]
 names(trim)
-
-write.csv(x = trim, file = "vdem-merge.csv")
 ```
 
 
@@ -139,20 +148,24 @@ write.csv(x = trim, file = "vdem-merge.csv")
 # Clean Some Mis-coded items
 ```{r}
 library(dplyr)
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge.csv")
+mydata <- trim
+#mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge.csv")
 #some cleaning
 #code polity -88 -66 -77 to na
 mydata <-
   mydata %>%
-  mutate(e_democ = replace(e_democ, e_democ == -88, NA), e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
-  mutate(e_democ = replace(e_democ, e_democ == -77, NA), e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
-  mutate(e_democ = replace(e_democ, e_democ == -66, NA), e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
-mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE, -X)
+  mutate(e_democ = replace(e_democ, e_democ == -88, NA), 
+         e_autoc = replace(e_autoc, e_autoc == -88, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -77, NA), 
+         e_autoc = replace(e_autoc, e_autoc == -77, NA)) %>%
+  mutate(e_democ = replace(e_democ, e_democ == -66, NA), 
+         e_autoc = replace(e_autoc, e_autoc == -66, NA)) 
+mydata <- select(mydata, -subpentrans_EXP, -subpentrans_GDPGSRE)
 #get rid of two annoying observations 
-newdata <- filter(mydata, wagessalaries_EXP >1)
+newdata <- filter(mydata, wagessalaries_EXP > 1)
 mydata <- setdiff(mydata, newdata)
 
-write.csv(x = mydata, file = "vdem-merge-clean.csv")
+write.csv(x = mydata, row.names = FALSE, file = "vdem-merge-clean.csv")
 ```
 
 
@@ -167,7 +180,7 @@ without multiple imputation
 library(dplyr)
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
 #This code is using the existing percentage index
-dv2 <- select(mydata, c(57:67), cowcode, year)
+dv2 <- select(mydata, c(56:66), cowcode, year)
 dv2 <- select(dv2, -pensions_EXP)
 
 
@@ -207,7 +220,7 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_0 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_0[mydata$stability_0 ==0] <-NA
+mydata$stability_0[mydata$stability_0 == 0] <-NA
 ```
 
 
@@ -218,7 +231,7 @@ library(Amelia)
 
 
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
-rawp <- select(mydata, cowcode, year, c(57:67))
+rawp <- select(mydata, cowcode, year, c(56:66))
 names(rawp)
 summary(rawp)
 #get rid of pension
@@ -454,8 +467,8 @@ write.csv(x = mydata, file = "mydata.csv")
 
 
 
-#LK score is incorrect, needs to recalculate
-#issue fixed
+#LK score 
+
 
 ```{r}
 library(Lmoments)
