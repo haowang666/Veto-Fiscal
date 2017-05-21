@@ -241,6 +241,7 @@ a.out <- amelia(rawp,
                 cs = "cowcode", 
                 m = 5)
 write.amelia(a.out, 
+             row.names = FALSE,
              format  = "csv", 
              file.stem = "imp")
 ```
