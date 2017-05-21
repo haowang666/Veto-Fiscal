@@ -220,7 +220,7 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_0 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_0[mydata$stability_0 == 0] <-NA
+mydata$stability_0[mydata$stability_0 == 0] <- NA
 ```
 
 
@@ -229,17 +229,23 @@ mydata$stability_0[mydata$stability_0 == 0] <-NA
 library(dplyr)
 library(Amelia)
 
-
-mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/vdem-merge-clean.csv")
-rawp <- select(mydata, cowcode, year, c(56:66))
+rawp <- select(mydata, 
+               cowcode, 
+               year, 
+               c(56:66))
 names(rawp)
 summary(rawp)
 #get rid of pension
 rawp <- select(rawp, -pensions_EXP)
 
 set.seed(3)
-a.out <- amelia(rawp, ts = "year", cs = "cowcode", m=5)
-write.amelia(a.out, format  = "csv", file.stem = "imp")
+a.out <- amelia(rawp, 
+                ts = "year", 
+                cs = "cowcode", 
+                m = 5)
+write.amelia(a.out, 
+             format  = "csv", 
+             file.stem = "imp")
 ```
 
 
@@ -256,7 +262,7 @@ imp5 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/maste
 #-----------------------------------------------------------------------------------------------
 dv2 <- imp1
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -291,12 +297,12 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_1 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_1[mydata$stability_1 ==0] <-NA
+mydata$stability_1[mydata$stability_1 == 0] <- NA
 
 #--------------------------------------------------------------------------
 dv2 <- imp2
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -331,12 +337,12 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_2 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_2[mydata$stability_2 ==0] <-NA
+mydata$stability_2[mydata$stability_2 == 0] <- NA
 
 #--------------------------------------------------------------------------
 dv2 <- imp3
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -371,12 +377,12 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_3 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_3[mydata$stability_3 ==0] <-NA
+mydata$stability_3[mydata$stability_3 == 0] <- NA
 
 #--------------------------------------------------------------------------
 dv2 <- imp4
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -411,12 +417,12 @@ yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
 #attach to data
 mydata$stability_4 <- sqrt(yb)
 #recode 0 to missing
-mydata$stability_4[mydata$stability_4 ==0] <-NA
+mydata$stability_4[mydata$stability_4 == 0] <- NA
 
 #--------------------------------------------------------------------------
 dv2 <- imp5
 #replace NA to 0. 
-dv2[is.na(dv2)] <-0
+dv2[is.na(dv2)] <- 0
 
 
 #create lagged variable
@@ -456,7 +462,7 @@ mydata$stability_5[mydata$stability_5 == 0] <- NA
 
 #--------------------------------------------------------------------------
 #export to doable file
-write.csv(x = mydata, file = "mydata.csv")
+write.csv(x = mydata, row.names = FALSE, file = "mydata.csv")
 ```
 
 
@@ -476,8 +482,6 @@ library(reshape2)
 library(dplyr)
 #-------------------------------------
 mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
-#get rid of X (row name)
-mydata <- select(mydata, -X.1)
 #-------------------------------------
 #collapse original data to mean-substraction
 d <- mydata %>%
