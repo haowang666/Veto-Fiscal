@@ -1,0 +1,664 @@
+---
+title: "LK-ordered-demo"
+author: "Hao Wang"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# LK Scores for democracy and autocracies (3 categories)
+
+```{r, message=FALSE, warning=FALSE}
+library(Amelia)
+library(dplyr)
+library(Lmoments)
+library(reshape2)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+
+#recode democracy index based on ordered scale
+mydata$demo_order <- mydata$e_v2x_polyarchy_3C
+mydata$demo_order[mydata$demo_order == 0] <- "auto"
+mydata$demo_order[mydata$demo_order == 1] <- "comptauto"
+mydata$demo_order[mydata$demo_order == 0.5] <- "democracy"
+
+mydata$demo_order <- as.factor(mydata$demo_order)
+```
+
+```{r, message=FALSE, warning=FALSE}
+imp0 <- select(mydata, cowcode, year, c(56:66), demo_order) 
+#imp0 <- select(imp0)
+
+
+#--------------------------------------------------------------------------
+dv2 <- imp0
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1),
+           diff.pensions_EXP = pensions_EXP - lag(pensions_EXP, 1))
+
+dv2 <- select(dv2, demo_order, c(15:25))
+
+aql <- melt(dv2, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order <- t(b)[, 4]
+lk_order
+```
+
+With GSRE data, LK score for ordered scale: autocracy is `r lk_order[1]`, competitive autocracy is `r lk_order[2]`, democracy is `r lk_order[3]`
+
+
+
+# LK Score for always demcoracies/autocracies
+
+??/stuck here unsolved
+
+
+```{r, message=FALSE, warning=FALSE}
+summary(mydata$demo_order)
+#create an ID var identifying always demcoraccies and autocracies
+#????????
+
+
+```
+
+
+
+
+
+# Exclude wage-salaries and pensions
+
+
+```{r, message=FALSE, warning=FALSE}
+dv3 <- select(dv2, -diff.wagessalaries_EXP, -diff.pensions_EXP)
+aql <- melt(dv3, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order <- t(b)[, 4]
+lk_order
+
+
+dv4 <- select(dv2, 
+              -diff.wagessalaries_EXP, 
+              -diff.pensions_EXP,
+              -diff.expend_security_EXP,
+              -diff.total_welfare_EXP)
+aql <- melt(dv4, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order4 <- t(b)[, 4]
+lk_order4
+```
+
+
+Without wage and pension, LK score for ordered scale: autocracy is `r lk_order[1]`, competitive autocracy is `r lk_order[2]`, democracy is `r lk_order[3]`
+
+Without wage, pension, total security spending and total welfare spending,  LK score for ordered scale: autocracy is `r lk_order4[1]`, competitive autocracy is `r lk_order4[2]`, democracy is `r lk_order4[3]`
+
+The total security spending and total welfare spending should be excluded as they are calculated through the combination of other categories. Making them redundant. 
+
+
+
+
+# Use var_GDPGSRE
+
+Results show here. I need to run the code from the beginning to include the WDI index, 
+
+
+```{r, message=FALSE, warning=FALSE}
+
+imp0 <- select(mydata, cowcode, year, c(67:77), demo_order) 
+#imp0 <- select(imp0)
+
+
+#--------------------------------------------------------------------------
+dv2 <- imp0
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_GDPGSRE = expend_security_GDPGSRE - lag(expend_security_GDPGSRE, 1), 
+           diff.expenddefence_GDPGSRE = expenddefence_GDPGSRE - lag(expenddefence_GDPGSRE, 1),
+           diff.exp_public_order_GDPGSRE = exp_public_order_GDPGSRE - lag(exp_public_order_GDPGSRE, 1), 
+           diff.wagessalaries_GDPGSRE = wagessalaries_GDPGSRE - lag(wagessalaries_GDPGSRE, 1), 
+           diff.total_welfare_GDPGSRE = total_welfare_GDPGSRE - lag(total_welfare_GDPGSRE, 1), 
+           diff.education_GDPGSRE = education_GDPGSRE - lag(education_GDPGSRE, 1), 
+           diff.health_GDPGSRE = health_GDPGSRE - lag(health_GDPGSRE, 1),
+           diff.social_protection_GDPGSRE = social_protection_GDPGSRE - lag(social_protection_GDPGSRE, 1),
+           diff.housing_GDPGSRE = housing_GDPGSRE - lag(housing_GDPGSRE, 1), 
+           diff.owelfarespend_GDPGSRE = owelfarespend_GDPGSRE - lag(owelfarespend_GDPGSRE, 1),
+           diff.pensions_GDPGSRE = pensions_GDPGSRE - lag(pensions_GDPGSRE, 1))
+
+dv2 <- select(dv2, demo_order, c(15:25))
+
+aql <- melt(dv2, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order <- t(b)[, 4]
+lk_order
+
+
+
+```
+
+
+With _GDPGSRE variables, LK score for ordered scale: autocracy is `r lk_order[1]`, competitive autocracy is `r lk_order[2]`, democracy is `r lk_order[3]`
+
+
+## Without wage pension
+
+
+```{r, message=FALSE, warning=FALSE}
+dv3 <- select(dv2, -diff.wagessalaries_GDPGSRE, -diff.pensions_GDPGSRE)
+aql <- melt(dv3, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order5 <- t(b)[, 4]
+lk_order5
+
+
+dv4 <- select(dv2, 
+              -diff.wagessalaries_GDPGSRE, 
+              -diff.pensions_GDPGSRE,
+              -diff.expend_security_GDPGSRE,
+              -diff.total_welfare_GDPGSRE)
+aql <- melt(dv4, id.vars = c("demo_order"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$demo_order, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order6 <- t(b)[, 4]
+lk_order6
+```
+
+
+
+
+
+Without wage and pension, LK score for ordered scale: autocracy is `r lk_order5[1]`, competitive autocracy is `r lk_order5[2]`, democracy is `r lk_order5[3]`
+
+Without wage pension total security spending and total welfare spending, LK score for ordered scale: autocracy is `r lk_order6[1]`, competitive autocracy is `r lk_order6[2]`, democracy is `r lk_order6[3]`
+
+
+
+
+
+# LK score for bivariate classification
+
+```{r, warning=FALSE, message=FALSE}
+mydata$bi_demo <- mydata$demo_order
+mydata$bi_demo[mydata$bi_demo == "comptauto"] <- "auto"
+mydata$bi_demo <- as.factor(mydata$bi_demo)
+
+imp0 <- select(mydata, cowcode, year, c(56:66), bi_demo) 
+#imp0 <- select(imp0)
+
+
+#--------------------------------------------------------------------------
+dv2 <- imp0
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1),
+           diff.pensions_EXP = pensions_EXP - lag(pensions_EXP, 1))
+
+dv2 <- select(dv2, bi_demo, c(15:25))
+
+aql <- melt(dv2, id.vars = c("bi_demo"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$bi_demo, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+lk_order <- t(b)[, 4]
+lk_order
+```
+
+
+With GSRE data, LK score for ordered scale: autocracy is `r lk_order[1]`, democracy is `r lk_order[2]`. 
+
+
+
+# For Cross-Sectional OLS
+
+## codes for generating LK score of each country
+
+```{r, message=FALSE, warning=FALSE}
+mydata$polity <- mydata$e_democ - mydata$e_autoc
+  
+#collapse original data to mean-substraction
+d <- mydata %>%
+ group_by(cowcode, country) %>%
+ summarise_each(funs(mean(., na.rm = TRUE)))
+#get rid of the missing
+d <- d[!(is.na(d$stability_0)),]
+
+
+imp0 <- select(mydata, cowcode, year, c(56:66), demo_order) 
+#imp0 <- select(imp0)
+
+
+#--------------------------------------------------------------------------
+dv2 <- imp0
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(diff.expend_security_EXP = expend_security_EXP - lag(expend_security_EXP, 1), 
+           diff.expenddefence_EXP = expenddefence_EXP - lag(expenddefence_EXP, 1),
+           diff.exp_public_order_EXP = exp_public_order_EXP - lag(exp_public_order_EXP, 1), 
+           diff.wagessalaries_EXP = wagessalaries_EXP - lag(wagessalaries_EXP, 1), 
+           diff.total_welfare_EXP = total_welfare_EXP - lag(total_welfare_EXP, 1), 
+           diff.education_EXP = education_EXP - lag(education_EXP, 1), 
+           diff.health_EXP = health_EXP - lag(health_EXP, 1),
+           diff.social_protection_EXP = social_protection_EXP - lag(social_protection_EXP, 1),
+           diff.housing_EXP = housing_EXP - lag(housing_EXP, 1), 
+           diff.owelfarespend_EXP = owelfarespend_EXP - lag(owelfarespend_EXP, 1),
+           diff.pensions_EXP = pensions_EXP - lag(pensions_EXP, 1))
+
+dv2 <- select(dv2, cowcode, c(15:25))
+
+aql <- melt(dv2, id.vars = c("cowcode"))
+aql <- na.omit(aql)
+a <- tapply(aql$value, aql$cowcode, function(x) Lcoefs(x))
+b <- as.data.frame(matrix(unlist(a), nrow = 4))
+#transpose, this is the LK score
+d$lk_country <- t(b)[, 4]
+
+```
+
+
+
+## OLS
+
+```{r, message=FALSE, warning=FALSE}
+lm <- lm(lk_country ~ polity, data = d)
+summary(lm)
+
+#list cross-sectional country list
+d2 <- select(d, country, lk_country, polity)
+d2 <- na.omit(d2)
+d2$country
+```
+
+## OLS with Quadratic Expression
+
+```{r, message=FALSE, warning=FALSE}
+qlm <- lm(lk_country ~ polity +I(polity^2), data = d)
+summary(qlm)
+```
+
+
+
+
+
+
+------------------------------------------------------------------
+# Number of Observations
+
+```{r, message=FALSE, warning=FALSE}
+library(Amelia)
+library(dplyr)
+library(Lmoments)
+library(reshape2)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+GSRE <- select(mydata, c(56:66))
+#if listwise deletion...
+missmap(GSRE)
+GSRE <- na.omit(GSRE)
+nrow(GSRE)
+
+#recode democracy index based on ordered scale
+mydata$demo_order <- mydata$e_v2x_polyarchy_3C
+mydata$demo_order[mydata$demo_order == 0] <- "auto"
+mydata$demo_order[mydata$demo_order == 1] <- "comptauto"
+mydata$demo_order[mydata$demo_order == 0.5] <- "democracy"
+
+mydata$demo_order <- as.factor(mydata$demo_order)
+```
+
+Therefore, using list-wise deletion for GSRE part, only 87 cases remain. By cases, I mean country-year observations. Total observations are `r nrow(mydata)`. 
+
+
+# How I calculated spendings
+
+I use all categories of GSRE, as well as GDPGSRE, then I calculated wages and pensions and repeat the calculations. In calculating the LK score, I first calculate the between year differences of each country, then use the pooled difference items of each country to calculate the LK score of corresponding countries. 
+
+In OLS regression, LK score is pooled score for each country, other independent variables are collapsed at mean levels. 
+
+
+
+
+# Missingness and Political Regime
+
+Most missing points are from the GSRE parts. 
+
+
+
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+GSRE <- select(mydata, c(56:66))
+
+#recode democracy index based on ordered scale
+mydata$demo_order <- mydata$e_v2x_polyarchy_3C
+mydata$demo_order[mydata$demo_order == 0] <- "auto"
+mydata$demo_order[mydata$demo_order == 1] <- "comptauto"
+mydata$demo_order[mydata$demo_order == 0.5] <- "democracy"
+
+mydata$demo_order <- as.factor(mydata$demo_order)
+
+mydata$na.count <-  apply(GSRE, 1, function(x) sum(is.na(x)))
+summary(lm(na.count ~ e_democ, data = mydata))
+```
+
+
+
+
+
+
+<!-- seems unrelevant for the moment
+
+# Recalculating Stability and LK score
+
+## add stability_x_aj to mydata.csv
+
+```{r, message=FALSE}
+library(dplyr)
+library(Lmoments)
+mydata <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/mydata.csv")
+
+```
+
+
+
+
+## without multiple imputation
+```{r, message=FALSE}
+dv2 <- select(mydata, c(56:66), cowcode, year)
+#get rid of wage 
+dv2 <- select(dv2, -pensions_EXP, -wagessalaries_EXP)
+
+
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+#
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_0_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_0_aj[mydata$stability_0_aj == 0] <- NA
+```
+
+
+
+# Multiple imputation: without wage index
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+imp1 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp1.csv")
+imp2 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp2.csv")
+imp3 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp3.csv")
+imp4 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp4.csv")
+imp5 <- read.csv("https://raw.githubusercontent.com/haowang666/Veto-Fiscal/master/data/imp5.csv") 
+
+#-----------------------------------------------------------------------------------------------
+dv2 <- imp1
+#replace NA to 0. 
+dv2[is.na(dv2)] <-0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_1_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_1_aj[mydata$stability_1_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp2
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_2_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_2_aj[mydata$stability_2_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp3
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_3_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_3_aj[mydata$stability_3_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp4
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_4_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_4_aj[mydata$stability_4_aj == 0] <- NA
+
+#--------------------------------------------------------------------------
+dv2 <- imp5
+#replace NA to 0. 
+dv2[is.na(dv2)] <- 0
+
+
+#create lagged variable
+dv2 <- 
+    dv2 %>%
+    group_by(cowcode) %>%
+    mutate(lag.expend_security_EXP = lag(expend_security_EXP, 1), 
+           lag.expenddefence_EXP = lag(expenddefence_EXP, 1),
+           lag.exp_public_order_EXP = lag(exp_public_order_EXP, 1), 
+           lag.total_welfare_EXP = lag(total_welfare_EXP, 1), 
+           lag.education_EXP = lag(education_EXP, 1), 
+           lag.health_EXP = lag(health_EXP, 1),
+           lag.social_protection_EXP = lag(social_protection_EXP, 1),
+           lag.housing_EXP = lag(housing_EXP, 1), 
+           lag.owelfarespend_EXP = lag(owelfarespend_EXP, 1))
+
+#calculate stability index
+attach(dv2)
+yb <- (expend_security_EXP - lag.expend_security_EXP)^2 +
+     (expenddefence_EXP - lag.expenddefence_EXP)^2 +
+     (exp_public_order_EXP - lag.exp_public_order_EXP)^2 +
+     (total_welfare_EXP - lag.total_welfare_EXP)^2 +
+     (education_EXP - lag.education_EXP)^2 +
+     (health_EXP - lag.health_EXP)^2 +
+     (social_protection_EXP - lag.social_protection_EXP)^2 +
+     (housing_EXP - lag.housing_EXP)^2 +
+     (owelfarespend_EXP - lag.owelfarespend_EXP)^2
+
+
+#attach to data
+mydata$stability_5_aj <- sqrt(yb)
+#recode 0 to missing
+mydata$stability_5_aj[mydata$stability_5_aj == 0] <- NA
+
+
+#--------------------------------------------------------------------------
+#export to doable file
+write.csv(x = mydata, file = "mydata.csv", row.names = FALSE)
+```
+
+
+-->
+
